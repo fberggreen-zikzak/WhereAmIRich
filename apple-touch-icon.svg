@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Rich or Poor">
+  <rect width="180" height="180" rx="40" fill="#0f0f0f"/>
+  <path d="M22 22h68v136H22z" fill="#1a4d2e"/>
+  <path d="M90 22h68v136H90z" fill="#5c2a28"/>
+  <circle cx="90" cy="90" r="20" fill="#c9a227"/>
+</svg>
