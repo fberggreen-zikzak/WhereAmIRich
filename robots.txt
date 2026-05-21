@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://richorpoor.com/sitemap.xml

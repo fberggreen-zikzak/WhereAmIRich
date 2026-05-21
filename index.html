@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0f0f0f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow" />
+
+    <title>Rich or Poor — Danish Salary Purchasing Power Calculator</title>
+    <meta
+      name="description"
+      content="Compare your Copenhagen salary to 20 cities. See equivalent pay and where you're rich or poor after local living costs — free, instant, shareable."
+    />
+    <meta
+      name="keywords"
+      content="purchasing power, cost of living, Copenhagen salary, Denmark salary calculator, equivalent salary abroad, rich or poor city, Numbeo, expat salary"
+    />
+    <meta name="author" content="Rich or Poor" />
+    <link rel="canonical" href="https://richorpoor.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rich or Poor" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:title"
+      content="Rich or Poor — Are you rich in Lisbon and poor in London?"
+    />
+    <meta
+      property="og:description"
+      content="Enter your Danish monthly salary and see how far it goes in Berlin, New York, Bangkok, and 17 more cities. Purchasing power, not hype."
+    />
+    <meta property="og:url" content="https://richorpoor.com/" />
+    <meta property="og:image" content="https://richorpoor.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Rich in Lisbon. Poor in London. — Danish salary purchasing power calculator"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rich or Poor — Danish salary purchasing power" />
+    <meta
+      name="twitter:description"
+      content="Rich in Lisbon? Poor in London? Compare your Copenhagen salary to 20 cities in seconds."
+    />
+    <meta name="twitter:image" content="https://richorpoor.com/og-image.svg" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://richorpoor.com/#website",
+            "url": "https://richorpoor.com/",
+            "name": "Rich or Poor",
+            "description": "Compare Danish salary purchasing power across global cities.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://richorpoor.com/#app",
+            "name": "Rich or Poor",
+            "url": "https://richorpoor.com/",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Any",
+            "browserRequirements": "Requires JavaScript",
+            "description": "Free calculator that shows equivalent salary and rich/middle/poor status across cities based on Numbeo cost-of-living data.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "DKK"
+            },
+            "featureList": [
+              "Copenhagen salary input",
+              "20 city comparisons",
+              "Equivalent salary in kr.",
+              "Shareable result links"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://richorpoor.com/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What does equivalent salary mean?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The monthly pay you would need in another city to afford a similar lifestyle to your Copenhagen salary, adjusted for local living costs."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What do Rich, Middle, and Poor mean?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "They describe how your purchasing power compares to a typical local earner in that city — directional labels, not personal finance advice."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What data is this based on?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cost-of-living indices from Numbeo (2025). Your chosen city is the baseline; other cities are compared against it."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#salary-input">Skip to salary input</a>
+    <main class="page" id="main-content">
+      <section class="calculator panel" aria-label="Salary calculator">
+        <p class="calculator__intro">
+          Enter your pay and where you earn it — see how it compares elsewhere.
+        </p>
+        <div class="calculator__fields">
+          <div class="calculator__field">
+            <label class="calculator__label" for="salary-input">Your monthly salary</label>
+            <div class="calculator__row">
+              <input
+                id="salary-input"
+                class="calculator__input"
+                type="text"
+                inputmode="decimal"
+                enterkeyhint="done"
+                autocomplete="off"
+                autocorrect="off"
+                spellcheck="false"
+                value="45,000"
+                aria-describedby="calculator-hint"
+              />
+              <span class="calculator__suffix" id="currency-suffix" aria-hidden="true">kr.</span>
+            </div>
+          </div>
+          <div class="calculator__field">
+            <label class="calculator__label" for="base-city">Current city</label>
+            <input
+              id="city-search"
+              class="calculator__search"
+              type="search"
+              placeholder="Search cities…"
+              autocomplete="off"
+              autocorrect="off"
+              spellcheck="false"
+              aria-label="Search cities"
+            />
+            <select id="base-city" class="calculator__select" aria-describedby="calculator-hint">
+              <!-- populated by app.js -->
+            </select>
+          </div>
+        </div>
+        <p id="calculator-hint" class="calculator__hint">
+          Enter your pay in Copenhagen — we compare how far it goes in 20 other cities (Numbeo, May 2025).
+        </p>
+      </section>
+
+      <header class="hero panel">
+        <p class="hero__eyebrow" id="hero-eyebrow">
+          Your salary of 45,000 kr. in Copenhagen is equivalent to
+        </p>
+        <h1 class="hero__title" id="hero-title">
+          Rich in Lisbon. <em class="hero__accent">Poor in London.</em>
+        </h1>
+        <p class="hero__trust" id="hero-trust">
+          Based on how far your salary goes after local living costs — relative spending
+          power, not money in your bank abroad.
+        </p>
+        <p class="hero__subtitle" id="hero-subtitle">
+          Your money goes further in 4 of 6 cities than at home
+        </p>
+      </header>
+
+      <section class="results" aria-labelledby="results-heading">
+        <div class="results__intro">
+          <h2 id="results-heading" class="results__heading">City breakdown</h2>
+          <p class="results__legend" id="results-legend">
+            <strong>Equivalent salary</strong> — what you’d need to earn there monthly to
+            live like you do at home. Shown in your city’s currency.
+          </p>
+        </div>
+        <div class="grid" id="city-grid"></div>
+      </section>
+
+      <details class="how panel">
+        <summary class="how__summary">How this works</summary>
+        <div class="how__body">
+          <ol class="how__list">
+            <li>Start with your monthly salary and the city where you earn it.</li>
+            <li>
+              Adjust for local living costs in each city using published cost-of-living
+              data (Numbeo, 2025).
+            </li>
+            <li>
+              Show the <strong>equivalent salary</strong> — the local pay that would
+              stretch about as far as yours does at home.
+            </li>
+            <li>
+              <strong>Rich / Middle / Poor</strong> means how that stacks up vs a typical
+              earner there — directional, not a verdict on your life.
+            </li>
+          </ol>
+          <p class="how__disclaimer">
+            A quick comparison for curiosity and sharing — not tax, rent, or personal
+            finance advice.
+          </p>
+        </div>
+      </details>
+
+      <footer class="share panel">
+        <div class="share__text">
+          <h2 class="share__title">Share your result</h2>
+          <p class="share__subtitle">
+            How does your salary stack up? See how your friends compare.
+          </p>
+        </div>
+        <div class="share__actions">
+          <button type="button" class="share-btn" aria-label="Share on Facebook">
+            <svg class="share-btn__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.437H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.437C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+            Facebook
+          </button>
+          <button type="button" class="share-btn" aria-label="Share on LinkedIn">
+            <svg class="share-btn__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              />
+            </svg>
+            LinkedIn
+          </button>
+          <button type="button" class="share-btn" id="copy-link">
+            <svg class="share-btn__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 8.5V6.75A2.75 2.75 0 0110.75 4h6.5A2.75 2.75 0 0120 6.75v6.5A2.75 2.75 0 0117.25 16h-1.75M4 10.75A2.75 2.75 0 016.75 8h6.5A2.75 2.75 0 0116 10.75v6.5A2.75 2.75 0 0113.25 20h-6.5A2.75 2.75 0 014 17.25v-6.5z"
+              />
+            </svg>
+            <span id="copy-label">Copy link</span>
+          </button>
+        </div>
+      </footer>
+
+      <p class="page__seo-note">
+        Rich or Poor is a free Copenhagen salary vs cost-of-living tool for expats,
+        remote workers, and anyone curious how Danish pay stacks up abroad.
+      </p>
+    </main>
+
+    <noscript>
+      <div class="noscript panel">
+        <h2>Rich or Poor — salary purchasing power</h2>
+        <p>
+          Enter your monthly Copenhagen salary to see equivalent pay and whether you are
+          rich, middle, or poor in 20 cities. Based on Numbeo cost-of-living indices.
+          Enable JavaScript for the interactive calculator.
+        </p>
+      </div>
+    </noscript>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
