@@ -10,7 +10,7 @@ python3 -m http.server 8765
 
 Open http://localhost:8765 — ES modules require a local server (not `file://`).
 
-Share a result: `?salary=50000&city=london` is added to the URL automatically.
+Share a result: `?salary=50000&city=london&dest=paris,tokyo,bangkok` is added to the URL automatically. Use the **Add destination** tile in the grid to search and add cities.
 
 ## SEO & deployment
 
@@ -64,7 +64,7 @@ Amounts are shown in **your city’s currency** (same units you typed). A factor
 2. Add or update a row in `CITY_RAW` inside `data.js`:
 
 ```js
-{ id: "milan", name: "Milan", countryCode: "it", numbeoColIndex: 78.0, currencyCode: "EUR", currencyLabel: "€" },
+{ id: "milan", name: "Milan", country: "Italy", countryCode: "it", numbeoColIndex: 78.0, currencyCode: "EUR", currencyLabel: "€" },
 ```
 
 3. Check factors from a base city:
@@ -84,7 +84,8 @@ Numbeo does not offer a reliable free public API for COL indices. For production
 
 | File | Purpose |
 |------|---------|
-| `data.js` | Cities, Numbeo COL indices, auto factors |
+| `cities-catalog.js` | ~100 global cities with Numbeo COL indices |
+| `data.js` | City exports, search helper, status config |
 | `calc.js` | Math, formatting, URL parsing |
 | `app.js` | UI and live updates |
 | `scripts/print-factors.js` | CLI helper when updating data |

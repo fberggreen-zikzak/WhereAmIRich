@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Rich or Poor  salary purchasing power calculator">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Rich or Poor — salary purchasing power calculator">
   <rect width="1200" height="630" fill="#0f0f0f"/>
   <rect x="48" y="48" width="1104" height="534" rx="24" fill="#161616" stroke="#2a2a2a" stroke-width="2"/>
   <text x="96" y="200" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#f5f5f5">Rich in Lisbon.</text>
   <text x="96" y="290" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#c9a227" font-style="italic">Poor in London.</text>
-  <text x="96" y="380" font-family="system-ui, sans-serif" font-size="32" fill="#9a9a9a">How far does your Danish salary really go?</text>
-  <text x="96" y="440" font-family="system-ui, sans-serif" font-size="28" fill="#6a6a6a">Compare purchasing power across 20 cities  free calculator</text>
+  <text x="96" y="380" font-family="system-ui, sans-serif" font-size="32" fill="#9a9a9a">How far does your salary really go?</text>
+  <text x="96" y="440" font-family="system-ui, sans-serif" font-size="28" fill="#6a6a6a">Compare purchasing power across 100+ cities</text>
   <text x="96" y="520" font-family="system-ui, sans-serif" font-size="36" font-weight="600" fill="#f5f5f5">Rich or Poor</text>
 </svg>

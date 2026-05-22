@@ -1,34 +1,43 @@
 import {
   CITIES,
-  citiesForSelect,
   DEFAULT_BASE_CITY_ID,
   DEFAULT_SALARY,
   getCityById,
-  HERO_TRUST_LINE,
-  METRIC_LABEL,
-  metricHint,
-  STATUS_CONTEXT,
+  AMOUNT_SUBLABEL,
+  searchCities,
   STATUS_LABELS,
+  STATUS_CONTEXT,
 } from "./data.js";
 import {
   computeResults,
+  defaultComparisonIds,
   formatMoney,
+  normalizeComparisonIds,
   parseSalaryInput,
+  resolveComparisonIds,
   stateFromUrl,
 } from "./calc.js";
 
 const els = {
   salaryInput: document.getElementById("salary-input"),
   currencySuffix: document.getElementById("currency-suffix"),
-  baseCitySelect: document.getElementById("base-city"),
-  citySearch: document.getElementById("city-search"),
-  calculatorHint: document.getElementById("calculator-hint"),
-  resultsLegend: document.getElementById("results-legend"),
+  baseCityPicker: document.getElementById("base-city-picker"),
+  baseCityTrigger: document.getElementById("base-city-trigger"),
+  baseCityPanel: document.getElementById("base-city-panel"),
+  baseCitySearch: document.getElementById("base-city-search"),
+  baseCityList: document.getElementById("base-city-list"),
+  baseCityFlag: document.getElementById("base-city-flag"),
+  baseCityName: document.getElementById("base-city-name"),
+  baseCityCountry: document.getElementById("base-city-country"),
   heroEyebrow: document.getElementById("hero-eyebrow"),
   heroTitle: document.getElementById("hero-title"),
-  heroTrust: document.getElementById("hero-trust"),
   heroSubtitle: document.getElementById("hero-subtitle"),
+  compareHighlights: document.getElementById("compare-highlights"),
+  compareBest: document.getElementById("compare-best"),
+  compareToughest: document.getElementById("compare-toughest"),
   grid: document.getElementById("city-grid"),
+  shareFacebook: document.getElementById("share-facebook"),
+  shareLinkedIn: document.getElementById("share-linkedin"),
   copyBtn: document.getElementById("copy-link"),
   copyLabel: document.getElementById("copy-label"),
 };
@@ -36,15 +45,41 @@ const els = {
 const urlState = stateFromUrl(new URLSearchParams(location.search));
 let currentSalary = urlState.salary ?? DEFAULT_SALARY;
 let currentBaseCityId = urlState.baseCityId ?? DEFAULT_BASE_CITY_ID;
+let comparisonCityIds = resolveComparisonIds(
+  urlState.comparisonCityIds,
+  currentBaseCityId
+);
 
 function flagUrl(code) {
   return `https://flagcdn.com/w40/${code}.png`;
 }
 
-function updateUrl(salary, baseCityId) {
+function citiesAvailableToAdd() {
+  const taken = new Set([currentBaseCityId, ...comparisonCityIds]);
+  return CITIES.filter((c) => !taken.has(c.id)).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+}
+
+function citiesSearchable() {
+  return CITIES.filter((c) => c.id !== currentBaseCityId).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+}
+
+function isDestinationAdded(cityId) {
+  return comparisonCityIds.includes(cityId);
+}
+
+function updateUrl(salary, baseCityId, destIds) {
   const url = new URL(location.href);
   url.searchParams.set("salary", String(salary));
   url.searchParams.set("city", baseCityId);
+  if (destIds.length) {
+    url.searchParams.set("dest", destIds.join(","));
+  } else {
+    url.searchParams.delete("dest");
+  }
   history.replaceState(null, "", url);
 }
 
@@ -53,55 +88,61 @@ function renderHero(results, salary) {
   const pay = formatMoney(salary, base.currencyLabel);
 
   if (els.heroEyebrow) {
-    els.heroEyebrow.textContent = `Your salary of ${pay} in ${base.name} is equivalent to`;
+    els.heroEyebrow.textContent = `${pay} in ${base.name} buys you`;
   }
 
   if (els.heroTitle) {
-    els.heroTitle.innerHTML = `Rich in ${richest.name}. <em class="hero__accent">Poor in ${poorest.name}.</em>`;
-  }
-
-  if (els.heroTrust) {
-    els.heroTrust.textContent = HERO_TRUST_LINE;
-  }
-
-  if (els.heroSubtitle) {
-    if (betterOffCount === 0) {
-      els.heroSubtitle.textContent = `Compared to ${base.name}, your pay stretches least in these cities`;
-    } else if (betterOffCount === totalCities) {
-      const noun = totalCities === 1 ? "city" : "cities";
-      els.heroSubtitle.textContent = `Your money goes further in all ${totalCities} other ${noun} than in ${base.name}`;
+    if (totalCities === 0) {
+      els.heroTitle.innerHTML = `Add cities below to compare from <em class="compare__accent">${base.name}</em>.`;
     } else {
-      const noun = betterOffCount === 1 ? "city" : "cities";
-      els.heroSubtitle.textContent = `Your money goes further in ${betterOffCount} of ${totalCities} other ${noun} than in ${base.name}`;
+      els.heroTitle.innerHTML = `Rich in ${richest.name}. <em class="compare__accent">Broke in ${poorest.name}.</em>`;
     }
   }
 
-  document.title = `Rich in ${richest.name}, poor in ${poorest.name} — Rich or Poor`;
-}
+  if (els.heroSubtitle) {
+    if (totalCities === 0) {
+      els.heroSubtitle.textContent = `Add destinations to see where your pay goes furthest.`;
+    } else if (betterOffCount === 0) {
+      els.heroSubtitle.textContent = `Your salary doesn't stretch further in any of these ${totalCities} cities.`;
+    } else if (betterOffCount === 1) {
+      els.heroSubtitle.textContent = `Your salary stretches further in 1 of ${totalCities} cities.`;
+    } else if (betterOffCount === totalCities) {
+      els.heroSubtitle.textContent = `Your salary stretches further in all ${totalCities} cities.`;
+    } else {
+      els.heroSubtitle.textContent = `Your salary stretches further in ${betterOffCount} of ${totalCities} cities.`;
+    }
+  }
 
-function updateResultsLegend(results) {
-  if (!els.resultsLegend) return;
-  const { base, cities } = results;
-  const names = cities.map((c) => c.name).join(", ");
-  els.resultsLegend.innerHTML = `<strong>Equivalent salary</strong> — what you’d need to earn there monthly to live like you do in ${base.name}. Shown in ${base.currencyLabel}. Compared to: ${names}.`;
+  if (els.compareHighlights) {
+    const show = totalCities > 0;
+    els.compareHighlights.hidden = !show;
+    if (show && els.compareBest && els.compareToughest) {
+      els.compareBest.textContent = richest.name;
+      els.compareToughest.textContent = poorest.name;
+    }
+  }
+
+  if (totalCities > 0) {
+    document.title = `Rich in ${richest.name}, broke in ${poorest.name} — Rich or Poor`;
+  } else {
+    document.title = `Rich or Poor — Salary purchasing power`;
+  }
 }
 
 function renderCityCard(city, currencyLabel) {
   const article = document.createElement("article");
   article.className = `city-card city-card--${city.status}`;
   const statusLabel = STATUS_LABELS[city.status];
-  const statusNote = STATUS_CONTEXT[city.status];
-  const hint = metricHint(currencyLabel);
+  const statusContext = STATUS_CONTEXT[city.status];
 
   article.setAttribute(
     "aria-label",
-    `${city.name}: ${statusLabel}, ${statusNote}. ${METRIC_LABEL} ${city.amount}`
+    `${city.name}, ${statusLabel}. ${city.amount}, ${AMOUNT_SUBLABEL}. Local average ${city.averageSalaryLabel} per month. ${city.vsAverageText}`
   );
 
   article.innerHTML = `
-    <div class="city-card__top">
-      <div class="city-card__meta">
-        <p class="city-card__name">${city.name}</p>
+    <header class="city-card__top">
+      <div class="city-card__identity">
         <img
           class="city-card__flag"
           src="${flagUrl(city.countryCode)}"
@@ -110,112 +151,318 @@ function renderCityCard(city, currencyLabel) {
           height="20"
           loading="lazy"
         />
+        <h3 class="city-card__name">${city.name}</h3>
       </div>
       <div class="city-card__badge-wrap">
-        <span class="city-card__badge" title="${statusNote}">${statusLabel}</span>
-        <span class="city-card__status-note">${statusNote}</span>
+        <span class="city-card__badge">${statusLabel}</span>
+        <span class="city-card__status-note">${statusContext}</span>
       </div>
-    </div>
-    <div class="city-card__figure">
-      <span class="city-card__metric" title="${hint}">${METRIC_LABEL}</span>
+    </header>
+    <div class="city-card__hero">
       <p class="city-card__amount">${city.amount}</p>
+      <p class="city-card__metric-sub">${AMOUNT_SUBLABEL}</p>
     </div>
-    <div class="city-card__bar" role="presentation" aria-hidden="true">
-      <span class="city-card__bar-fill" style="width: 0%"></span>
-    </div>
+    <footer class="city-card__benchmark">
+      <dl class="city-card__benchmark-row">
+        <dt class="city-card__benchmark-label">Local average</dt>
+        <dd class="city-card__benchmark-value">${city.averageSalaryLabel}<span class="city-card__benchmark-unit">/mo</span></dd>
+      </dl>
+      <p class="city-card__vs-avg city-card__vs-avg--${city.vsAverageTone}">${city.vsAverageText}</p>
+    </footer>
   `;
 
-  requestAnimationFrame(() => {
-    const fill = article.querySelector(".city-card__bar-fill");
-    if (fill) fill.style.width = `${city.progress}%`;
+  return article;
+}
+
+function renderAddTile() {
+  const article = document.createElement("article");
+  article.className = "city-card city-card--add";
+  const available = citiesAvailableToAdd();
+  const listId = "add-city-list";
+
+  article.setAttribute("aria-label", "Add a destination city");
+  article.innerHTML = `
+    <div class="add-city__icon" aria-hidden="true">+</div>
+    <h3 class="add-city__title">Add destination</h3>
+    <p class="add-city__hint">Search for a city to compare</p>
+    <div class="add-city__field">
+      <label class="visually-hidden" for="add-city-search">Search for a destination</label>
+      <input
+        id="add-city-search"
+        class="add-city__search"
+        type="search"
+        placeholder="e.g. Milan, Seoul, Mumbai…"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="${listId}"
+        aria-autocomplete="list"
+        ${available.length ? "" : "disabled"}
+      />
+      <ul id="${listId}" class="add-city__list" role="listbox" hidden></ul>
+    </div>
+    ${available.length ? "" : '<p class="add-city__empty">All cities are already on the board.</p>'}
+  `;
+
+  if (!available.length) return article;
+
+  const search = article.querySelector("#add-city-search");
+  const list = article.querySelector(`#${listId}`);
+
+  function renderList(query = "") {
+    const matches = searchCities(citiesSearchable(), query).sort((a, b) => {
+      const aAdded = isDestinationAdded(a.id);
+      const bAdded = isDestinationAdded(b.id);
+      if (aAdded !== bAdded) return aAdded ? 1 : -1;
+      return a.name.localeCompare(b.name);
+    });
+
+    list.replaceChildren();
+    if (!matches.length) {
+      list.hidden = true;
+      search.setAttribute("aria-expanded", "false");
+      return;
+    }
+
+    matches.slice(0, 12).forEach((city) => {
+      const added = isDestinationAdded(city.id);
+      const li = document.createElement("li");
+      li.className = `add-city__option${added ? " add-city__option--added" : ""}`;
+      li.setAttribute("role", "option");
+      li.dataset.cityId = city.id;
+      if (added) {
+        li.setAttribute("aria-disabled", "true");
+      }
+      li.innerHTML = `
+        <img class="add-city__flag" src="${flagUrl(city.countryCode)}" alt="" width="20" height="14" />
+        <span class="add-city__label">
+          <span class="add-city__name">${city.name}</span>
+          <span class="add-city__country">${city.country}</span>
+        </span>
+        ${added ? '<span class="add-city__tag">Already added</span>' : ""}
+      `;
+      if (!added) {
+        li.addEventListener("click", () => addDestination(city.id));
+      }
+      list.appendChild(li);
+    });
+
+    list.hidden = false;
+    search.setAttribute("aria-expanded", "true");
+  }
+
+  search.addEventListener("focus", () => renderList(search.value));
+  search.addEventListener("input", () => renderList(search.value));
+
+  search.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      list.hidden = true;
+      search.setAttribute("aria-expanded", "false");
+      search.blur();
+      return;
+    }
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const first = list.querySelector(
+        ".add-city__option:not(.add-city__option--added)"
+      );
+      if (first?.dataset.cityId) addDestination(first.dataset.cityId);
+    }
   });
 
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!article.contains(e.target)) {
+        list.hidden = true;
+        search.setAttribute("aria-expanded", "false");
+      }
+    },
+    { capture: true }
+  );
+
   return article;
+}
+
+function addDestination(cityId) {
+  if (!getCityById(cityId) || cityId === currentBaseCityId) return;
+  if (comparisonCityIds.includes(cityId)) return;
+  comparisonCityIds = [...comparisonCityIds, cityId];
+  applyState(currentSalary, currentBaseCityId);
 }
 
 function renderGrid(results) {
   if (!els.grid) return;
   els.grid.replaceChildren();
+
   [...results.cities]
     .sort((a, b) => b.equivalent - a.equivalent)
     .forEach((city) => {
       els.grid.appendChild(renderCityCard(city, results.base.currencyLabel));
     });
+
+  els.grid.appendChild(renderAddTile());
 }
 
 function syncCurrencyUi(baseCity) {
   if (els.currencySuffix) {
     els.currencySuffix.textContent = baseCity.currencyLabel;
   }
-  if (els.calculatorHint) {
-    els.calculatorHint.textContent = `Enter your pay in ${baseCity.name} — we compare how far it goes in ${CITIES.length - 1} other cities (Numbeo, May 2025).`;
-  }
 }
 
 function applyState(salary, baseCityId) {
-  const base = getCityById(baseCityId);
+  const base = getCityById(baseCityId) ?? getCityById(DEFAULT_BASE_CITY_ID);
   if (!base) return;
 
   currentSalary = salary;
-  currentBaseCityId = baseCityId;
-  const results = computeResults(CITIES, salary, baseCityId);
+  currentBaseCityId = base.id;
+  comparisonCityIds = normalizeComparisonIds(comparisonCityIds, base.id);
+
+  const results = computeResults(
+    CITIES,
+    salary,
+    base.id,
+    comparisonCityIds
+  );
 
   if (els.salaryInput) {
     els.salaryInput.value = salary.toLocaleString("en-US");
   }
-  if (els.baseCitySelect) {
-    els.baseCitySelect.value = baseCityId;
-  }
-  if (els.citySearch) {
-    els.citySearch.value = "";
-    filterCityOptions("");
-  }
-
+  updateBaseCityPickerDisplay(base);
   syncCurrencyUi(base);
   renderHero(results, salary);
-  updateResultsLegend(results);
   renderGrid(results);
-  updateUrl(salary, baseCityId);
+  updateUrl(salary, base.id, comparisonCityIds);
 }
 
-function filterCityOptions(query) {
-  if (!els.baseCitySelect) return;
-  const q = query.trim().toLowerCase();
-  [...els.baseCitySelect.options].forEach((opt) => {
-    opt.hidden = Boolean(q && !opt.textContent.toLowerCase().includes(q));
+function updateBaseCityPickerDisplay(city) {
+  if (!city) return;
+  if (els.baseCityFlag) {
+    els.baseCityFlag.src = flagUrl(city.countryCode);
+  }
+  if (els.baseCityName) {
+    els.baseCityName.textContent = city.name;
+  }
+  if (els.baseCityCountry) {
+    els.baseCityCountry.textContent = city.country;
+  }
+}
+
+function setBaseCityPickerOpen(open) {
+  if (!els.baseCityPanel || !els.baseCityTrigger) return;
+  els.baseCityPanel.hidden = !open;
+  els.baseCityTrigger.setAttribute("aria-expanded", String(open));
+  if (els.baseCitySearch) {
+    els.baseCitySearch.setAttribute("aria-expanded", String(open));
+  }
+}
+
+function renderBaseCityList(query = "") {
+  if (!els.baseCityList || !els.baseCitySearch) return;
+
+  const matches = searchCities(CITIES, query).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+
+  els.baseCityList.replaceChildren();
+
+  matches.forEach((city) => {
+    const selected = city.id === currentBaseCityId;
+    const li = document.createElement("li");
+    li.className = `base-city-picker__option${selected ? " base-city-picker__option--selected" : ""}`;
+    li.setAttribute("role", "option");
+    li.setAttribute("aria-selected", String(selected));
+    li.dataset.cityId = city.id;
+    li.innerHTML = `
+      <img class="base-city-picker__option-flag" src="${flagUrl(city.countryCode)}" alt="" width="20" height="14" />
+      <span class="base-city-picker__option-label">
+        <span class="base-city-picker__option-name">${city.name}</span>
+        <span class="base-city-picker__option-country">${city.country}</span>
+      </span>
+      ${selected ? '<span class="base-city-picker__check" aria-hidden="true">✓</span>' : ""}
+    `;
+    li.addEventListener("click", () => selectBaseCity(city.id));
+    els.baseCityList.appendChild(li);
   });
 }
 
-function initBaseCitySelect() {
-  if (!els.baseCitySelect) return;
+function selectBaseCity(cityId) {
+  if (!getCityById(cityId) || cityId === currentBaseCityId) {
+    closeBaseCityPicker();
+    return;
+  }
 
-  els.baseCitySelect.replaceChildren();
-  citiesForSelect().forEach((city) => {
-    const opt = document.createElement("option");
-    opt.value = city.id;
-    opt.textContent = city.name;
-    els.baseCitySelect.appendChild(opt);
-  });
-
-  els.baseCitySelect.addEventListener("change", () => {
-    applyState(currentSalary, els.baseCitySelect.value);
-  });
+  comparisonCityIds = normalizeComparisonIds(comparisonCityIds, cityId);
+  if (!comparisonCityIds.length) {
+    comparisonCityIds = defaultComparisonIds(cityId);
+  }
+  if (els.baseCitySearch) {
+    els.baseCitySearch.value = "";
+  }
+  closeBaseCityPicker();
+  applyState(currentSalary, cityId);
 }
 
-function initCitySearch() {
-  if (!els.citySearch || !els.baseCitySelect) return;
+function openBaseCityPicker() {
+  setBaseCityPickerOpen(true);
+  renderBaseCityList(els.baseCitySearch?.value ?? "");
+  els.baseCitySearch?.focus();
+}
 
-  els.citySearch.addEventListener("input", () => {
-    filterCityOptions(els.citySearch.value);
-  });
+function closeBaseCityPicker() {
+  setBaseCityPickerOpen(false);
+  if (els.baseCitySearch) {
+    els.baseCitySearch.value = "";
+  }
+}
 
-  els.citySearch.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      applyState(currentSalary, els.baseCitySelect.value);
-      els.citySearch.blur();
+function initBaseCityPicker() {
+  if (!els.baseCityPicker) return;
+
+  const base = getCityById(currentBaseCityId);
+  if (base) {
+    updateBaseCityPickerDisplay(base);
+  }
+
+  els.baseCityTrigger?.addEventListener("click", () => {
+    if (els.baseCityPanel?.hidden) {
+      openBaseCityPicker();
+    } else {
+      closeBaseCityPicker();
     }
   });
+
+  els.baseCitySearch?.addEventListener("input", () => {
+    renderBaseCityList(els.baseCitySearch.value);
+  });
+
+  els.baseCitySearch?.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeBaseCityPicker();
+      els.baseCityTrigger?.focus();
+      return;
+    }
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const first = els.baseCityList?.querySelector(".base-city-picker__option");
+      if (first?.dataset.cityId) {
+        selectBaseCity(first.dataset.cityId);
+      }
+    }
+  });
+
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!els.baseCityPicker?.contains(e.target)) {
+        closeBaseCityPicker();
+      }
+    },
+    { capture: true }
+  );
 }
 
 function initCalculator() {
@@ -233,27 +480,80 @@ function initCalculator() {
   });
 }
 
-function initShare() {
-  if (!els.copyBtn || !els.copyLabel) return;
+function getShareUrl() {
+  const { origin, pathname, search } = location;
+  return `${origin}${pathname}${search}`;
+}
 
-  els.copyBtn.addEventListener("click", async () => {
+function openSharePopup(shareUrl) {
+  window.open(
+    shareUrl,
+    "_blank",
+    "noopener,noreferrer,width=600,height=640"
+  );
+}
+
+function shareOnFacebook() {
+  const url = encodeURIComponent(getShareUrl());
+  openSharePopup(
+    `https://www.facebook.com/sharer/sharer.php?u=${url}`
+  );
+}
+
+function shareOnLinkedIn() {
+  const url = encodeURIComponent(getShareUrl());
+  openSharePopup(
+    `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+  );
+}
+
+async function copyShareLink() {
+  const url = getShareUrl();
+  if (navigator.clipboard?.writeText) {
     try {
-      await navigator.clipboard.writeText(location.href);
-      els.copyLabel.textContent = "Copied!";
-      setTimeout(() => {
-        els.copyLabel.textContent = "Copy link";
-      }, 2000);
+      await navigator.clipboard.writeText(url);
+      return true;
     } catch {
-      els.copyLabel.textContent = "Could not copy";
-      setTimeout(() => {
-        els.copyLabel.textContent = "Copy link";
-      }, 2000);
+      /* fall through */
     }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = url;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  let ok = false;
+  try {
+    ok = document.execCommand("copy");
+  } catch {
+    ok = false;
+  }
+  document.body.removeChild(textarea);
+  return ok;
+}
+
+function flashCopyLabel(message, resetMs = 2000) {
+  if (!els.copyLabel) return;
+  els.copyLabel.textContent = message;
+  setTimeout(() => {
+    els.copyLabel.textContent = "Copy link";
+  }, resetMs);
+}
+
+function initShare() {
+  els.shareFacebook?.addEventListener("click", shareOnFacebook);
+  els.shareLinkedIn?.addEventListener("click", shareOnLinkedIn);
+
+  els.copyBtn?.addEventListener("click", async () => {
+    const ok = await copyShareLink();
+    flashCopyLabel(ok ? "Copied!" : "Could not copy");
   });
 }
 
-initBaseCitySelect();
-initCitySearch();
+initBaseCityPicker();
 initCalculator();
 initShare();
 applyState(currentSalary, currentBaseCityId);

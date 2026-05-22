@@ -1,8 +1,14 @@
 import {
+  DEFAULT_BASE_CITY_ID,
+  DEFAULT_COMPARISON_IDS,
   factorBetween,
   getCityById,
   STATUS_THRESHOLDS,
 } from "./data.js";
+import {
+  formatVsAverage,
+  percentVsLocalAverage,
+} from "./salary-compare.js";
 
 /**
  * @param {number} salary
@@ -37,28 +43,89 @@ export function formatMoney(amount, currencyLabel) {
 }
 
 /**
+ * @param {string[]} comparisonCityIds
+ * @param {string} baseCityId
+ */
+export function normalizeComparisonIds(comparisonCityIds, baseCityId) {
+  const seen = new Set();
+  return comparisonCityIds.filter((id) => {
+    if (id === baseCityId || seen.has(id) || !getCityById(id)) return false;
+    seen.add(id);
+    return true;
+  });
+}
+
+/**
+ * @param {string} baseCityId
+ */
+export function defaultComparisonIds(baseCityId) {
+  return normalizeComparisonIds(DEFAULT_COMPARISON_IDS, baseCityId);
+}
+
+/** Older saved links used 5–6 cities before the 8-city default */
+const LEGACY_DEST_PRESETS = [
+  ["hong-kong", "london", "new-york", "paris", "zurich"],
+  ["hong-kong", "london", "new-york", "oslo", "paris", "zurich"],
+];
+
+function isLegacyDestPreset(ids) {
+  const key = [...ids].sort().join(",");
+  return LEGACY_DEST_PRESETS.some(
+    (preset) => [...preset].sort().join(",") === key
+  );
+}
+
+/**
+ * @param {string[] | null} urlIds from ?dest=
+ * @param {string} baseCityId
+ */
+export function resolveComparisonIds(urlIds, baseCityId) {
+  if (!urlIds?.length) {
+    return defaultComparisonIds(baseCityId);
+  }
+  const normalized = normalizeComparisonIds(urlIds, baseCityId);
+  if (isLegacyDestPreset(normalized)) {
+    return defaultComparisonIds(baseCityId);
+  }
+  return normalized;
+}
+
+/**
  * @param {import("./data.js").City[]} cities
  * @param {number} salary
  * @param {string} baseCityId
+ * @param {string[]} comparisonCityIds
  */
-export function computeResults(cities, salary, baseCityId) {
+export function computeResults(cities, salary, baseCityId, comparisonCityIds) {
   const base = getCityById(baseCityId);
   if (!base) {
     throw new Error(`Unknown base city: ${baseCityId}`);
   }
 
-  const comparisonCities = cities.filter((c) => c.id !== baseCityId);
+  const ids = normalizeComparisonIds(comparisonCityIds, baseCityId);
+  const comparisonCities = cities.filter(
+    (c) => c.id !== baseCityId && ids.includes(c.id)
+  );
 
   const rows = comparisonCities.map((city) => {
     const factor = factorBetween(base.numbeoColIndex, city.numbeoColIndex);
     const equivalent = equivalentSalary(salary, factor);
     const status = classifyStatus(factor);
+    const vsAveragePercent = percentVsLocalAverage(salary, base, city);
+    const vsAverage = formatVsAverage(vsAveragePercent);
     return {
       ...city,
       factor,
       equivalent,
       status,
       amount: formatMoney(equivalent, base.currencyLabel),
+      averageSalaryLabel: formatMoney(
+        city.averageMonthlySalary,
+        city.currencyLabel
+      ),
+      vsAveragePercent,
+      vsAverageText: vsAverage.text,
+      vsAverageTone: vsAverage.tone,
     };
   });
 
@@ -107,8 +174,15 @@ export function stateFromUrl(params) {
     if (Number.isFinite(n) && n > 0) salary = Math.min(n, 999_999);
   }
 
-  const baseCityId =
-    cityRaw && getCityById(cityRaw) ? cityRaw : null;
+  let baseCityId = cityRaw && getCityById(cityRaw) ? cityRaw : null;
+  if (baseCityId === "copenhagen") {
+    baseCityId = DEFAULT_BASE_CITY_ID;
+  }
 
-  return { salary, baseCityId };
+  const destRaw = params.get("dest") ?? params.get("destinations");
+  const comparisonCityIds = destRaw
+    ? destRaw.split(",").map((s) => s.trim()).filter(Boolean)
+    : null;
+
+  return { salary, baseCityId, comparisonCityIds };
 }
