@@ -4,6 +4,8 @@ import {
   DEFAULT_SALARY,
   getCityById,
   AMOUNT_SUBLABEL,
+  LOCAL_AVERAGE_LABEL,
+  destinationsLegend,
   searchCities,
   STATUS_LABELS,
 } from "./data.js";
@@ -34,6 +36,7 @@ const els = {
   compareHighlights: document.getElementById("compare-highlights"),
   compareBest: document.getElementById("compare-best"),
   compareToughest: document.getElementById("compare-toughest"),
+  destinationsLegend: document.getElementById("destinations-legend"),
   grid: document.getElementById("city-grid"),
   shareFacebook: document.getElementById("share-facebook"),
   shareLinkedIn: document.getElementById("share-linkedin"),
@@ -140,15 +143,13 @@ function renderCityCard(city, base) {
   const article = document.createElement("article");
   article.className = `city-card city-card--${city.status}`;
   const statusLabel = STATUS_LABELS[city.status];
-  const homeNote = `Compared to ${base.name}`;
-
   article.setAttribute(
     "aria-label",
-    `${city.name}: ${statusLabel}. ${city.amount}, ${AMOUNT_SUBLABEL}. ${homeNote}. Local average ${city.averageSalaryLabel} per month. ${city.vsAverageText}`
+    `${city.name}: ${statusLabel}. ${city.amount} per month, ${AMOUNT_SUBLABEL}. ${LOCAL_AVERAGE_LABEL} ${city.averageSalaryLabel} per month. ${city.vsAverageText}. Compared to ${base.name}.`
   );
 
   article.innerHTML = `
-    <header class="city-card__top">
+    <div class="city-card__head">
       <div class="city-card__identity">
         <img
           class="city-card__flag"
@@ -161,20 +162,18 @@ function renderCityCard(city, base) {
         <h3 class="city-card__name">${city.name}</h3>
       </div>
       <span class="city-card__badge">${statusLabel}</span>
-    </header>
-    <div class="city-card__hero">
-      <p class="city-card__amount">${city.amount}</p>
-      <p class="city-card__metric-sub">${AMOUNT_SUBLABEL}</p>
-      <p class="city-card__home-note">${homeNote}</p>
     </div>
-    <footer class="city-card__benchmark">
-      <p class="city-card__benchmark-heading">Local benchmark</p>
-      <dl class="city-card__benchmark-row">
-        <dt class="city-card__benchmark-label">Local average</dt>
-        <dd class="city-card__benchmark-value">${city.averageSalaryLabel}<span class="city-card__benchmark-unit">/mo</span></dd>
-      </dl>
-      <p class="city-card__vs-avg city-card__vs-avg--${city.vsAverageTone}">${city.vsAverageText}</p>
-    </footer>
+    <p class="city-card__amount">
+      <span class="city-card__amount-value">${city.amount}</span><span class="city-card__period">/mo</span>
+    </p>
+    <p class="city-card__metric-sub">${AMOUNT_SUBLABEL}</p>
+    <div class="city-card__foot">
+      <p class="city-card__benchmark-label">${LOCAL_AVERAGE_LABEL}</p>
+      <p class="city-card__benchmark-value">
+        <span class="city-card__benchmark-amount">${city.averageSalaryLabel}</span><span class="city-card__period">/mo</span>
+      </p>
+      <p class="city-card__delta city-card__delta--${city.vsAverageTone}">${city.vsAverageText}</p>
+    </div>
   `;
 
   return article;
@@ -338,6 +337,9 @@ function applyState(salary, baseCityId) {
   }
   updateBaseCityPickerDisplay(base);
   syncCurrencyUi(base);
+  if (els.destinationsLegend) {
+    els.destinationsLegend.textContent = destinationsLegend(base.name);
+  }
   renderHero(results, salary);
   renderGrid(results);
   updateUrl(salary, base.id, comparisonCityIds);

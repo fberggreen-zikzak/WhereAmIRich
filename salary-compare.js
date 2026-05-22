@@ -115,15 +115,49 @@ export function percentVsLocalAverage(userSalary, base, city) {
   return Math.round((userPpc / avgPpc - 1) * 100);
 }
 
+/** At or above this |%| gap, show a × factor instead of a raw percent. */
+const MULTIPLIER_MIN_ABS_PERCENT = 100;
+
+/**
+ * @param {number} factor purchasing-power multiple vs local average (1 = even)
+ */
+function formatMultiplierFactor(factor) {
+  if (factor >= 10) return `${Math.round(factor)}×`;
+  const rounded = Math.round(factor * 10) / 10;
+  const label =
+    rounded % 1 === 0 ? String(Math.round(rounded)) : rounded.toFixed(1);
+  return `${label}×`;
+}
+
 /**
  * @param {number} percent
  */
 export function formatVsAverage(percent) {
+  if (percent === 0) {
+    return { text: "At local average", tone: "neutral" };
+  }
+
+  const useMultiplier = Math.abs(percent) >= MULTIPLIER_MIN_ABS_PERCENT;
+  const factor = 1 + percent / 100;
+
+  if (useMultiplier) {
+    if (factor <= 0) {
+      return { text: "Below local average", tone: "below" };
+    }
+    return {
+      text: `${formatMultiplierFactor(factor)} local average`,
+      tone: percent > 0 ? "above" : "below",
+    };
+  }
+
   if (percent > 0) {
-    return { text: `+${percent}% vs local average`, tone: "above" };
+    return {
+      text: `+${percent}% vs local average`,
+      tone: "above",
+    };
   }
-  if (percent < 0) {
-    return { text: `−${Math.abs(percent)}% vs local average`, tone: "below" };
-  }
-  return { text: "At local average", tone: "neutral" };
+  return {
+    text: `−${Math.abs(percent)}% vs local average`,
+    tone: "below",
+  };
 }

@@ -222,7 +222,20 @@
       </section>
 
       <section class="destinations" aria-labelledby="destinations-heading">
-        <h2 id="destinations-heading" class="destinations__heading">Destinations</h2>
+        <div class="destinations__intro">
+          <h2 id="destinations-heading" class="destinations__heading">Destinations</h2>
+          <p class="destinations__legend" id="destinations-legend">
+            Badge = vs your home city. Benchmark = vs locals in each city.
+          </p>
+          <details class="destinations__tip">
+            <summary class="destinations__tip-trigger" aria-label="Why can both differ?">
+              <span aria-hidden="true">i</span>
+            </summary>
+            <p class="destinations__tip-text">
+              You can be worse than home while still above the local average.
+            </p>
+          </details>
+        </div>
         <div class="grid" id="city-grid"></div>
       </section>
 
