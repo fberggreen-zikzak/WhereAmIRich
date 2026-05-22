@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f0f0f" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow" />
+    <title>Methodology &amp; Data — Rich or Poor</title>
+    <meta
+      name="description"
+      content="How we calculate purchasing power from Numbeo cost-of-living indices, status thresholds, FX for local salaries, and known limitations."
+    />
+    <link rel="canonical" href="https://richorpoor.com/methodology.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rich or Poor" />
+    <meta property="og:title" content="Methodology &amp; Data — Rich or Poor" />
+    <meta
+      property="og:description"
+      content="How we calculate purchasing power from Numbeo cost-of-living indices, status thresholds, FX for local salaries, and known limitations."
+    />
+    <meta property="og:url" content="https://richorpoor.com/methodology.html" />
+    <meta property="og:image" content="https://richorpoor.com/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.svg" sizes="180x180" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "Rich or Poor",
+            "url": "https://richorpoor.com/",
+            "logo": "https://richorpoor.com/og-image.svg"
+          },
+          {
+            "@type": "WebPage",
+            "name": "Methodology",
+            "url": "https://richorpoor.com/methodology.html",
+            "description": "Data sources and formulas behind Rich or Poor."
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header panel">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href="index.html">
+          <span class="site-header__name">Rich or Poor</span>
+          <span class="site-header__tagline">Rich in Lisbon. Poor in London.</span>
+        </a>
+        <nav class="site-nav" aria-label="Site">
+          <a href="index.html">Calculator</a>
+          <a href="how-it-works.html">How it works</a>
+          <a href="methodology.html" aria-current="page">Methodology</a>
+          <a href="faq.html">FAQ</a>
+        </nav>
+      </div>
+    </header>
+    <main class="page page--content" id="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li aria-current="page">Methodology</li>
+        </ol>
+      </nav>
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://richorpoor.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Methodology" }
+          ]
+        }
+      </script>
+      <article class="content panel">
+        <h1>Methodology &amp; data</h1>
+        <p class="content__lead">
+          We combine public cost-of-living indices with approximate local salary benchmarks.
+          Results are meant for orientation — not tax, HR, or relocation advice.
+        </p>
+
+        <h2>Cost-of-living source</h2>
+        <p>
+          City indices come from
+          <a href="https://www.numbeo.com/cost-of-living/" rel="noopener noreferrer">Numbeo</a>
+          (<strong>Cost of Living Index excluding rent</strong>). Copenhagen is treated as ≈ 100 on that scale;
+          other cities are stored as comparable index values in our catalog and refreshed periodically
+          (last data pass: 2025-05 in the app bundle).
+        </p>
+
+        <h2>Purchasing power formula</h2>
+        <p>For home city <em>H</em> and destination <em>D</em>:</p>
+        <p><code>factor = H.numbeoColIndex ÷ D.numbeoColIndex</code></p>
+        <p><code>equivalentSalary = yourMonthlySalary × factor</code></p>
+        <p>
+          Amounts stay in <strong>your home currency</strong> (the symbol you type). A factor above 1 means
+          your money buys more there; below 1 means less. We round equivalents to whole units for display.
+        </p>
+
+        <h2>Status thresholds (vs home)</h2>
+        <ul>
+          <li><strong>Better than home</strong> — factor ≥ 1.55</li>
+          <li><strong>Similar to home</strong> — 0.75 &lt; factor &lt; 1.55</li>
+          <li><strong>Worse than home</strong> — factor ≤ 0.75</li>
+        </ul>
+        <p>These cutoffs are fixed in the app so labels stay consistent across sessions.</p>
+
+        <h2>Local average comparison</h2>
+        <p>
+          Typical gross monthly salaries per city are stored separately (<code>city-salaries.js</code>).
+          To compare your purchasing power with a local earner, we:
+        </p>
+        <ol>
+          <li>Convert both salaries toward USD using approximate FX rates (updated occasionally).</li>
+          <li>Adjust for cost of living between your home city and the destination.</li>
+          <li>Express the gap as a percentage above/below the local average.</li>
+        </ol>
+        <p>
+          FX is a simplification — real paychecks depend on tax residency, benefits, and contract currency.
+        </p>
+
+        <h2>Limitations</h2>
+        <ul>
+          <li><strong>Rent excluded</strong> from the Numbeo index; housing can dominate budgets.</li>
+          <li><strong>Household differences</strong> — family size, commute, and lifestyle are not modeled.</li>
+          <li><strong>Crowd-sourced data</strong> — Numbeo reflects contributor surveys, not official statistics.</li>
+          <li><strong>No tax or visa modeling</strong> — net pay and work rights vary widely.</li>
+          <li><strong>Salary averages are rough</strong> — useful for direction, not offers or negotiations.</li>
+        </ul>
+
+        <p>
+          <a class="content__cta" href="index.html">Open calculator</a>
+          <a href="faq.html">Read FAQ</a>
+        </p>
+      </article>
+    </main>
+    <footer class="site-footer panel">
+      <div class="site-footer__grid">
+        <div>
+          <p class="site-footer__title">Rich or Poor</p>
+          <p class="site-footer__text">Cost-of-living comparisons for salary decisions — not financial advice.</p>
+        </div>
+        <nav aria-label="Learn more">
+          <p class="site-footer__heading">Learn</p>
+          <ul class="site-footer__links">
+            <li><a href="how-it-works.html">How the calculator works</a></li>
+            <li><a href="methodology.html" aria-current="page">Methodology &amp; data sources</a></li>
+            <li><a href="faq.html">Frequently asked questions</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Popular cities">
+          <p class="site-footer__heading">Popular cities</p>
+          <ul class="site-footer__links">
+            <li><a href="cities/london.html">London salary guide</a></li>
+            <li><a href="cities/new-york.html">New York salary guide</a></li>
+            <li><a href="cities/lisbon.html">Lisbon salary guide</a></li>
+            <li><a href="cities/bangkok.html">Bangkok salary guide</a></li>
+            <li><a href="cities/dubai.html">Dubai salary guide</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="site-footer__meta">Data: Numbeo cost-of-living indices (approximate). <a href="methodology.html">Read limitations</a>.</p>
+    </footer>
+  </body>
+</html>

@@ -105,10 +105,6 @@ export const STATUS_LABELS = {
 export const AMOUNT_SUBLABEL = "Spending power equivalent";
 export const LOCAL_AVERAGE_LABEL = "Local average";
 
-/** @param {string} baseName */
-export const destinationsLegend = (baseName) =>
-  `Badge = vs ${baseName}. Local average = typical monthly pay in each city.`;
-
 export const STATUS_THRESHOLDS = {
   richMin: 1.55,
   poorMax: 0.75,

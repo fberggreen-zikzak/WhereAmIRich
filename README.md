@@ -14,23 +14,19 @@ Share a result: `?salary=50000&city=london&dest=paris,tokyo,bangkok` is added to
 
 ## SEO & deployment
 
-Before going live, set your production URL in **`site.config.js`** (`SITE_URL`), then run:
+See **[SEO.md](./SEO.md)** for Search Console setup, monitoring, and content guidelines.
 
-```bash
-node scripts/generate-sitemap.js
-# or: npm run seo
-```
+Before going live:
 
-Update canonical URLs, Open Graph tags, and `robots.txt` in **`index.html`** to match the same domain (search for `richorpoor.com`).
+1. Set **`SITE_URL`** in `site.config.js`
+2. Run `npm run seo` (regenerates `sitemap.xml`, `robots.txt`, and `cities/*.html`)
+3. Align homepage canonical/OG URLs in `index.html` with `SITE_URL`
 
-Included for search and social:
+Included:
 
-- Meta description, keywords, canonical, robots
-- Open Graph + Twitter Card tags
-- JSON-LD (`WebSite`, `WebApplication`, `FAQPage`)
+- Supporting pages: `how-it-works.html`, `methodology.html`, `faq.html`, featured `cities/*.html`
+- Per-page titles, descriptions, canonicals, breadcrumbs, JSON-LD
 - `sitemap.xml`, `robots.txt`, `favicon.svg`, `og-image.svg`
-
-For best Facebook/LinkedIn previews, export `og-image.svg` to **1200×630 PNG** as `og-image.png` and point `og:image` to that file (many crawlers ignore SVG).
 
 Submit `https://your-domain.com/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
 

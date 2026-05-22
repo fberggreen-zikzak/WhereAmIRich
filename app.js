@@ -5,7 +5,6 @@ import {
   getCityById,
   AMOUNT_SUBLABEL,
   LOCAL_AVERAGE_LABEL,
-  destinationsLegend,
   searchCities,
   STATUS_LABELS,
 } from "./data.js";
@@ -36,7 +35,6 @@ const els = {
   compareHighlights: document.getElementById("compare-highlights"),
   compareBest: document.getElementById("compare-best"),
   compareToughest: document.getElementById("compare-toughest"),
-  destinationsLegend: document.getElementById("destinations-legend"),
   grid: document.getElementById("city-grid"),
   shareFacebook: document.getElementById("share-facebook"),
   shareLinkedIn: document.getElementById("share-linkedin"),
@@ -337,9 +335,6 @@ function applyState(salary, baseCityId) {
   }
   updateBaseCityPickerDisplay(base);
   syncCurrencyUi(base);
-  if (els.destinationsLegend) {
-    els.destinationsLegend.textContent = destinationsLegend(base.name);
-  }
   renderHero(results, salary);
   renderGrid(results);
   updateUrl(salary, base.id, comparisonCityIds);

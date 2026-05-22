@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f0f0f" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow" />
+    <title>How It Works — Rich or Poor</title>
+    <meta
+      name="description"
+      content="Learn how the Rich or Poor calculator compares your salary across cities: equivalent pay, vs home badges, and local average benchmarks."
+    />
+    <link rel="canonical" href="https://richorpoor.com/how-it-works.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rich or Poor" />
+    <meta property="og:title" content="How It Works — Rich or Poor" />
+    <meta
+      property="og:description"
+      content="Learn how the Rich or Poor calculator compares your salary across cities: equivalent pay, vs home badges, and local average benchmarks."
+    />
+    <meta property="og:url" content="https://richorpoor.com/how-it-works.html" />
+    <meta property="og:image" content="https://richorpoor.com/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.svg" sizes="180x180" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "Rich or Poor",
+            "url": "https://richorpoor.com/",
+            "logo": "https://richorpoor.com/og-image.svg"
+          },
+          {
+            "@type": "WebPage",
+            "name": "How it works",
+            "url": "https://richorpoor.com/how-it-works.html",
+            "description": "How the Rich or Poor salary purchasing power calculator works."
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header panel">
+      <div class="site-header__inner">
+        <a class="site-header__brand" href="index.html">
+          <span class="site-header__name">Rich or Poor</span>
+          <span class="site-header__tagline">Rich in Lisbon. Poor in London.</span>
+        </a>
+        <nav class="site-nav" aria-label="Site">
+          <a href="index.html">Calculator</a>
+          <a href="how-it-works.html" aria-current="page">How it works</a>
+          <a href="methodology.html">Methodology</a>
+          <a href="faq.html">FAQ</a>
+        </nav>
+      </div>
+    </header>
+    <main class="page page--content" id="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li aria-current="page">How it works</li>
+        </ol>
+      </nav>
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://richorpoor.com/" },
+            { "@type": "ListItem", "position": 2, "name": "How it works" }
+          ]
+        }
+      </script>
+      <article class="content panel">
+        <h1>How the calculator works</h1>
+        <p class="content__lead">
+          Rich or Poor answers one practical question: if you earn a given monthly salary in one city,
+          how far does that money go elsewhere — and how does that compare to typical local earners?
+        </p>
+
+        <h2>1. Enter your salary and home city</h2>
+        <p>
+          Type your gross monthly pay in the currency shown (your home city’s symbol). Pick any of 100+
+          cities as <strong>Based in</strong> — not only Copenhagen or Denmark. The whole board recalculates instantly.
+        </p>
+
+        <h2>2. Equivalent spending power</h2>
+        <p>
+          Each destination card shows an <strong>equivalent</strong> monthly amount in your home currency.
+          That is the pay you would need there to afford a similar basket of goods and services, using
+          Numbeo’s cost-of-living index (excluding rent). It is a lifestyle comparison, not a job-market quote.
+        </p>
+
+        <h2>3. Better, similar, or worse than home</h2>
+        <p>
+          The badge on each card (green / neutral / red) compares purchasing power to your home city:
+        </p>
+        <ul>
+          <li><strong>Better than home</strong> — factor ≥ 1.55 (your salary stretches much further).</li>
+          <li><strong>Similar to home</strong> — between 0.75 and 1.55.</li>
+          <li><strong>Worse than home</strong> — factor ≤ 0.75.</li>
+        </ul>
+        <p>
+          The headline hook (“Rich in … Broke in …”) picks the strongest and weakest destinations on your board.
+        </p>
+
+        <h2>4. Local average benchmark</h2>
+        <p>
+          Separately, each card can show how you stack up against a <strong>typical local monthly salary</strong>
+          in that destination (cost-of-living adjusted). You can be worse than home while still above the local average —
+          the legend on the calculator explains both signals.
+        </p>
+
+        <h2>5. Share and deep-link</h2>
+        <p>
+          Copy a link with your salary, home city, and destination list in the URL
+          (for example <code>?salary=6200&amp;city=new-york&amp;dest=london,bangkok</code>).
+          Friends open the same comparison without re-entering data.
+        </p>
+
+        <p>
+          <a class="content__cta" href="index.html">Try the calculator</a>
+          <a href="methodology.html">Read the methodology</a>
+        </p>
+      </article>
+    </main>
+    <footer class="site-footer panel">
+      <div class="site-footer__grid">
+        <div>
+          <p class="site-footer__title">Rich or Poor</p>
+          <p class="site-footer__text">Cost-of-living comparisons for salary decisions — not financial advice.</p>
+        </div>
+        <nav aria-label="Learn more">
+          <p class="site-footer__heading">Learn</p>
+          <ul class="site-footer__links">
+            <li><a href="how-it-works.html" aria-current="page">How the calculator works</a></li>
+            <li><a href="methodology.html">Methodology &amp; data sources</a></li>
+            <li><a href="faq.html">Frequently asked questions</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Popular cities">
+          <p class="site-footer__heading">Popular cities</p>
+          <ul class="site-footer__links">
+            <li><a href="cities/london.html">London salary guide</a></li>
+            <li><a href="cities/new-york.html">New York salary guide</a></li>
+            <li><a href="cities/lisbon.html">Lisbon salary guide</a></li>
+            <li><a href="cities/bangkok.html">Bangkok salary guide</a></li>
+            <li><a href="cities/dubai.html">Dubai salary guide</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="site-footer__meta">Data: Numbeo cost-of-living indices (approximate). <a href="methodology.html">Read limitations</a>.</p>
+    </footer>
+  </body>
+</html>
