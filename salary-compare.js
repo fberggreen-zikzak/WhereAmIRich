@@ -116,31 +116,14 @@ export function percentVsLocalAverage(userSalary, base, city) {
 }
 
 /**
- * @param {number} percent above (+) or below (−) local average earner
- */
-function formatMultiplier(percent) {
-  const m = Math.abs(percent) / 100;
-  if (m >= 10) return m.toFixed(1).replace(/\.0$/, "");
-  if (m >= 1) return m.toFixed(1).replace(/\.0$/, "");
-  if (m >= 0.1) return m.toFixed(1).replace(/\.0$/, "");
-  return m.toFixed(2).replace(/\.?0+$/, "");
-}
-
-/**
  * @param {number} percent
  */
 export function formatVsAverage(percent) {
   if (percent > 0) {
-    return {
-      text: `${formatMultiplier(percent)}x higher than the local average`,
-      tone: "above",
-    };
+    return { text: `+${percent}% vs local average`, tone: "above" };
   }
   if (percent < 0) {
-    return {
-      text: `${formatMultiplier(percent)}x lower than the local average`,
-      tone: "below",
-    };
+    return { text: `−${Math.abs(percent)}% vs local average`, tone: "below" };
   }
   return { text: "At local average", tone: "neutral" };
 }

@@ -19,13 +19,14 @@ export function equivalentSalary(salary, factor) {
 }
 
 /**
+ * Spending power vs home city (COL-adjusted).
  * @param {number} factor
- * @returns {"rich" | "middle" | "poor"}
+ * @returns {"better" | "similar" | "worse"}
  */
 export function classifyStatus(factor) {
-  if (factor >= STATUS_THRESHOLDS.richMin) return "rich";
-  if (factor <= STATUS_THRESHOLDS.poorMax) return "poor";
-  return "middle";
+  if (factor >= STATUS_THRESHOLDS.richMin) return "better";
+  if (factor <= STATUS_THRESHOLDS.poorMax) return "worse";
+  return "similar";
 }
 
 /**

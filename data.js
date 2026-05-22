@@ -95,17 +95,11 @@ export function citiesForSelect() {
   return sorted;
 }
 
+/** Vs user's home / "Based in" city only */
 export const STATUS_LABELS = {
-  rich: "Rich",
-  middle: "Middle",
-  poor: "Poor",
-};
-
-/** Rich / Middle / Poor vs your base city — not vs local earners */
-export const STATUS_CONTEXT = {
-  rich: "More than at home",
-  middle: "Similar to home",
-  poor: "Less than at home",
+  better: "Better than home",
+  similar: "Similar to home",
+  worse: "Worse than home",
 };
 
 export const AMOUNT_SUBLABEL = "Local spending-power equivalent";

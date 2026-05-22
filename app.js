@@ -6,7 +6,6 @@ import {
   AMOUNT_SUBLABEL,
   searchCities,
   STATUS_LABELS,
-  STATUS_CONTEXT,
 } from "./data.js";
 import {
   computeResults,
@@ -95,7 +94,15 @@ function renderHero(results, salary) {
     if (totalCities === 0) {
       els.heroTitle.innerHTML = `Add cities below to compare from <em class="compare__accent">${base.name}</em>.`;
     } else {
-      els.heroTitle.innerHTML = `Rich in ${richest.name}. <em class="compare__accent">Broke in ${poorest.name}.</em>`;
+      const bestLabel =
+        richest.status === "better"
+          ? `Rich in ${richest.name}`
+          : `Best in ${richest.name}`;
+      const worstLabel =
+        poorest.status === "worse"
+          ? `Broke in ${poorest.name}`
+          : `Toughest in ${poorest.name}`;
+      els.heroTitle.innerHTML = `${bestLabel}. <em class="compare__accent">${worstLabel}.</em>`;
     }
   }
 
@@ -123,21 +130,21 @@ function renderHero(results, salary) {
   }
 
   if (totalCities > 0) {
-    document.title = `Rich in ${richest.name}, broke in ${poorest.name} — Rich or Poor`;
+    document.title = `${richest.name} vs ${poorest.name} — Rich or Poor`;
   } else {
     document.title = `Rich or Poor — Salary purchasing power`;
   }
 }
 
-function renderCityCard(city, currencyLabel) {
+function renderCityCard(city, base) {
   const article = document.createElement("article");
   article.className = `city-card city-card--${city.status}`;
   const statusLabel = STATUS_LABELS[city.status];
-  const statusContext = STATUS_CONTEXT[city.status];
+  const homeNote = `Compared to ${base.name}`;
 
   article.setAttribute(
     "aria-label",
-    `${city.name}, ${statusLabel}. ${city.amount}, ${AMOUNT_SUBLABEL}. Local average ${city.averageSalaryLabel} per month. ${city.vsAverageText}`
+    `${city.name}: ${statusLabel}. ${city.amount}, ${AMOUNT_SUBLABEL}. ${homeNote}. Local average ${city.averageSalaryLabel} per month. ${city.vsAverageText}`
   );
 
   article.innerHTML = `
@@ -153,16 +160,15 @@ function renderCityCard(city, currencyLabel) {
         />
         <h3 class="city-card__name">${city.name}</h3>
       </div>
-      <div class="city-card__badge-wrap">
-        <span class="city-card__badge">${statusLabel}</span>
-        <span class="city-card__status-note">${statusContext}</span>
-      </div>
+      <span class="city-card__badge">${statusLabel}</span>
     </header>
     <div class="city-card__hero">
       <p class="city-card__amount">${city.amount}</p>
       <p class="city-card__metric-sub">${AMOUNT_SUBLABEL}</p>
+      <p class="city-card__home-note">${homeNote}</p>
     </div>
     <footer class="city-card__benchmark">
+      <p class="city-card__benchmark-heading">Local benchmark</p>
       <dl class="city-card__benchmark-row">
         <dt class="city-card__benchmark-label">Local average</dt>
         <dd class="city-card__benchmark-value">${city.averageSalaryLabel}<span class="city-card__benchmark-unit">/mo</span></dd>
@@ -300,7 +306,7 @@ function renderGrid(results) {
   [...results.cities]
     .sort((a, b) => b.equivalent - a.equivalent)
     .forEach((city) => {
-      els.grid.appendChild(renderCityCard(city, results.base.currencyLabel));
+      els.grid.appendChild(renderCityCard(city, results.base));
     });
 
   els.grid.appendChild(renderAddTile());
