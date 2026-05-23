@@ -96,11 +96,11 @@ export function citiesForSelect() {
   return sorted;
 }
 
-/** Vs user's home / "Based in" city only */
+/** Vs user's home / "Based in" city — short badge labels */
 export const STATUS_LABELS = {
-  better: "Better than home",
-  similar: "Similar to home",
-  worse: "Worse than home",
+  better: "Rich vs home",
+  similar: "Similar vs home",
+  worse: "Tough vs home",
 };
 
 export const AMOUNT_SUBLABEL = "Spending power equivalent";

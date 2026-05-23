@@ -1,4 +1,4 @@
-import { FEATURED_CITIES, SITE_NAME } from "./site.config.js";
+import { SITE_NAME } from "./site.config.js";
 import {
   CITIES,
   DEFAULT_BASE_CITY_ID,
@@ -19,10 +19,6 @@ import {
   stateFromUrl,
 } from "./calc.js";
 
-const CITY_GUIDE_PATHS = Object.fromEntries(
-  FEATURED_CITIES.map((c) => [c.id, c.path.replace(/^\//, "")])
-);
-
 const els = {
   salaryInput: document.getElementById("salary-input"),
   currencySuffix: document.getElementById("currency-suffix"),
@@ -34,7 +30,6 @@ const els = {
   baseCityFlag: document.getElementById("base-city-flag"),
   baseCityName: document.getElementById("base-city-name"),
   baseCityCountry: document.getElementById("base-city-country"),
-  heroEyebrow: document.getElementById("hero-eyebrow"),
   heroTitle: document.getElementById("hero-title"),
   heroSubtitle: document.getElementById("hero-subtitle"),
   compareHighlights: document.getElementById("compare-highlights"),
@@ -106,11 +101,6 @@ function updateShareMeta(results, salary, base) {
 
 function renderHero(results, salary) {
   const { base, richest, poorest, betterOffCount, totalCities } = results;
-  const pay = formatMoney(salary, base.currencyLabel);
-
-  if (els.heroEyebrow) {
-    els.heroEyebrow.textContent = `${pay} in ${base.name} buys you`;
-  }
 
   if (els.heroTitle) {
     if (totalCities === 0) {
@@ -120,25 +110,22 @@ function renderHero(results, salary) {
         richest.status === "better"
           ? `Rich in ${richest.name}`
           : `Best in ${richest.name}`;
-      const worstLabel =
-        poorest.status === "worse"
-          ? `Broke in ${poorest.name}`
-          : `Toughest in ${poorest.name}`;
+      const worstLabel = `Toughest in ${poorest.name}`;
       els.heroTitle.innerHTML = `${bestLabel}. <em class="compare__accent">${worstLabel}.</em>`;
     }
   }
 
   if (els.heroSubtitle) {
     if (totalCities === 0) {
-      els.heroSubtitle.textContent = `Add destinations to see where your pay goes furthest.`;
+      els.heroSubtitle.textContent = `Add destinations below to see where your pay goes furthest.`;
     } else if (betterOffCount === 0) {
-      els.heroSubtitle.textContent = `Your salary doesn't stretch further in any of these ${totalCities} cities.`;
+      els.heroSubtitle.textContent = `Your pay doesn't go further in any of these ${totalCities} cities.`;
     } else if (betterOffCount === 1) {
-      els.heroSubtitle.textContent = `Your salary stretches further in 1 of ${totalCities} cities.`;
+      els.heroSubtitle.textContent = `Your salary goes furthest in 1 of ${totalCities} cities.`;
     } else if (betterOffCount === totalCities) {
-      els.heroSubtitle.textContent = `Your salary stretches further in all ${totalCities} cities.`;
+      els.heroSubtitle.textContent = `Your salary goes furthest in all ${totalCities} cities.`;
     } else {
-      els.heroSubtitle.textContent = `Your salary stretches further in ${betterOffCount} of ${totalCities} cities.`;
+      els.heroSubtitle.textContent = `Your salary goes furthest in ${betterOffCount} of ${totalCities} cities.`;
     }
   }
 
@@ -164,10 +151,6 @@ function renderCityCard(city, base) {
   const article = document.createElement("article");
   article.className = `city-card city-card--${city.status}`;
   const statusLabel = STATUS_LABELS[city.status];
-  const guidePath = CITY_GUIDE_PATHS[city.id];
-  const guideLink = guidePath
-    ? `<a class="city-card__guide" href="${guidePath}">${city.name} salary guide</a>`
-    : "";
   article.setAttribute(
     "aria-label",
     `${city.name}: ${statusLabel}. ${city.amount} per month, ${AMOUNT_SUBLABEL}. ${LOCAL_AVERAGE_LABEL} ${city.averageSalaryLabel} per month. ${city.vsAverageText}. Compared to ${base.name}.`
@@ -201,7 +184,6 @@ function renderCityCard(city, base) {
         <span class="city-card__benchmark-amount">${city.averageSalaryLabel}</span><span class="city-card__period">/mo</span>
       </p>
       <p class="city-card__delta city-card__delta--${city.vsAverageTone}">${city.vsAverageText}</p>
-      ${guideLink}
     </div>
   `;
 
