@@ -56,7 +56,7 @@ let comparisonCityIds = resolveComparisonIds(
 );
 
 function flagUrl(code) {
-  return `https://flagcdn.com/w40/${code}.png`;
+  return `https://flagcdn.com/w20/${code}.png`;
 }
 
 function citiesAvailableToAdd() {
@@ -546,6 +546,18 @@ function initCalculator() {
 
 function getShareUrl() {
   const { origin, pathname, search } = location;
+  const defaults = defaultComparisonIds(currentBaseCityId);
+  const sameDest =
+    comparisonCityIds.length === defaults.length &&
+    [...comparisonCityIds].sort().join(",") === [...defaults].sort().join(",");
+  const defaultSalary = currentSalary === DEFAULT_SALARY;
+  const onCalculator =
+    pathname === "/" ||
+    pathname.endsWith("/index.html") ||
+    pathname.endsWith("/");
+  if (onCalculator && sameDest && defaultSalary) {
+    return `${origin}/share/${currentBaseCityId}.html`;
+  }
   return `${origin}${pathname}${search}`;
 }
 

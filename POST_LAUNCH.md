@@ -13,7 +13,7 @@ Use this after deploying to [https://www.whereamirich.com](https://www.whereamir
 
 1. Property: **URL prefix** `https://www.whereamirich.com/` (or domain property if TXT is verified).
 2. Submit sitemap: [https://www.whereamirich.com/sitemap.xml](https://www.whereamirich.com/sitemap.xml)
-3. Request indexing for `/`, `/cities/paris.html`, `/cities/barcelona.html`, `/comparisons/dubai-vs-bangkok.html` if new.
+3. Request indexing for `/`, `/guides/remote-work-relocation.html`, `/cities/paris.html`, `/cities/barcelona.html`, `/comparisons/dubai-vs-bangkok.html` if new.
 4. After 2–4 weeks, review **Performance** → Queries and **Pages** → filter by `/cities/` and `/comparisons/`.
 
 ## Smoke test (mobile + desktop)

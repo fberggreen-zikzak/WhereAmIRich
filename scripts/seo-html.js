@@ -30,6 +30,10 @@ export function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
+/** Trimmed Google Fonts — regular + semibold/bold sans, display serif only */
+export const GOOGLE_FONTS_URL =
+  "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Instrument+Serif&display=swap";
+
 /** @param {{ ogTitle?: string; ogDescription?: string; title: string; description: string }} seo */
 export function shareMeta(seo) {
   return {
@@ -122,7 +126,7 @@ export function renderHead(path, opts = {}) {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap"
+      href="${GOOGLE_FONTS_URL}"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="${assetPrefix}styles.css" />${jsonLd}`;

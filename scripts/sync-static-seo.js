@@ -11,7 +11,7 @@ import {
   TERMS_PATH,
 } from "../site.config.js";
 import { DATA_UPDATED } from "../data.js";
-import { renderConsentScripts, renderSocialPreviewTags } from "./seo-html.js";
+import { GOOGLE_FONTS_URL, renderConsentScripts, renderSocialPreviewTags } from "./seo-html.js";
 
 const ROOT = new URL("../", import.meta.url);
 const ANALYTICS_BLOCK =
@@ -39,6 +39,8 @@ const FILE_TO_PAGE_PATH = {
 const OLD_FOOTER_TEXT = "Cost-of-living comparisons for salary decisions — not financial advice.";
 const NEW_FOOTER_HTML = `${SITE_DISCLAIMER_SHORT} <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>`;
 const OG_IMAGE_FROM = `${SITE_URL}/og-image.svg`;
+const LEGACY_FONTS =
+  /https:\/\/fonts\.googleapis\.com\/css2\?family=DM\+Sans:[^"']+/g;
 
 /** @type {string[]} */
 const REPLACE_FROM = [
@@ -67,6 +69,10 @@ for (const file of FILES) {
   }
   if (html.includes(OG_IMAGE_FROM)) {
     html = html.split(OG_IMAGE_FROM).join(OG_IMAGE_URL);
+    changed = true;
+  }
+  if (LEGACY_FONTS.test(html)) {
+    html = html.replace(LEGACY_FONTS, GOOGLE_FONTS_URL);
     changed = true;
   }
   if (html.includes(OLD_FOOTER_TEXT)) {

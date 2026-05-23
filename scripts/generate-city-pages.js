@@ -95,7 +95,7 @@ ${renderBreadcrumb(assetPrefix, [
         <h1>${escapeHtml(city.name)} salary purchasing power</h1>
         <p class="content__lead">
           ${escapeHtml(city.name)} has a Numbeo cost-of-living index (excluding rent) of
-          <strong>${city.numbeoColIndex}</strong> on our scale where Copenhagen ≈ 100.
+          <strong>${city.numbeoColIndex}</strong> on our scale where New York ≈ 100.
           Use the calculator with ${escapeHtml(city.name)} as your home city to see equivalent monthly pay
           and spending power in destinations worldwide.
         </p>

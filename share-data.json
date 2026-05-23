@@ -1,0 +1,1117 @@
+{
+  "siteName": "WhereAmIRich.com",
+  "siteUrl": "https://www.whereamirich.com",
+  "ogImage": "https://www.whereamirich.com/og-image.png",
+  "defaultSalary": 6200,
+  "defaultComparisonIds": [
+    "london",
+    "paris",
+    "new-york",
+    "barcelona",
+    "amsterdam",
+    "dubai",
+    "singapore",
+    "bangkok",
+    "lisbon"
+  ],
+  "cities": [
+    {
+      "id": "copenhagen",
+      "name": "Copenhagen",
+      "numbeoColIndex": 69,
+      "currencyLabel": "kr."
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "numbeoColIndex": 87.5,
+      "currencyLabel": "£"
+    },
+    {
+      "id": "zurich",
+      "name": "Zurich",
+      "numbeoColIndex": 86.2,
+      "currencyLabel": "CHF"
+    },
+    {
+      "id": "geneva",
+      "name": "Geneva",
+      "numbeoColIndex": 88.3,
+      "currencyLabel": "CHF"
+    },
+    {
+      "id": "basel",
+      "name": "Basel",
+      "numbeoColIndex": 81.4,
+      "currencyLabel": "CHF"
+    },
+    {
+      "id": "oslo",
+      "name": "Oslo",
+      "numbeoColIndex": 72.4,
+      "currencyLabel": "kr"
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "numbeoColIndex": 78.6,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "lyon",
+      "name": "Lyon",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "marseille",
+      "name": "Marseille",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "dublin",
+      "name": "Dublin",
+      "numbeoColIndex": 60.7,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "amsterdam",
+      "name": "Amsterdam",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "rotterdam",
+      "name": "Rotterdam",
+      "numbeoColIndex": 44.8,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "brussels",
+      "name": "Brussels",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "luxembourg",
+      "name": "Luxembourg",
+      "numbeoColIndex": 67.6,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "stockholm",
+      "name": "Stockholm",
+      "numbeoColIndex": 46.7,
+      "currencyLabel": "kr"
+    },
+    {
+      "id": "gothenburg",
+      "name": "Gothenburg",
+      "numbeoColIndex": 42.8,
+      "currencyLabel": "kr"
+    },
+    {
+      "id": "helsinki",
+      "name": "Helsinki",
+      "numbeoColIndex": 55.2,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "numbeoColIndex": 70,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "munich",
+      "name": "Munich",
+      "numbeoColIndex": 56.6,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "frankfurt",
+      "name": "Frankfurt",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "hamburg",
+      "name": "Hamburg",
+      "numbeoColIndex": 51,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "vienna",
+      "name": "Vienna",
+      "numbeoColIndex": 48.3,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "milan",
+      "name": "Milan",
+      "numbeoColIndex": 58.6,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "numbeoColIndex": 51,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "naples",
+      "name": "Naples",
+      "numbeoColIndex": 40,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "barcelona",
+      "name": "Barcelona",
+      "numbeoColIndex": 59.2,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "madrid",
+      "name": "Madrid",
+      "numbeoColIndex": 44.8,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "valencia",
+      "name": "Valencia",
+      "numbeoColIndex": 37.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "lisbon",
+      "name": "Lisbon",
+      "numbeoColIndex": 54.2,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "porto",
+      "name": "Porto",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "prague",
+      "name": "Prague",
+      "numbeoColIndex": 38.6,
+      "currencyLabel": "Kč"
+    },
+    {
+      "id": "warsaw",
+      "name": "Warsaw",
+      "numbeoColIndex": 34.5,
+      "currencyLabel": "zł"
+    },
+    {
+      "id": "krakow",
+      "name": "Kraków",
+      "numbeoColIndex": 31.7,
+      "currencyLabel": "zł"
+    },
+    {
+      "id": "budapest",
+      "name": "Budapest",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "Ft"
+    },
+    {
+      "id": "bucharest",
+      "name": "Bucharest",
+      "numbeoColIndex": 29,
+      "currencyLabel": "lei"
+    },
+    {
+      "id": "sofia",
+      "name": "Sofia",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "лв"
+    },
+    {
+      "id": "athens",
+      "name": "Athens",
+      "numbeoColIndex": 40,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "istanbul",
+      "name": "Istanbul",
+      "numbeoColIndex": 31,
+      "currencyLabel": "₺"
+    },
+    {
+      "id": "ankara",
+      "name": "Ankara",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "₺"
+    },
+    {
+      "id": "kyiv",
+      "name": "Kyiv",
+      "numbeoColIndex": 24.1,
+      "currencyLabel": "₴"
+    },
+    {
+      "id": "riga",
+      "name": "Riga",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "tallinn",
+      "name": "Tallinn",
+      "numbeoColIndex": 37.2,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "vilnius",
+      "name": "Vilnius",
+      "numbeoColIndex": 34.5,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "zagreb",
+      "name": "Zagreb",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "belgrade",
+      "name": "Belgrade",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "RSD"
+    },
+    {
+      "id": "manchester",
+      "name": "Manchester",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "£"
+    },
+    {
+      "id": "edinburgh",
+      "name": "Edinburgh",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "£"
+    },
+    {
+      "id": "reykjavik",
+      "name": "Reykjavik",
+      "numbeoColIndex": 75.9,
+      "currencyLabel": "kr"
+    },
+    {
+      "id": "birmingham",
+      "name": "Birmingham",
+      "numbeoColIndex": 48.3,
+      "currencyLabel": "£"
+    },
+    {
+      "id": "glasgow",
+      "name": "Glasgow",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "£"
+    },
+    {
+      "id": "nice",
+      "name": "Nice",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "cologne",
+      "name": "Cologne",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "stuttgart",
+      "name": "Stuttgart",
+      "numbeoColIndex": 52.4,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "florence",
+      "name": "Florence",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "seville",
+      "name": "Seville",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "antwerp",
+      "name": "Antwerp",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "cork",
+      "name": "Cork",
+      "numbeoColIndex": 51.7,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "valletta",
+      "name": "Valletta",
+      "numbeoColIndex": 40,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "nicosia",
+      "name": "Nicosia",
+      "numbeoColIndex": 37.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "bratislava",
+      "name": "Bratislava",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "ljubljana",
+      "name": "Ljubljana",
+      "numbeoColIndex": 40,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "thessaloniki",
+      "name": "Thessaloniki",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "antalya",
+      "name": "Antalya",
+      "numbeoColIndex": 29,
+      "currencyLabel": "₺"
+    },
+    {
+      "id": "poznan",
+      "name": "Poznań",
+      "numbeoColIndex": 30.3,
+      "currencyLabel": "zł"
+    },
+    {
+      "id": "split",
+      "name": "Split",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "€"
+    },
+    {
+      "id": "sarajevo",
+      "name": "Sarajevo",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "KM"
+    },
+    {
+      "id": "skopje",
+      "name": "Skopje",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "MKD"
+    },
+    {
+      "id": "new-york",
+      "name": "New York",
+      "numbeoColIndex": 100,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "san-francisco",
+      "name": "San Francisco",
+      "numbeoColIndex": 97.9,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "los-angeles",
+      "name": "Los Angeles",
+      "numbeoColIndex": 67.6,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "chicago",
+      "name": "Chicago",
+      "numbeoColIndex": 60.7,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "boston",
+      "name": "Boston",
+      "numbeoColIndex": 65.5,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "washington-dc",
+      "name": "Washington DC",
+      "numbeoColIndex": 63.4,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "seattle",
+      "name": "Seattle",
+      "numbeoColIndex": 66.2,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "miami",
+      "name": "Miami",
+      "numbeoColIndex": 62.1,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "austin",
+      "name": "Austin",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "denver",
+      "name": "Denver",
+      "numbeoColIndex": 56.6,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "houston",
+      "name": "Houston",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "toronto",
+      "name": "Toronto",
+      "numbeoColIndex": 51.7,
+      "currencyLabel": "C$"
+    },
+    {
+      "id": "vancouver",
+      "name": "Vancouver",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "C$"
+    },
+    {
+      "id": "montreal",
+      "name": "Montreal",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "C$"
+    },
+    {
+      "id": "calgary",
+      "name": "Calgary",
+      "numbeoColIndex": 48.3,
+      "currencyLabel": "C$"
+    },
+    {
+      "id": "mexico-city",
+      "name": "Mexico City",
+      "numbeoColIndex": 31,
+      "currencyLabel": "MX$"
+    },
+    {
+      "id": "guadalajara",
+      "name": "Guadalajara",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "MX$"
+    },
+    {
+      "id": "sao-paulo",
+      "name": "São Paulo",
+      "numbeoColIndex": 29,
+      "currencyLabel": "R$"
+    },
+    {
+      "id": "rio-de-janeiro",
+      "name": "Rio de Janeiro",
+      "numbeoColIndex": 30.3,
+      "currencyLabel": "R$"
+    },
+    {
+      "id": "buenos-aires",
+      "name": "Buenos Aires",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "ARS"
+    },
+    {
+      "id": "santiago",
+      "name": "Santiago",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "CLP"
+    },
+    {
+      "id": "lima",
+      "name": "Lima",
+      "numbeoColIndex": 29,
+      "currencyLabel": "S/"
+    },
+    {
+      "id": "bogota",
+      "name": "Bogotá",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "COP"
+    },
+    {
+      "id": "panama-city",
+      "name": "Panama City",
+      "numbeoColIndex": 37.9,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "philadelphia",
+      "name": "Philadelphia",
+      "numbeoColIndex": 58.6,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "atlanta",
+      "name": "Atlanta",
+      "numbeoColIndex": 51.7,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "san-diego",
+      "name": "San Diego",
+      "numbeoColIndex": 60.7,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "portland",
+      "name": "Portland",
+      "numbeoColIndex": 56.6,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "las-vegas",
+      "name": "Las Vegas",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "honolulu",
+      "name": "Honolulu",
+      "numbeoColIndex": 65.5,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "ottawa",
+      "name": "Ottawa",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "C$"
+    },
+    {
+      "id": "quebec-city",
+      "name": "Quebec City",
+      "numbeoColIndex": 42.8,
+      "currencyLabel": "C$"
+    },
+    {
+      "id": "cancun",
+      "name": "Cancún",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "MX$"
+    },
+    {
+      "id": "monterrey",
+      "name": "Monterrey",
+      "numbeoColIndex": 29,
+      "currencyLabel": "MX$"
+    },
+    {
+      "id": "medellin",
+      "name": "Medellín",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "COP"
+    },
+    {
+      "id": "montevideo",
+      "name": "Montevideo",
+      "numbeoColIndex": 31,
+      "currencyLabel": "$U"
+    },
+    {
+      "id": "quito",
+      "name": "Quito",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "guayaquil",
+      "name": "Guayaquil",
+      "numbeoColIndex": 24.8,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "san-jose-cr",
+      "name": "San José",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "₡"
+    },
+    {
+      "id": "santo-domingo",
+      "name": "Santo Domingo",
+      "numbeoColIndex": 29,
+      "currencyLabel": "RD$"
+    },
+    {
+      "id": "hong-kong",
+      "name": "Hong Kong",
+      "numbeoColIndex": 79.3,
+      "currencyLabel": "HK$"
+    },
+    {
+      "id": "singapore",
+      "name": "Singapore",
+      "numbeoColIndex": 87.7,
+      "currencyLabel": "S$"
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "numbeoColIndex": 59.3,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "osaka",
+      "name": "Osaka",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "seoul",
+      "name": "Seoul",
+      "numbeoColIndex": 56.6,
+      "currencyLabel": "₩"
+    },
+    {
+      "id": "busan",
+      "name": "Busan",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "₩"
+    },
+    {
+      "id": "taipei",
+      "name": "Taipei",
+      "numbeoColIndex": 41.4,
+      "currencyLabel": "NT$"
+    },
+    {
+      "id": "shanghai",
+      "name": "Shanghai",
+      "numbeoColIndex": 44.8,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "beijing",
+      "name": "Beijing",
+      "numbeoColIndex": 37.9,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "shenzhen",
+      "name": "Shenzhen",
+      "numbeoColIndex": 40,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "guangzhou",
+      "name": "Guangzhou",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "chengdu",
+      "name": "Chengdu",
+      "numbeoColIndex": 29,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "mumbai",
+      "name": "Mumbai",
+      "numbeoColIndex": 22.1,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "delhi",
+      "name": "Delhi",
+      "numbeoColIndex": 20.7,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "bangalore",
+      "name": "Bangalore",
+      "numbeoColIndex": 19.3,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "chennai",
+      "name": "Chennai",
+      "numbeoColIndex": 17.9,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "hyderabad",
+      "name": "Hyderabad",
+      "numbeoColIndex": 18.6,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "bangkok",
+      "name": "Bangkok",
+      "numbeoColIndex": 41.4,
+      "currencyLabel": "฿"
+    },
+    {
+      "id": "kuala-lumpur",
+      "name": "Kuala Lumpur",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "RM"
+    },
+    {
+      "id": "jakarta",
+      "name": "Jakarta",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "Rp"
+    },
+    {
+      "id": "bali",
+      "name": "Bali",
+      "numbeoColIndex": 29,
+      "currencyLabel": "Rp"
+    },
+    {
+      "id": "manila",
+      "name": "Manila",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "₱"
+    },
+    {
+      "id": "ho-chi-minh-city",
+      "name": "Ho Chi Minh City",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "₫"
+    },
+    {
+      "id": "hanoi",
+      "name": "Hanoi",
+      "numbeoColIndex": 24.8,
+      "currencyLabel": "₫"
+    },
+    {
+      "id": "sydney",
+      "name": "Sydney",
+      "numbeoColIndex": 55.9,
+      "currencyLabel": "A$"
+    },
+    {
+      "id": "melbourne",
+      "name": "Melbourne",
+      "numbeoColIndex": 51.7,
+      "currencyLabel": "A$"
+    },
+    {
+      "id": "brisbane",
+      "name": "Brisbane",
+      "numbeoColIndex": 48.3,
+      "currencyLabel": "A$"
+    },
+    {
+      "id": "perth",
+      "name": "Perth",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "A$"
+    },
+    {
+      "id": "auckland",
+      "name": "Auckland",
+      "numbeoColIndex": 48.3,
+      "currencyLabel": "NZ$"
+    },
+    {
+      "id": "wellington",
+      "name": "Wellington",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "NZ$"
+    },
+    {
+      "id": "kyoto",
+      "name": "Kyoto",
+      "numbeoColIndex": 51.7,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "nagoya",
+      "name": "Nagoya",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "chiang-mai",
+      "name": "Chiang Mai",
+      "numbeoColIndex": 29,
+      "currencyLabel": "฿"
+    },
+    {
+      "id": "phuket",
+      "name": "Phuket",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "฿"
+    },
+    {
+      "id": "da-nang",
+      "name": "Da Nang",
+      "numbeoColIndex": 23.4,
+      "currencyLabel": "₫"
+    },
+    {
+      "id": "colombo",
+      "name": "Colombo",
+      "numbeoColIndex": 22.1,
+      "currencyLabel": "Rs"
+    },
+    {
+      "id": "karachi",
+      "name": "Karachi",
+      "numbeoColIndex": 19.3,
+      "currencyLabel": "₨"
+    },
+    {
+      "id": "lahore",
+      "name": "Lahore",
+      "numbeoColIndex": 17.9,
+      "currencyLabel": "₨"
+    },
+    {
+      "id": "islamabad",
+      "name": "Islamabad",
+      "numbeoColIndex": 18.6,
+      "currencyLabel": "₨"
+    },
+    {
+      "id": "pune",
+      "name": "Pune",
+      "numbeoColIndex": 18.6,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "kolkata",
+      "name": "Kolkata",
+      "numbeoColIndex": 17.9,
+      "currencyLabel": "₹"
+    },
+    {
+      "id": "macau",
+      "name": "Macau",
+      "numbeoColIndex": 48.3,
+      "currencyLabel": "HK$"
+    },
+    {
+      "id": "hangzhou",
+      "name": "Hangzhou",
+      "numbeoColIndex": 37.2,
+      "currencyLabel": "¥"
+    },
+    {
+      "id": "phnom-penh",
+      "name": "Phnom Penh",
+      "numbeoColIndex": 24.8,
+      "currencyLabel": "៛"
+    },
+    {
+      "id": "yangon",
+      "name": "Yangon",
+      "numbeoColIndex": 20.7,
+      "currencyLabel": "K"
+    },
+    {
+      "id": "kathmandu",
+      "name": "Kathmandu",
+      "numbeoColIndex": 19.3,
+      "currencyLabel": "₨"
+    },
+    {
+      "id": "dhaka",
+      "name": "Dhaka",
+      "numbeoColIndex": 22.1,
+      "currencyLabel": "৳"
+    },
+    {
+      "id": "jeju",
+      "name": "Jeju",
+      "numbeoColIndex": 44.8,
+      "currencyLabel": "₩"
+    },
+    {
+      "id": "christchurch",
+      "name": "Christchurch",
+      "numbeoColIndex": 44.8,
+      "currencyLabel": "NZ$"
+    },
+    {
+      "id": "adelaide",
+      "name": "Adelaide",
+      "numbeoColIndex": 46.9,
+      "currencyLabel": "A$"
+    },
+    {
+      "id": "canberra",
+      "name": "Canberra",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "A$"
+    },
+    {
+      "id": "queenstown",
+      "name": "Queenstown",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "NZ$"
+    },
+    {
+      "id": "dubai",
+      "name": "Dubai",
+      "numbeoColIndex": 61.8,
+      "currencyLabel": "AED"
+    },
+    {
+      "id": "abu-dhabi",
+      "name": "Abu Dhabi",
+      "numbeoColIndex": 49.7,
+      "currencyLabel": "AED"
+    },
+    {
+      "id": "doha",
+      "name": "Doha",
+      "numbeoColIndex": 53.8,
+      "currencyLabel": "QAR"
+    },
+    {
+      "id": "riyadh",
+      "name": "Riyadh",
+      "numbeoColIndex": 37.9,
+      "currencyLabel": "SAR"
+    },
+    {
+      "id": "jeddah",
+      "name": "Jeddah",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "SAR"
+    },
+    {
+      "id": "tel-aviv",
+      "name": "Tel Aviv",
+      "numbeoColIndex": 63.4,
+      "currencyLabel": "₪"
+    },
+    {
+      "id": "cairo",
+      "name": "Cairo",
+      "numbeoColIndex": 19.3,
+      "currencyLabel": "E£"
+    },
+    {
+      "id": "casablanca",
+      "name": "Casablanca",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "MAD"
+    },
+    {
+      "id": "marrakech",
+      "name": "Marrakech",
+      "numbeoColIndex": 24.8,
+      "currencyLabel": "MAD"
+    },
+    {
+      "id": "johannesburg",
+      "name": "Johannesburg",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "R"
+    },
+    {
+      "id": "cape-town",
+      "name": "Cape Town",
+      "numbeoColIndex": 29,
+      "currencyLabel": "R"
+    },
+    {
+      "id": "nairobi",
+      "name": "Nairobi",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "KES"
+    },
+    {
+      "id": "lagos",
+      "name": "Lagos",
+      "numbeoColIndex": 24.1,
+      "currencyLabel": "₦"
+    },
+    {
+      "id": "kuwait-city",
+      "name": "Kuwait City",
+      "numbeoColIndex": 40,
+      "currencyLabel": "KD"
+    },
+    {
+      "id": "manama",
+      "name": "Manama",
+      "numbeoColIndex": 42.8,
+      "currencyLabel": "BD"
+    },
+    {
+      "id": "muscat",
+      "name": "Muscat",
+      "numbeoColIndex": 35.9,
+      "currencyLabel": "OMR"
+    },
+    {
+      "id": "amman",
+      "name": "Amman",
+      "numbeoColIndex": 33.1,
+      "currencyLabel": "JOD"
+    },
+    {
+      "id": "beirut",
+      "name": "Beirut",
+      "numbeoColIndex": 37.9,
+      "currencyLabel": "$"
+    },
+    {
+      "id": "accra",
+      "name": "Accra",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "GH₵"
+    },
+    {
+      "id": "addis-ababa",
+      "name": "Addis Ababa",
+      "numbeoColIndex": 24.1,
+      "currencyLabel": "Br"
+    },
+    {
+      "id": "tunis",
+      "name": "Tunis",
+      "numbeoColIndex": 22.1,
+      "currencyLabel": "DT"
+    },
+    {
+      "id": "durban",
+      "name": "Durban",
+      "numbeoColIndex": 26.2,
+      "currencyLabel": "R"
+    },
+    {
+      "id": "pretoria",
+      "name": "Pretoria",
+      "numbeoColIndex": 24.8,
+      "currencyLabel": "R"
+    },
+    {
+      "id": "dakar",
+      "name": "Dakar",
+      "numbeoColIndex": 27.6,
+      "currencyLabel": "CFA"
+    }
+  ]
+}

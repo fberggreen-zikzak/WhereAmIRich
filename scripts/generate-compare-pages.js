@@ -99,7 +99,7 @@ ${renderBreadcrumb(assetPrefix, [
             </tbody>
           </table>
         </div>
-        <p>${escapeHtml(cheaperNote)} Indices use Copenhagen ≈ 100 as reference in our dataset.</p>
+        <p>${escapeHtml(cheaperNote)} Indices use New York ≈ 100 as reference in our dataset.</p>
         <h2>Purchasing power factors</h2>
         <p>Using the same formula as the app (<code>home index ÷ destination index</code>):</p>
         <ul>

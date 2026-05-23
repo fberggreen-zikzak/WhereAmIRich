@@ -55,6 +55,8 @@ export const SITE_DISCLAIMER_SHORT =
 export const TERMS_PATH = "/terms.html";
 export const PRIVACY_PATH = "/privacy.html";
 
+export const RELOCATION_GUIDE_PATH = "/guides/remote-work-relocation.html";
+
 /** @param {number} [year] */
 export function copyrightNotice(year = new Date().getFullYear()) {
   return `© ${year} ${COPYRIGHT_HOLDER}. All rights reserved.`;
@@ -81,7 +83,9 @@ export const SITEMAP_PAGES = [
   { path: "/faq.html", changefreq: "monthly", priority: "0.8" },
   { path: TERMS_PATH, changefreq: "yearly", priority: "0.5" },
   { path: PRIVACY_PATH, changefreq: "yearly", priority: "0.5" },
+  { path: RELOCATION_GUIDE_PATH, changefreq: "monthly", priority: "0.75" },
   { path: CITIES_INDEX_PATH, changefreq: "monthly", priority: "0.75" },
+  { path: "/share/default.html", changefreq: "monthly", priority: "0.6" },
   { path: "/comparisons/london-vs-lisbon.html", changefreq: "monthly", priority: "0.7" },
   { path: "/comparisons/new-york-vs-london.html", changefreq: "monthly", priority: "0.7" },
   { path: "/comparisons/dubai-vs-bangkok.html", changefreq: "monthly", priority: "0.7" },
@@ -129,6 +133,20 @@ export const PAGE_SEO = {
     title: "Privacy Policy — WhereAmIRich.com",
     description:
       "How WhereAmIRich.com uses cookies, Google Analytics, and AdSense; your choices and rights regarding personal data.",
+  },
+  [RELOCATION_GUIDE_PATH]: {
+    title: "Remote Work Relocation Guide — WhereAmIRich.com",
+    ogTitle: "Remote work relocation — where your salary stretches",
+    ogDescription:
+      "Step-by-step checklist, popular hubs, and head-to-head comparisons before you move with a remote salary.",
+    description:
+      "Compare salary purchasing power before relocating. Popular remote-work hubs, head-to-head city pairs, and step-by-step checklist.",
+  },
+  "/share/default.html": {
+    title: "Share — WhereAmIRich.com salary calculator",
+    ogTitle: DEFAULT_SHARE.ogTitle,
+    ogDescription: DEFAULT_SHARE.ogDescription,
+    description: DEFAULT_SHARE.ogDescription,
   },
   [CITIES_INDEX_PATH]: {
     title: "City Salary Guides — WhereAmIRich.com",
