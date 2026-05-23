@@ -11,6 +11,7 @@ import {
 } from "./data.js";
 import {
   computeResults,
+  computeMostExpensiveCities,
   defaultComparisonIds,
   formatMoney,
   normalizeComparisonIds,
@@ -40,6 +41,9 @@ const els = {
   shareLinkedIn: document.getElementById("share-linkedin"),
   copyBtn: document.getElementById("copy-link"),
   copyLabel: document.getElementById("copy-label"),
+  expensiveList: document.getElementById("expensive-list"),
+  expensiveBase: document.getElementById("expensive-base"),
+  expensiveSalary: document.getElementById("expensive-salary"),
 };
 
 const urlState = stateFromUrl(new URLSearchParams(location.search));
@@ -332,6 +336,47 @@ function renderGrid(results) {
   els.grid.appendChild(renderAddTile());
 }
 
+function renderExpensiveCities(salary, baseCityId) {
+  if (!els.expensiveList) return;
+
+  const { base, cities } = computeMostExpensiveCities(
+    CITIES,
+    salary,
+    baseCityId,
+    20
+  );
+  if (!base || !cities.length) {
+    els.expensiveList.replaceChildren();
+    return;
+  }
+
+  if (els.expensiveBase) {
+    els.expensiveBase.textContent = base.name;
+  }
+  if (els.expensiveSalary) {
+    els.expensiveSalary.textContent = formatMoney(salary, base.currencyLabel);
+  }
+
+  els.expensiveList.replaceChildren(
+    ...cities.map((city, index) => {
+      const li = document.createElement("li");
+      li.className = "expensive-cities__item";
+      const badge = STATUS_LABELS[city.status];
+      li.innerHTML = `
+        <span class="expensive-cities__rank">${index + 1}</span>
+        <img class="expensive-cities__flag" src="${flagUrl(city.countryCode)}" alt="" width="20" height="14" loading="lazy" />
+        <span class="expensive-cities__name">${city.name}</span>
+        <span class="expensive-cities__amount">${city.amount}<span class="expensive-cities__period">/mo</span></span>
+        <span class="expensive-cities__meta">
+          <span class="expensive-cities__factor">${city.factor.toFixed(2)}× home</span>
+          <span class="expensive-cities__badge expensive-cities__badge--${city.status}">${badge}</span>
+        </span>
+      `;
+      return li;
+    })
+  );
+}
+
 function syncCurrencyUi(baseCity) {
   if (els.currencySuffix) {
     els.currencySuffix.textContent = baseCity.currencyLabel;
@@ -360,6 +405,7 @@ function applyState(salary, baseCityId) {
   syncCurrencyUi(base);
   renderHero(results, salary);
   renderGrid(results);
+  renderExpensiveCities(salary, base.id);
   updateUrl(salary, base.id, comparisonCityIds);
 }
 

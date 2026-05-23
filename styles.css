@@ -1134,6 +1134,163 @@ body {
   outline-offset: 2px;
 }
 
+/* Top expensive cities (full catalog) */
+.expensive-cities__header {
+  margin-bottom: 1rem;
+}
+
+.expensive-cities__title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .expensive-cities__title {
+    font-size: 1.05rem;
+  }
+}
+
+.expensive-cities__intro {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  max-width: 40rem;
+}
+
+.expensive-cities__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.expensive-cities__item {
+  display: grid;
+  grid-template-columns: 1.75rem 1.25rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    "rank flag name amount"
+    "rank flag meta meta";
+  gap: 0.2rem 0.5rem;
+  align-items: center;
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (min-width: 640px) {
+  .expensive-cities__item {
+    grid-template-columns: 2rem 1.25rem minmax(6rem, 1fr) 6.75rem 1fr;
+    grid-template-areas: "rank flag name amount meta";
+    gap: 0.65rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+.expensive-cities__rank {
+  grid-area: rank;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.expensive-cities__flag {
+  grid-area: flag;
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.expensive-cities__name {
+  grid-area: name;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.expensive-cities__amount {
+  grid-area: amount;
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+@media (min-width: 640px) {
+  .expensive-cities__amount {
+    font-size: 1.05rem;
+    justify-self: end;
+  }
+}
+
+.expensive-cities__period {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.expensive-cities__meta {
+  grid-area: meta;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .expensive-cities__meta {
+    justify-content: flex-end;
+  }
+}
+
+.expensive-cities__factor {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.expensive-cities__badge {
+  display: inline-flex;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.expensive-cities__badge--better {
+  background: var(--rich-badge-bg);
+  color: var(--rich-badge-fg);
+  border: 1px solid var(--rich-border);
+}
+
+.expensive-cities__badge--similar {
+  background: var(--middle-badge-bg);
+  color: var(--middle-fg);
+  border: 1px solid var(--middle-border);
+}
+
+.expensive-cities__badge--worse {
+  background: var(--poor-badge-bg);
+  color: var(--poor-badge-fg);
+  border: 1px solid var(--poor-border);
+}
+
 .share-btn__icon {
   width: 18px;
   height: 18px;

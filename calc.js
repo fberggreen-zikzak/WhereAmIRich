@@ -152,6 +152,38 @@ export function computeResults(cities, salary, baseCityId, comparisonCityIds) {
 }
 
 /**
+ * Cities where salary buys the least vs home (lowest equivalent pay first).
+ * @param {import("./data.js").City[]} cities
+ * @param {number} salary
+ * @param {string} baseCityId
+ * @param {number} [limit]
+ */
+export function computeMostExpensiveCities(cities, salary, baseCityId, limit = 20) {
+  const base = getCityById(baseCityId);
+  if (!base) return { base: null, cities: [] };
+
+  const rows = cities
+    .filter((c) => c.id !== baseCityId)
+    .map((city) => {
+      const factor = factorBetween(base.numbeoColIndex, city.numbeoColIndex);
+      const equivalent = equivalentSalary(salary, factor);
+      return {
+        id: city.id,
+        name: city.name,
+        countryCode: city.countryCode,
+        factor,
+        equivalent,
+        status: classifyStatus(factor),
+        amount: formatMoney(equivalent, base.currencyLabel),
+      };
+    })
+    .sort((a, b) => a.equivalent - b.equivalent)
+    .slice(0, limit);
+
+  return { base, cities: rows };
+}
+
+/**
  * @param {string} raw
  */
 export function parseSalaryInput(raw) {
