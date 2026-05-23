@@ -39,8 +39,9 @@ const FILE_TO_PAGE_PATH = {
 const OLD_FOOTER_TEXT = "Cost-of-living comparisons for salary decisions — not financial advice.";
 const NEW_FOOTER_HTML = `${SITE_DISCLAIMER_SHORT} <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>`;
 const OG_IMAGE_FROM = `${SITE_URL}/og-image.svg`;
+/** Old Google Fonts URL (italics + variable axis) — not the trimmed GOOGLE_FONTS_URL. */
 const LEGACY_FONTS =
-  /https:\/\/fonts\.googleapis\.com\/css2\?family=DM\+Sans:[^"']+/g;
+  /https:\/\/fonts\.googleapis\.com\/css2\?family=DM\+Sans:ital,[^"']+/g;
 
 /** @type {string[]} */
 const REPLACE_FROM = [
@@ -68,29 +69,51 @@ for (const file of FILES) {
     changed = true;
   }
   if (html.includes(OG_IMAGE_FROM)) {
-    html = html.split(OG_IMAGE_FROM).join(OG_IMAGE_URL);
-    changed = true;
+    const next = html.split(OG_IMAGE_FROM).join(OG_IMAGE_URL);
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
   }
   if (LEGACY_FONTS.test(html)) {
-    html = html.replace(LEGACY_FONTS, GOOGLE_FONTS_URL);
-    changed = true;
+    LEGACY_FONTS.lastIndex = 0;
+    const next = html.replace(LEGACY_FONTS, GOOGLE_FONTS_URL);
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
   }
   if (html.includes(OLD_FOOTER_TEXT)) {
-    html = html.split(OLD_FOOTER_TEXT).join(NEW_FOOTER_HTML);
-    changed = true;
+    const next = html.split(OLD_FOOTER_TEXT).join(NEW_FOOTER_HTML);
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
   }
   const dataMeta = /Numbeo data \(indicative, updated \d{4}-\d{2}\)/;
   if (dataMeta.test(html)) {
-    html = html.replace(dataMeta, `Numbeo data (indicative, updated ${DATA_UPDATED})`);
-    changed = true;
+    const next = html.replace(
+      dataMeta,
+      `Numbeo data (indicative, updated ${DATA_UPDATED})`
+    );
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
   }
   if (/last data pass: \d{4}-\d{2}/.test(html)) {
-    html = html.replace(/last data pass: \d{4}-\d{2}/g, `last data pass: ${DATA_UPDATED}`);
-    changed = true;
+    const next = html.replace(/last data pass: \d{4}-\d{2}/g, `last data pass: ${DATA_UPDATED}`);
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
   }
   if (ANALYTICS_BLOCK.test(html)) {
-    html = html.replace(ANALYTICS_BLOCK, "");
-    changed = true;
+    const next = html.replace(ANALYTICS_BLOCK, "");
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
   }
   if (!html.includes("consent.js")) {
     const inserted = html.replace(
@@ -106,7 +129,7 @@ for (const file of FILES) {
   if (pagePath) {
     const socialBlock = renderSocialPreviewTags(pagePath).trim();
     const socialPattern =
-      /<meta property="og:type" content="website" \/>[\s\S]*?(?:<meta name="twitter:image:alt"[\s\S]*?\/>|<meta name="twitter:card" content="summary_large_image" \/>)/;
+      /<meta property="og:type" content="website" \/>[\s\S]*?(?=\n\s*<link rel=")/;
     const replaced = html.replace(socialPattern, socialBlock);
     if (replaced !== html) {
       html = replaced;

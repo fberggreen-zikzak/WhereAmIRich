@@ -4,8 +4,10 @@
  */
 import { writeFileSync } from "fs";
 import { FEATURED_CITIES, SITE_URL, SITEMAP_PAGES } from "../site.config.js";
+import { DATA_UPDATED } from "../data.js";
 
-const lastmod = new Date().toISOString().slice(0, 10);
+/** Stable lastmod — tied to data refresh, not wall clock (keeps CI deterministic). */
+const lastmod = `${DATA_UPDATED}-01`;
 
 const sharePages = [
   ...SITEMAP_PAGES,
