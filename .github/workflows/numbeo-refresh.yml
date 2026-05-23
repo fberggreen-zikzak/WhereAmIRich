@@ -1,0 +1,42 @@
+name: Numbeo monthly refresh
+
+on:
+  schedule:
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Refresh Numbeo indices
+        run: npm run numbeo:refresh
+
+      - name: Regenerate SEO artifacts
+        run: bash scripts/run-seo.sh
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cities-catalog.js data.js sitemap.xml share-data.json cities/ comparisons/ guides/ share/ index.html methodology.html privacy.html terms.html og-image.png
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "$(cat <<'EOF'
+chore: refresh Numbeo cost-of-living indices
+
+Automated monthly update from Numbeo rankings plus SEO artifact sync.
+EOF
+)"
+          git push

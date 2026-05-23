@@ -25,11 +25,15 @@ Use this after deploying to [https://www.whereamirich.com](https://www.whereamir
 - [ ] Cookie banner: Essential only vs Accept all
 - [ ] Privacy and Terms pages load
 
-## Data maintenance (quarterly)
+## Data maintenance
 
-1. Refresh Numbeo indices in `cities-catalog.js`.
-2. Update `DATA_UPDATED` in `data.js`.
-3. Run `npm run seo` and commit.
+Numbeo cost-of-living indices refresh automatically on the **1st of each month** via the GitHub Actions workflow `.github/workflows/numbeo-refresh.yml`. It runs `npm run numbeo:refresh`, regenerates SEO artifacts, and commits any changes.
+
+Manual refresh (optional):
+
+1. `npm run numbeo:refresh` — fetches live Numbeo rankings and updates `cities-catalog.js` + `DATA_UPDATED` in `data.js`. Use `--dry-run` to preview without writing.
+2. `npm run seo` — regenerate sitemap and static pages after data changes.
+3. Commit and push if not using the automated workflow.
 
 ## Contact email
 

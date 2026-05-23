@@ -29,6 +29,60 @@ export function classifyStatus(factor) {
   return "similar";
 }
 
+/** Within ~3% of home — used for ranking copy, tighter than card badges */
+const VS_HOME_SIMILAR_BAND = 0.03;
+
+/**
+ * Human-readable spending power vs home (ranking section).
+ * @param {number} factor
+ */
+export function formatVsHomeComparison(factor) {
+  const pct = Math.round((factor - 1) * 100);
+  if (Math.abs(pct) <= 3) return "About the same as home";
+  if (pct > 0) return `${pct}% easier than home`;
+  return `${Math.abs(pct)}% tougher than home`;
+}
+
+/**
+ * @param {number} factor
+ * @returns {{ status: "better" | "similar" | "worse", label: string }}
+ */
+export function vsHomeBadge(factor) {
+  const pct = (factor - 1) * 100;
+  if (Math.abs(pct) <= 3) {
+    return { status: "similar", label: "About the same" };
+  }
+  if (pct > 0) {
+    return { status: "better", label: "Easier than home" };
+  }
+  return { status: "worse", label: "Tougher than home" };
+}
+
+/**
+ * @param {{ factor: number }} city
+ * @param {number} index
+ * @param {{ name: string }[]} ranked
+ * @param {{ name: string }} base
+ */
+export function rankingRowInsight(city, index, ranked, base) {
+  if (index === 0) return "Least value in this set";
+  if (Math.abs(city.factor - 1) <= VS_HOME_SIMILAR_BAND) {
+    return `Close to ${base.name}`;
+  }
+  if (index <= 2 && city.factor < 0.9) {
+    return "Among the hardest for this salary";
+  }
+  if (index === 1 && ranked[0]) {
+    const gapPct = Math.round(
+      ((ranked[0].equivalent - city.equivalent) / city.equivalent) * 100
+    );
+    if (gapPct <= 2) {
+      return `Nearly as tough as ${ranked[0].name}`;
+    }
+  }
+  return "";
+}
+
 /**
  * @param {number} amount
  * @param {string} currencyLabel
@@ -160,9 +214,9 @@ export function computeResults(cities, salary, baseCityId, comparisonCityIds) {
  */
 export function computeMostExpensiveCities(cities, salary, baseCityId, limit = 20) {
   const base = getCityById(baseCityId);
-  if (!base) return { base: null, cities: [] };
+  if (!base) return { base: null, cities: [], toughest: null, easiest: null };
 
-  const rows = cities
+  const allRows = cities
     .filter((c) => c.id !== baseCityId)
     .map((city) => {
       const factor = factorBetween(base.numbeoColIndex, city.numbeoColIndex);
@@ -173,14 +227,28 @@ export function computeMostExpensiveCities(cities, salary, baseCityId, limit = 2
         countryCode: city.countryCode,
         factor,
         equivalent,
-        status: classifyStatus(factor),
-        amount: formatMoney(equivalent, base.currencyLabel),
       };
     })
-    .sort((a, b) => a.equivalent - b.equivalent)
-    .slice(0, limit);
+    .sort((a, b) => a.equivalent - b.equivalent);
 
-  return { base, cities: rows };
+  const topRows = allRows.slice(0, limit).map((city, index, ranked) => {
+    const badge = vsHomeBadge(city.factor);
+    return {
+      ...city,
+      amount: formatMoney(city.equivalent, base.currencyLabel),
+      vsHomeText: formatVsHomeComparison(city.factor),
+      badgeStatus: badge.status,
+      badgeLabel: badge.label,
+      insight: rankingRowInsight(city, index, ranked, base),
+    };
+  });
+
+  return {
+    base,
+    cities: topRows,
+    toughest: topRows[0] ?? null,
+    easiest: allRows[allRows.length - 1] ?? null,
+  };
 }
 
 /**

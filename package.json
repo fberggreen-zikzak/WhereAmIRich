@@ -10,7 +10,8 @@
     "seo": "node scripts/generate-og-image.js && node scripts/generate-sitemap.js && node scripts/generate-terms-page.js && node scripts/generate-privacy-page.js && node scripts/generate-city-pages.js && node scripts/generate-cities-index.js && node scripts/generate-compare-pages.js && node scripts/generate-relocation-guide.js && node scripts/generate-share-presets.js && node scripts/export-share-data.js && node scripts/sync-index-sections.js && node scripts/sync-static-seo.js",
     "seo:og": "node scripts/generate-og-image.js",
     "seo:sitemap": "node scripts/generate-sitemap.js",
-    "seo:cities": "node scripts/generate-city-pages.js"
+    "seo:cities": "node scripts/generate-city-pages.js",
+    "numbeo:refresh": "node scripts/refresh-numbeo-indices.js"
   },
   "devDependencies": {
     "vite": "^6.2.0"

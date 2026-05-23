@@ -1136,19 +1136,28 @@ body {
 
 /* Top expensive cities (full catalog) */
 .expensive-cities__header {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .expensive-cities__title {
-  margin: 0 0 0.35rem;
-  font-size: 1rem;
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 @media (min-width: 640px) {
   .expensive-cities__title {
-    font-size: 1.05rem;
+    font-size: 1.125rem;
   }
+}
+
+.expensive-cities__takeaway {
+  margin: 0 0 0.45rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text);
+  max-width: 42rem;
 }
 
 .expensive-cities__intro {
@@ -1156,7 +1165,37 @@ body {
   font-size: 0.8125rem;
   line-height: 1.45;
   color: var(--text-muted);
-  max-width: 40rem;
+  max-width: 42rem;
+}
+
+.expensive-cities__table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.expensive-cities__columns {
+  display: none;
+  grid-template-columns: 2rem 1.25rem minmax(0, 1fr) 7rem 9.5rem auto;
+  gap: 0.75rem;
+  align-items: end;
+  padding: 0 0.85rem 0.15rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@media (min-width: 640px) {
+  .expensive-cities__columns {
+    display: grid;
+  }
+}
+
+.expensive-cities__col-power,
+.expensive-cities__col-compare {
+  text-align: right;
 }
 
 .expensive-cities__list {
@@ -1165,29 +1204,52 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .expensive-cities__item {
   display: grid;
   grid-template-columns: 1.75rem 1.25rem minmax(0, 1fr) auto;
   grid-template-areas:
-    "rank flag name amount"
-    "rank flag meta meta";
-  gap: 0.2rem 0.5rem;
+    "rank flag city power"
+    "rank flag compare badge";
+  gap: 0.15rem 0.55rem;
   align-items: center;
-  padding: 0.55rem 0.65rem;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.7rem 0.75rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.expensive-cities__item:hover {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.expensive-cities__item--lead {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 3px 0 0 rgba(255, 120, 100, 0.55);
+}
+
+.expensive-cities__item--lead:hover {
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 @media (min-width: 640px) {
   .expensive-cities__item {
-    grid-template-columns: 2rem 1.25rem minmax(6rem, 1fr) 6.75rem 1fr;
-    grid-template-areas: "rank flag name amount meta";
-    gap: 0.65rem;
-    padding: 0.5rem 0.75rem;
+    grid-template-columns: 2rem 1.25rem minmax(6rem, 1fr) 7rem 9.5rem auto;
+    grid-template-areas: "rank flag city power compare badge";
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
   }
 }
 
@@ -1200,6 +1262,10 @@ body {
   text-align: right;
 }
 
+.expensive-cities__item--lead .expensive-cities__rank {
+  color: var(--text);
+}
+
 .expensive-cities__flag {
   grid-area: flag;
   width: 20px;
@@ -1209,27 +1275,43 @@ body {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
+.expensive-cities__city {
+  grid-area: city;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
 .expensive-cities__name {
-  grid-area: name;
   font-size: 0.875rem;
   font-weight: 600;
-  line-height: 1.2;
-  min-width: 0;
+  line-height: 1.25;
+}
+
+.expensive-cities__insight {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+.expensive-cities__power {
+  grid-area: power;
+  justify-self: end;
+  text-align: right;
 }
 
 .expensive-cities__amount {
-  grid-area: amount;
   font-family: var(--font-serif);
   font-size: 0.9375rem;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  justify-self: end;
 }
 
 @media (min-width: 640px) {
   .expensive-cities__amount {
     font-size: 1.05rem;
-    justify-self: end;
   }
 }
 
@@ -1240,55 +1322,51 @@ body {
   color: var(--text-muted);
 }
 
-.expensive-cities__meta {
-  grid-area: meta;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  min-width: 0;
+.expensive-cities__compare {
+  grid-area: compare;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text-muted);
+  justify-self: end;
+  text-align: right;
 }
 
 @media (min-width: 640px) {
-  .expensive-cities__meta {
-    justify-content: flex-end;
+  .expensive-cities__compare {
+    font-size: 0.8125rem;
   }
 }
 
-.expensive-cities__factor {
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
 .expensive-cities__badge {
+  grid-area: badge;
   display: inline-flex;
-  padding: 0.2rem 0.45rem;
-  font-size: 0.5625rem;
+  justify-self: end;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.625rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.01em;
   border-radius: var(--radius-pill);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .expensive-cities__badge--better {
-  background: var(--rich-badge-bg);
-  color: var(--rich-badge-fg);
-  border: 1px solid var(--rich-border);
+  background: rgba(72, 187, 120, 0.12);
+  color: #86efac;
+  border: 1px solid rgba(72, 187, 120, 0.28);
 }
 
 .expensive-cities__badge--similar {
-  background: var(--middle-badge-bg);
-  color: var(--middle-fg);
-  border: 1px solid var(--middle-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .expensive-cities__badge--worse {
-  background: var(--poor-badge-bg);
-  color: var(--poor-badge-fg);
-  border: 1px solid var(--poor-border);
+  background: rgba(248, 113, 113, 0.1);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.28);
 }
 
 .share-btn__icon {
@@ -1992,17 +2070,6 @@ body {
   color: #0f0f0f;
   background: var(--accent);
   border: 1px solid var(--accent);
-}
-
-.ad-slot {
-  margin-top: 0.75rem;
-  padding: 0.75rem 1rem;
-  min-height: 90px;
-  text-align: center;
-}
-
-.ad-slot[hidden] {
-  display: none;
 }
 
 /* —— Mobile optimization —— */

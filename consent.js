@@ -1,12 +1,11 @@
 /**
- * Cookie consent — loads Google Analytics and AdSense only after "Accept all".
+ * Cookie consent — loads Google Analytics only after "Accept all".
  * Preference: localStorage key wair-consent = "all" | "essential"
  */
 (function () {
   const STORAGE_KEY = "wair-consent";
   const root = document.documentElement;
   const gaId = root.dataset.gaId || "";
-  const adsenseClient = root.dataset.adsenseClient || "";
 
   function loadScript(src, crossOrigin) {
     return new Promise((resolve, reject) => {
@@ -17,19 +16,6 @@
       s.onload = () => resolve();
       s.onerror = () => reject(new Error(`Failed to load ${src}`));
       document.head.appendChild(s);
-    });
-  }
-
-  function initAdSlots() {
-    document.querySelectorAll(".ad-slot").forEach((slot) => {
-      slot.hidden = false;
-    });
-    document.querySelectorAll(".adsbygoogle").forEach(() => {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch {
-        /* AdSense not ready */
-      }
     });
   }
 
@@ -45,17 +31,6 @@
         await loadScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`);
         window.gtag("js", new Date());
         window.gtag("config", gaId);
-      } catch {
-        /* ignore */
-      }
-    }
-    if (adsenseClient) {
-      try {
-        await loadScript(
-          `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(adsenseClient)}`,
-          "anonymous"
-        );
-        initAdSlots();
       } catch {
         /* ignore */
       }
@@ -79,7 +54,7 @@
     banner.setAttribute("aria-label", "Cookie preferences");
     banner.innerHTML = `
       <p class="consent-banner__text">
-        We use cookies for analytics and ads to keep ${root.dataset.siteName || "this site"} free.
+        We use cookies for analytics to keep ${root.dataset.siteName || "this site"} running.
         <a href="${privacyHref}">Privacy policy</a>
       </p>
       <div class="consent-banner__actions">

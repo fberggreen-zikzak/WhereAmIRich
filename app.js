@@ -42,8 +42,7 @@ const els = {
   copyBtn: document.getElementById("copy-link"),
   copyLabel: document.getElementById("copy-label"),
   expensiveList: document.getElementById("expensive-list"),
-  expensiveBase: document.getElementById("expensive-base"),
-  expensiveSalary: document.getElementById("expensive-salary"),
+  expensiveTakeaway: document.getElementById("expensive-takeaway"),
 };
 
 const urlState = stateFromUrl(new URLSearchParams(location.search));
@@ -339,7 +338,7 @@ function renderGrid(results) {
 function renderExpensiveCities(salary, baseCityId) {
   if (!els.expensiveList) return;
 
-  const { base, cities } = computeMostExpensiveCities(
+  const { base, cities, toughest, easiest } = computeMostExpensiveCities(
     CITIES,
     salary,
     baseCityId,
@@ -347,30 +346,45 @@ function renderExpensiveCities(salary, baseCityId) {
   );
   if (!base || !cities.length) {
     els.expensiveList.replaceChildren();
+    if (els.expensiveTakeaway) {
+      els.expensiveTakeaway.textContent =
+        "These are the cities where your salary buys the least.";
+    }
     return;
   }
 
-  if (els.expensiveBase) {
-    els.expensiveBase.textContent = base.name;
-  }
-  if (els.expensiveSalary) {
-    els.expensiveSalary.textContent = formatMoney(salary, base.currencyLabel);
+  if (els.expensiveTakeaway) {
+    const salaryLabel = formatMoney(salary, base.currencyLabel);
+    if (toughest && easiest && toughest.id !== easiest.id) {
+      els.expensiveTakeaway.textContent = `For ${salaryLabel}/mo earned in ${base.name}, ${toughest.name} is the toughest city in our catalog — and ${easiest.name} is where it goes furthest.`;
+    } else if (toughest) {
+      els.expensiveTakeaway.textContent = `For ${salaryLabel}/mo earned in ${base.name}, ${toughest.name} is the toughest city in our catalog.`;
+    }
   }
 
   els.expensiveList.replaceChildren(
     ...cities.map((city, index) => {
       const li = document.createElement("li");
-      li.className = "expensive-cities__item";
-      const badge = STATUS_LABELS[city.status];
+      li.className = `expensive-cities__item${index === 0 ? " expensive-cities__item--lead" : ""}`;
+      const insightHtml = city.insight
+        ? `<span class="expensive-cities__insight">${city.insight}</span>`
+        : "";
+      li.setAttribute(
+        "aria-label",
+        `${index + 1}. ${city.name}. ${city.amount} per month spending power equivalent. ${city.vsHomeText}. ${city.badgeLabel}.`
+      );
       li.innerHTML = `
         <span class="expensive-cities__rank">${index + 1}</span>
         <img class="expensive-cities__flag" src="${flagUrl(city.countryCode)}" alt="" width="20" height="14" loading="lazy" />
-        <span class="expensive-cities__name">${city.name}</span>
-        <span class="expensive-cities__amount">${city.amount}<span class="expensive-cities__period">/mo</span></span>
-        <span class="expensive-cities__meta">
-          <span class="expensive-cities__factor">${city.factor.toFixed(2)}× home</span>
-          <span class="expensive-cities__badge expensive-cities__badge--${city.status}">${badge}</span>
-        </span>
+        <div class="expensive-cities__city">
+          <span class="expensive-cities__name">${city.name}</span>
+          ${insightHtml}
+        </div>
+        <div class="expensive-cities__power">
+          <span class="expensive-cities__amount">${city.amount}<span class="expensive-cities__period">/mo</span></span>
+        </div>
+        <span class="expensive-cities__compare">${city.vsHomeText}</span>
+        <span class="expensive-cities__badge expensive-cities__badge--${city.badgeStatus}">${city.badgeLabel}</span>
       `;
       return li;
     })

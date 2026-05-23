@@ -330,23 +330,24 @@
           <h2 class="expensive-cities__title" id="expensive-heading">
             Top 20 most expensive cities
           </h2>
+          <p class="expensive-cities__takeaway" id="expensive-takeaway">
+            These are the cities where your salary buys the least.
+          </p>
           <p class="expensive-cities__intro">
-            Where <span id="expensive-salary">$6,200</span>/mo earned in
-            <span id="expensive-base">New York</span> buys the least — lowest spending power in our catalog.
+            Ranked by local spending-power equivalent — what your take-home feels like on the ground compared to home.
           </p>
         </header>
-        <ol id="expensive-list" class="expensive-cities__list"></ol>
+        <div class="expensive-cities__table">
+          <div class="expensive-cities__columns" aria-hidden="true">
+            <span class="expensive-cities__col-rank">#</span>
+            <span class="expensive-cities__col-city">City</span>
+            <span class="expensive-cities__col-power">Spending power</span>
+            <span class="expensive-cities__col-compare">Vs home</span>
+            <span class="expensive-cities__col-badge"></span>
+          </div>
+          <ol id="expensive-list" class="expensive-cities__list"></ol>
+        </div>
       </section>
-
-      <aside class="ad-slot panel" hidden aria-label="Advertisement">
-        <ins
-          class="adsbygoogle"
-          style="display: block"
-          data-ad-client="ca-pub-6644431061410794"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-      </aside>
 
     </main>
 
