@@ -76,27 +76,29 @@ ${renderBreadcrumb(assetPrefix, [
           <a class="content__cta" href="${calcBoth}">Compare in the calculator</a>
         </p>
         <h2>Cost-of-living indices (excluding rent)</h2>
-        <table class="content-table">
-          <thead>
-            <tr>
-              <th scope="col">City</th>
-              <th scope="col">Numbeo index</th>
-              <th scope="col">Typical gross salary</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${escapeHtml(cityA.name)}</td>
-              <td>${cityA.numbeoColIndex}</td>
-              <td>${escapeHtml(formatSalary(cityAId, cityA))}</td>
-            </tr>
-            <tr>
-              <td>${escapeHtml(cityB.name)}</td>
-              <td>${cityB.numbeoColIndex}</td>
-              <td>${escapeHtml(formatSalary(cityBId, cityB))}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="content-table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th scope="col">City</th>
+                <th scope="col">Numbeo index</th>
+                <th scope="col">Typical gross salary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${escapeHtml(cityA.name)}</td>
+                <td>${cityA.numbeoColIndex}</td>
+                <td>${escapeHtml(formatSalary(cityAId, cityA))}</td>
+              </tr>
+              <tr>
+                <td>${escapeHtml(cityB.name)}</td>
+                <td>${cityB.numbeoColIndex}</td>
+                <td>${escapeHtml(formatSalary(cityBId, cityB))}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>${escapeHtml(cheaperNote)} Indices use Copenhagen ≈ 100 as reference in our dataset.</p>
         <h2>Purchasing power factors</h2>
         <p>Using the same formula as the app (<code>home index ÷ destination index</code>):</p>

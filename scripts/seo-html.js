@@ -5,11 +5,19 @@ import {
   CITIES_INDEX_PATH,
   FEATURED_CITIES,
   FEATURED_COMPARISONS,
+  OG_IMAGE_ALT,
+  OG_IMAGE_URL,
   ORGANIZATION,
   PAGE_SEO,
   SITE_NAME,
   SITE_TAGLINE,
   SITE_URL,
+  ADSENSE_CLIENT_ID,
+  DEFAULT_SHARE,
+  GA_MEASUREMENT_ID,
+  SITE_DISCLAIMER_SHORT,
+  TERMS_PATH,
+  copyrightNotice,
 } from "../site.config.js";
 
 export function escapeHtml(s) {
@@ -18,6 +26,70 @@ export function escapeHtml(s) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/** @param {{ ogTitle?: string; ogDescription?: string; title: string; description: string }} seo */
+export function shareMeta(seo) {
+  return {
+    title: seo.ogTitle ?? DEFAULT_SHARE.ogTitle,
+    description:
+      seo.ogDescription ?? seo.description ?? DEFAULT_SHARE.ogDescription,
+  };
+}
+
+/**
+ * Open Graph + Twitter tags for social previews (uses DEFAULT_SHARE when page omits overrides).
+ * @param {string} path PAGE_SEO key, e.g. "/faq.html"
+ */
+export function renderSocialPreviewTags(path) {
+  const seo = PAGE_SEO[path];
+  if (!seo) throw new Error(`Missing PAGE_SEO for ${path}`);
+  const share = shareMeta(seo);
+  const canonical = path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+
+  return `
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="${escapeHtml(SITE_NAME)}" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="${escapeHtml(share.title)}" />
+    <meta property="og:description" content="${escapeHtml(share.description)}" />
+    <meta property="og:url" content="${canonical}" />${renderOpenGraphTags(share)}`;
+}
+
+export function renderOpenGraphTags(share) {
+  return `
+    <meta property="og:image" content="${OG_IMAGE_URL}" />
+    <meta property="og:image:secure_url" content="${OG_IMAGE_URL}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapeHtml(share.title)}" />
+    <meta name="twitter:description" content="${escapeHtml(share.description)}" />
+    <meta name="twitter:image" content="${OG_IMAGE_URL}" />
+    <meta name="twitter:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`;
+}
+
+/** Google Analytics gtag snippet (empty if GA_MEASUREMENT_ID unset). */
+export function renderGoogleAnalytics() {
+  if (!GA_MEASUREMENT_ID) return "";
+  return `
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "${GA_MEASUREMENT_ID}");
+    </script>`;
+}
+
+/** Google AdSense loader (empty if ADSENSE_CLIENT_ID unset). */
+export function renderAdSense() {
+  if (!ADSENSE_CLIENT_ID) return "";
+  return `
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}" crossorigin="anonymous"></script>`;
 }
 
 /**
@@ -38,23 +110,14 @@ export function renderHead(path, opts = {}) {
   return `    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0f0f0f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />${renderGoogleAnalytics()}${renderAdSense()}
     <title>${escapeHtml(seo.title)}</title>
     <meta name="description" content="${escapeHtml(seo.description)}" />
-    <link rel="canonical" href="${canonical}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="${escapeHtml(SITE_NAME)}" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:title" content="${escapeHtml(seo.title)}" />
-    <meta property="og:description" content="${escapeHtml(seo.description)}" />
-    <meta property="og:url" content="${canonical}" />
-    <meta property="og:image" content="${SITE_URL}/og-image.svg" />
-    <meta property="og:image:alt" content="${escapeHtml(SITE_NAME)} — global salary purchasing power calculator" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${escapeHtml(seo.title)}" />
-    <meta name="twitter:description" content="${escapeHtml(seo.description)}" />
-    <meta name="twitter:image" content="${SITE_URL}/og-image.svg" />
+    <link rel="canonical" href="${canonical}" />${renderSocialPreviewTags(path)}
     <link rel="icon" href="${assetPrefix}favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" href="${assetPrefix}apple-touch-icon.svg" sizes="180x180" />
     <link rel="manifest" href="${assetPrefix}site.webmanifest" />
@@ -81,18 +144,18 @@ export function renderSiteHeader(assetPrefix, active = "") {
   const calcHref = `${assetPrefix}index.html`;
   const citiesHref = `${assetPrefix}${CITIES_INDEX_PATH.replace(/^\//, "")}`;
 
-  return `    <header class="site-header panel">
+  return `    <header class="site-header">
       <div class="site-header__inner">
         <a class="site-header__brand" href="${calcHref}"${home}>
           <span class="site-header__name">${escapeHtml(SITE_NAME)}</span>
           <span class="site-header__tagline">${escapeHtml(SITE_TAGLINE)}</span>
         </a>
         <nav class="site-nav" aria-label="Site">
-          <a href="${calcHref}"${home}>Calculator</a>
-          <a href="${citiesHref}"${cities}>City guides</a>
-          <a href="${assetPrefix}how-it-works.html"${how}>How it works</a>
-          <a href="${assetPrefix}methodology.html"${method}>Methodology</a>
-          <a href="${assetPrefix}faq.html"${faq}>FAQ</a>
+          <a class="site-nav__link" href="${calcHref}"${home}>Calculator</a>
+          <a class="site-nav__link" href="${citiesHref}"${cities}>City guides</a>
+          <a class="site-nav__link" href="${assetPrefix}how-it-works.html"${how}>How it works</a>
+          <a class="site-nav__link" href="${assetPrefix}methodology.html"${method}>Methodology</a>
+          <a class="site-nav__link" href="${assetPrefix}faq.html"${faq}>FAQ</a>
         </nav>
       </div>
     </header>`;
@@ -118,7 +181,7 @@ export function renderSiteFooter(assetPrefix) {
       <div class="site-footer__grid">
         <div>
           <p class="site-footer__title">${escapeHtml(SITE_NAME)}</p>
-          <p class="site-footer__text">Cost-of-living comparisons for salary decisions — not financial advice.</p>
+          <p class="site-footer__text">${escapeHtml(SITE_DISCLAIMER_SHORT)} <a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">Terms of use</a></p>
         </div>
         <nav aria-label="Learn more">
           <p class="site-footer__heading">Learn</p>
@@ -126,6 +189,7 @@ export function renderSiteFooter(assetPrefix) {
             <li><a href="${assetPrefix}how-it-works.html">How the calculator works</a></li>
             <li><a href="${assetPrefix}methodology.html">Methodology &amp; data sources</a></li>
             <li><a href="${assetPrefix}faq.html">Frequently asked questions</a></li>
+            <li><a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">Terms of use</a></li>
           </ul>
         </nav>
         <nav aria-label="City guides">
@@ -142,6 +206,7 @@ ${compareLinks}
           </ul>
         </nav>
       </div>
+      <p class="site-footer__legal">${escapeHtml(copyrightNotice())}</p>
       <p class="site-footer__meta">Data: Numbeo cost-of-living indices (approximate). <a href="${assetPrefix}methodology.html">Read limitations</a>.</p>
     </footer>`;
 }
@@ -198,6 +263,7 @@ export function organizationJsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: ORGANIZATION.name,
+    legalName: ORGANIZATION.legalName,
     url: ORGANIZATION.url,
     logo: ORGANIZATION.logo,
   };

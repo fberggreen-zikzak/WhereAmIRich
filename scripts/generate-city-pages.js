@@ -102,18 +102,20 @@ ${renderBreadcrumb(assetPrefix, [
           Factors below use the same formula as the app:
           <code>home index ÷ destination index</code>. Values above 1 mean your money stretches further there.
         </p>
-        <table class="content-table">
-          <thead>
-            <tr>
-              <th scope="col">Destination</th>
-              <th scope="col">Factor</th>
-              <th scope="col">Direction</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div class="content-table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th scope="col">Destination</th>
+                <th scope="col">Factor</th>
+                <th scope="col">Direction</th>
+              </tr>
+            </thead>
+            <tbody>
 ${rows}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
         <h2>Local context</h2>
         <p>${escapeHtml(avgNote)} The calculator also shows how you compare to that local average when you pick a destination — using approximate FX to put salaries on a comparable footing.</p>
         <h2>Good to know</h2>

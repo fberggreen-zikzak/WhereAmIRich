@@ -1,9 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Where Am I Rich — salary purchasing power calculator">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="WhereAmIRich.com — Rich in Lisbon. Poor in London.">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e8c547"/>
+      <stop offset="100%" stop-color="#c9a227"/>
+    </linearGradient>
+  </defs>
   <rect width="1200" height="630" fill="#0f0f0f"/>
   <rect x="48" y="48" width="1104" height="534" rx="24" fill="#161616" stroke="#2a2a2a" stroke-width="2"/>
-  <text x="96" y="200" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#f5f5f5">Rich in Lisbon.</text>
-  <text x="96" y="290" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#c9a227" font-style="italic">Poor in London.</text>
-  <text x="96" y="380" font-family="system-ui, sans-serif" font-size="32" fill="#9a9a9a">How far does your salary really go?</text>
-  <text x="96" y="440" font-family="system-ui, sans-serif" font-size="28" fill="#6a6a6a">Compare purchasing power across 100+ cities</text>
-  <text x="96" y="520" font-family="system-ui, sans-serif" font-size="34" font-weight="600" fill="#f5f5f5">Where Am I Rich</text>
+  <rect x="96" y="96" width="4" height="88" rx="2" fill="url(#gold)"/>
+  <text x="116" y="132" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" letter-spacing="0.04em" fill="#c9a227">WHEREAMIRICH.COM</text>
+  <text x="96" y="248" font-family="Georgia, 'Times New Roman', serif" font-size="76" fill="#f5f5f5">Rich in Lisbon.</text>
+  <text x="96" y="342" font-family="Georgia, 'Times New Roman', serif" font-size="76" fill="#c9a227" font-style="italic">Poor in London.</text>
+  <text x="96" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="34" fill="#b8b8b8">How far does your salary really go?</text>
+  <text x="96" y="472" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#7a7a7a">100+ cities · equivalent pay · free calculator</text>
+  <rect x="720" y="180" width="360" height="320" rx="16" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="752" y="248" font-family="system-ui, sans-serif" font-size="22" fill="#6a6a6a">Lisbon</text>
+  <text x="752" y="292" font-family="system-ui, sans-serif" font-size="40" font-weight="700" fill="#4ade80">Richer</text>
+  <text x="752" y="340" font-family="system-ui, sans-serif" font-size="22" fill="#6a6a6a">London</text>
+  <text x="752" y="384" font-family="system-ui, sans-serif" font-size="40" font-weight="700" fill="#f87171">Poorer</text>
+  <text x="752" y="448" font-family="system-ui, sans-serif" font-size="20" fill="#9a9a9a">Same salary, different life</text>
 </svg>

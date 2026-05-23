@@ -1,6 +1,6 @@
 # SEO & Google Search Console
 
-Where Am I Rich is a static site. SEO metadata is centralized in **`site.config.js`**; public URLs are listed in **`SITEMAP_PAGES`**.
+WhereAmIRich.com is a static site. SEO metadata is centralized in **`site.config.js`**; public URLs are listed in **`SITEMAP_PAGES`**.
 
 ## Before deploy
 
@@ -11,10 +11,11 @@ Where Am I Rich is a static site. SEO metadata is centralized in **`site.config.
 npm run seo
 ```
 
-This updates `sitemap.xml`, `robots.txt`, `cities/*.html`, `cities/index.html`, and `comparisons/*.html`.
+This updates `sitemap.xml`, `robots.txt`, `og-image.png` (from `og-image.svg` via `resvg`), `cities/*.html`, `cities/index.html`, and `comparisons/*.html`.
 
 3. Confirm `index.html` canonical/OG URLs match `SITE_URL`.
-4. Optional: export `og-image.svg` to **1200×630 PNG** as `og-image.png` and point social `og:image` tags to it.
+4. **Social previews** use `og-image.png` (1200×630). iMessage, Slack, and LinkedIn do not render SVG — commit the PNG after editing `og-image.svg` (`npm run seo:og` or `node scripts/generate-og-image.js`).
+5. **Default preview text** lives in `site.config.js` as `DEFAULT_SHARE` (`ogTitle` + `ogDescription`). Pages without their own `ogTitle` / `ogDescription` in `PAGE_SEO` inherit these for Open Graph and Twitter. Homepage copy is overridden via `HOME_SHARE`. Run `npm run seo` (includes `sync-static-seo.js`) to refresh hand-edited HTML.
 
 ## Sitemap
 

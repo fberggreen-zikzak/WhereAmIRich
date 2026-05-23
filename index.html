@@ -8,46 +8,56 @@
     />
     <meta name="theme-color" content="#0f0f0f" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="googlebot" content="index, follow" />
-    <!-- Google Search Console: uncomment and set content after verifying ownership -->
     <meta name="google-site-verification" content="UpYZmDYAv4PtuA1oaHahVjoATzHxX42OO2S9xteou9Q" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8B5FDK9V77"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-8B5FDK9V77");
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6644431061410794" crossorigin="anonymous"></script>
 
-    <title>Where Am I Rich — Salary Purchasing Power Calculator</title>
+    <title>WhereAmIRich.com — Salary Purchasing Power Calculator</title>
     <meta
       name="description"
       content="Compare your monthly salary to 100+ cities worldwide. See equivalent spending power and where you're better or worse off than home — free, instant, shareable."
     />
-    <meta name="author" content="Where Am I Rich" />
+    <meta name="author" content="Bulgogi ApS" />
     <link rel="canonical" href="https://www.whereamirich.com/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Where Am I Rich" />
+    <meta property="og:site_name" content="WhereAmIRich.com" />
     <meta property="og:locale" content="en_US" />
-    <meta
-      property="og:title"
-      content="Where Am I Rich — Salary Purchasing Power Calculator"
-    />
-    <meta
-      property="og:description"
-      content="Enter your monthly salary and home city. See equivalent pay in London, Lisbon, Bangkok, and 100+ destinations — purchasing power, not hype."
-    />
+    <meta property="og:title" content="Rich in Lisbon. Poor in London." />
+    <meta property="og:description" content="Enter your monthly salary and home city. See equivalent pay in 100+ cities — where you're rich or poor after local costs." />
     <meta property="og:url" content="https://www.whereamirich.com/" />
-    <meta property="og:image" content="https://www.whereamirich.com/og-image.svg" />
+    <meta property="og:image" content="https://www.whereamirich.com/og-image.png" />
+    <meta property="og:image:secure_url" content="https://www.whereamirich.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="Rich in Lisbon. Poor in London. — global salary purchasing power calculator"
-    />
-
+    <meta property="og:image:alt" content="Rich in Lisbon. Poor in London. — compare salary purchasing power across 100+ cities" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Where Am I Rich — Salary purchasing power" />
+    <meta name="twitter:title" content="Rich in Lisbon. Poor in London." />
+    <meta name="twitter:description" content="Enter your monthly salary and home city. See equivalent pay in 100+ cities — where you're rich or poor after local costs." />
+    <meta name="twitter:image" content="https://www.whereamirich.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Rich in Lisbon. Poor in London. — compare salary purchasing power across 100+ cities" />
+    <meta name="twitter:title" content="Rich in Lisbon. Poor in London." />
     <meta
       name="twitter:description"
-      content="Rich in Lisbon? Poor in London? Compare your salary to 100+ cities in seconds."
+      content="Enter your monthly salary and home city. See equivalent pay in 100+ cities — where you're rich or poor after local costs."
     />
-    <meta name="twitter:image" content="https://www.whereamirich.com/og-image.svg" />
+    <meta name="twitter:image" content="https://www.whereamirich.com/og-image.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Rich in Lisbon. Poor in London. — compare salary purchasing power across 100+ cities"
+    />
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="shortcut icon" href="favicon.svg" />
@@ -62,15 +72,16 @@
           {
             "@type": "Organization",
             "@id": "https://www.whereamirich.com/#organization",
-            "name": "Where Am I Rich",
+            "name": "WhereAmIRich.com",
+            "legalName": "Bulgogi ApS",
             "url": "https://www.whereamirich.com/",
-            "logo": "https://www.whereamirich.com/og-image.svg"
+            "logo": "https://www.whereamirich.com/og-image.png"
           },
           {
             "@type": "WebSite",
             "@id": "https://www.whereamirich.com/#website",
             "url": "https://www.whereamirich.com/",
-            "name": "Where Am I Rich",
+            "name": "WhereAmIRich.com",
             "description": "Compare salary purchasing power across 100+ global cities.",
             "inLanguage": "en",
             "publisher": { "@id": "https://www.whereamirich.com/#organization" },
@@ -86,7 +97,7 @@
           {
             "@type": "SoftwareApplication",
             "@id": "https://www.whereamirich.com/#app",
-            "name": "Where Am I Rich",
+            "name": "WhereAmIRich.com",
             "url": "https://www.whereamirich.com/",
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "Any",
@@ -133,38 +144,42 @@
   </head>
   <body>
     <a class="skip-link" href="#salary-input">Skip to salary input</a>
-    <header class="site-header panel">
+    <header class="site-header">
       <div class="site-header__inner">
         <a class="site-header__brand" href="index.html" aria-current="page">
-          <span class="site-header__name">Where Am I Rich</span>
-          <span class="site-header__tagline">Rich in Lisbon. Poor in London.</span>
+          <span class="site-header__name">WhereAmIRich.com</span>
+          <span class="site-header__tagline">Purchasing power, city by city.</span>
         </a>
         <nav class="site-nav" aria-label="Site">
-          <a href="index.html" aria-current="page">Calculator</a>
-          <a href="cities/index.html">City guides</a>
-          <a href="how-it-works.html">How it works</a>
-          <a href="methodology.html">Methodology</a>
-          <a href="faq.html">FAQ</a>
+          <a class="site-nav__link" href="index.html" aria-current="page">Calculator</a>
+          <a class="site-nav__link" href="cities/index.html">City guides</a>
+          <a class="site-nav__link" href="how-it-works.html">How it works</a>
+          <a class="site-nav__link" href="methodology.html">Methodology</a>
+          <a class="site-nav__link" href="faq.html">FAQ</a>
         </nav>
       </div>
     </header>
-    <main class="page" id="main-content">
-      <section class="page-intro panel" aria-labelledby="page-intro-heading">
-        <h1 id="page-intro-heading" class="page-intro__title">Where does your salary go furthest?</h1>
-        <p class="page-intro__text">
-          Compare monthly pay across 100+ cities using Numbeo cost-of-living data. See equivalent spending power,
-          how each place stacks up against your home city, and typical local salaries — free, with no account.
-        </p>
-        <ul class="page-intro__links">
-          <li><a href="cities/index.html">City salary guides</a></li>
-          <li><a href="how-it-works.html">How the calculator works</a></li>
-          <li><a href="methodology.html">Methodology &amp; limitations</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-        </ul>
-      </section>
+    <main class="page page--home" id="main-content">
+      <section class="hero panel" aria-labelledby="page-intro-heading">
+        <div class="hero__intro">
+          <h1 id="page-intro-heading" class="hero__title">Where does your salary go furthest?</h1>
+          <p class="hero__lead">
+            Compare monthly pay across 100+ cities — spending power, local averages, and Numbeo cost-of-living data. Free, instant, no account.
+          </p>
+          <p class="compare__disclaimer" role="note">
+            Indicative estimates for inspiration only — not for financial decisions.
+            <a href="terms.html">Terms of use</a>
+          </p>
+          <nav class="hero__links" aria-label="Learn more">
+            <a class="hero__link" href="cities/index.html">City guides</a>
+            <a class="hero__link" href="how-it-works.html">How it works</a>
+            <a class="hero__link" href="methodology.html">Methodology</a>
+            <a class="hero__link" href="faq.html">FAQ</a>
+          </nav>
+        </div>
 
-      <section class="compare panel" aria-labelledby="compare-heading">
-        <h2 id="compare-heading" class="visually-hidden">Salary comparison</h2>
+        <div class="hero__calc compare" aria-labelledby="compare-heading">
+          <h2 id="compare-heading" class="visually-hidden">Salary comparison</h2>
 
         <div class="compare__toolbar">
           <div class="compare__control">
@@ -248,6 +263,7 @@
             </p>
           </div>
         </div>
+        </div>
       </section>
 
       <section class="destinations" aria-labelledby="destinations-heading">
@@ -325,8 +341,8 @@
     <footer class="site-footer panel">
       <div class="site-footer__grid">
         <div>
-          <p class="site-footer__title">Where Am I Rich</p>
-          <p class="site-footer__text">Cost-of-living comparisons for salary decisions — not financial advice.</p>
+          <p class="site-footer__title">WhereAmIRich.com</p>
+          <p class="site-footer__text">For inspiration and general curiosity only — not for financial, tax, legal, or relocation decisions. All data is indicative. <a href="terms.html">Terms of use</a></p>
         </div>
         <nav aria-label="Learn more">
           <p class="site-footer__heading">Learn</p>
@@ -334,6 +350,7 @@
             <li><a href="how-it-works.html">How the calculator works</a></li>
             <li><a href="methodology.html">Methodology &amp; data sources</a></li>
             <li><a href="faq.html">Frequently asked questions</a></li>
+            <li><a href="terms.html">Terms of use</a></li>
           </ul>
         </nav>
         <nav aria-label="City guides">
@@ -357,12 +374,13 @@
           </ul>
         </nav>
       </div>
+      <p class="site-footer__legal">© 2026 Bulgogi ApS. All rights reserved.</p>
       <p class="site-footer__meta">Data: Numbeo cost-of-living indices (approximate). <a href="methodology.html">Read limitations</a>.</p>
     </footer>
 
     <noscript>
       <div class="noscript panel">
-        <h2>Where Am I Rich — salary purchasing power</h2>
+        <h2>WhereAmIRich.com — salary purchasing power</h2>
         <p>
           Enter your monthly salary and home city to see equivalent pay and whether you are
           better or worse off across 100+ destinations. Based on Numbeo cost-of-living indices.

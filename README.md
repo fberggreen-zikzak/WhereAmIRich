@@ -1,4 +1,4 @@
-# Where Am I Rich
+# WhereAmIRich.com
 
 Compare your salary’s purchasing power across major cities. Enter your monthly pay and **current city**; see how it translates elsewhere using cost-of-living indices.
 

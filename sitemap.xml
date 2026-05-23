@@ -25,6 +25,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.whereamirich.com/terms.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.whereamirich.com/cities/index.html</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>

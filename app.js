@@ -1,3 +1,4 @@
+import { SITE_NAME } from "./site.config.js";
 import {
   CITIES,
   DEFAULT_BASE_CITY_ID,
@@ -131,9 +132,9 @@ function renderHero(results, salary) {
   }
 
   if (totalCities > 0) {
-    document.title = `${richest.name} vs ${poorest.name} — Where Am I Rich`;
+    document.title = `${richest.name} vs ${poorest.name} — ${SITE_NAME}`;
   } else {
-    document.title = `Where Am I Rich — Salary purchasing power`;
+    document.title = `${SITE_NAME} — Salary purchasing power`;
   }
 }
 
@@ -353,6 +354,20 @@ function updateBaseCityPickerDisplay(city) {
   }
 }
 
+let pickerBackdrop = null;
+
+function ensurePickerBackdrop() {
+  if (pickerBackdrop) return pickerBackdrop;
+  pickerBackdrop = document.createElement("button");
+  pickerBackdrop.type = "button";
+  pickerBackdrop.className = "picker-backdrop";
+  pickerBackdrop.hidden = true;
+  pickerBackdrop.setAttribute("aria-label", "Close city list");
+  pickerBackdrop.addEventListener("click", () => closeBaseCityPicker());
+  document.body.appendChild(pickerBackdrop);
+  return pickerBackdrop;
+}
+
 function setBaseCityPickerOpen(open) {
   if (!els.baseCityPanel || !els.baseCityTrigger) return;
   els.baseCityPanel.hidden = !open;
@@ -360,6 +375,10 @@ function setBaseCityPickerOpen(open) {
   if (els.baseCitySearch) {
     els.baseCitySearch.setAttribute("aria-expanded", String(open));
   }
+  els.baseCityPicker?.classList.toggle("base-city-picker--open", open);
+  document.body.classList.toggle("picker-open", open);
+  const backdrop = ensurePickerBackdrop();
+  backdrop.hidden = !open;
 }
 
 function renderBaseCityList(query = "") {
@@ -411,7 +430,9 @@ function selectBaseCity(cityId) {
 function openBaseCityPicker() {
   setBaseCityPickerOpen(true);
   renderBaseCityList(els.baseCitySearch?.value ?? "");
-  els.baseCitySearch?.focus();
+  requestAnimationFrame(() => {
+    els.baseCitySearch?.focus({ preventScroll: true });
+  });
 }
 
 function closeBaseCityPicker() {

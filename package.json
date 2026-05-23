@@ -1,5 +1,5 @@
 {
-  "name": "rich-or-poor",
+  "name": "whereamirich",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "seo": "node scripts/generate-sitemap.js && node scripts/generate-city-pages.js && node scripts/generate-cities-index.js && node scripts/generate-compare-pages.js && node scripts/sync-static-seo.js",
+    "seo": "node scripts/generate-og-image.js && node scripts/generate-sitemap.js && node scripts/generate-terms-page.js && node scripts/generate-city-pages.js && node scripts/generate-cities-index.js && node scripts/generate-compare-pages.js && node scripts/sync-static-seo.js",
+    "seo:og": "node scripts/generate-og-image.js",
     "seo:sitemap": "node scripts/generate-sitemap.js",
     "seo:cities": "node scripts/generate-city-pages.js"
   },
