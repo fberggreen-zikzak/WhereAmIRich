@@ -29,50 +29,59 @@ export function classifyStatus(factor) {
   return "similar";
 }
 
-/** Within ~3% of home — used for ranking copy, tighter than card badges */
-const VS_HOME_SIMILAR_BAND = 0.03;
+/** Within ~1% of home — ranking “about the same” band */
+const VS_HOME_SAME_MAX_PCT = 1;
+/** Up to ~7% uses “slightly” wording before numeric labels */
+const VS_HOME_SLIGHT_MAX_PCT = 7;
 
 /**
- * Human-readable spending power vs home (ranking section).
+ * Ranking row copy + short badge (text carries detail; badge is categorical).
  * @param {number} factor
+ * @returns {{ text: string, badgeStatus: "better" | "similar" | "worse", badgeLabel: string }}
  */
-export function formatVsHomeComparison(factor) {
+export function vsHomeRankingCopy(factor) {
   const pct = Math.round((factor - 1) * 100);
-  if (Math.abs(pct) <= 3) return "About the same as home";
-  if (pct > 0) return `${pct}% easier than home`;
-  return `${Math.abs(pct)}% tougher than home`;
-}
+  const abs = Math.abs(pct);
 
-/**
- * @param {number} factor
- * @returns {{ status: "better" | "similar" | "worse", label: string }}
- */
-export function vsHomeBadge(factor) {
-  const pct = (factor - 1) * 100;
-  if (Math.abs(pct) <= 3) {
-    return { status: "similar", label: "About the same" };
+  if (abs <= VS_HOME_SAME_MAX_PCT) {
+    return {
+      text: "About the same as home",
+      badgeStatus: "similar",
+      badgeLabel: "Similar",
+    };
   }
+
   if (pct > 0) {
-    return { status: "better", label: "Easier than home" };
+    const text =
+      abs <= VS_HOME_SLIGHT_MAX_PCT
+        ? "Slightly easier than home"
+        : `${abs}% easier than home`;
+    return { text, badgeStatus: "better", badgeLabel: "Easier" };
   }
-  return { status: "worse", label: "Tougher than home" };
+
+  const text =
+    abs <= VS_HOME_SLIGHT_MAX_PCT
+      ? "Slightly tougher than home"
+      : `${abs}% tougher than home`;
+  return { text, badgeStatus: "worse", badgeLabel: "Tougher" };
 }
 
 /**
  * @param {{ factor: number }} city
  * @param {number} index
- * @param {{ name: string }[]} ranked
+ * @param {{ name: string, equivalent?: number }[]} ranked
  * @param {{ name: string }} base
  */
 export function rankingRowInsight(city, index, ranked, base) {
-  if (index === 0) return "Least value in this set";
-  if (Math.abs(city.factor - 1) <= VS_HOME_SIMILAR_BAND) {
+  if (index === 0) return "Toughest in this set";
+  const pctFromHome = Math.abs((city.factor - 1) * 100);
+  if (pctFromHome <= VS_HOME_SAME_MAX_PCT) {
     return `Close to ${base.name}`;
   }
   if (index <= 2 && city.factor < 0.9) {
     return "Among the hardest for this salary";
   }
-  if (index === 1 && ranked[0]) {
+  if (index === 1 && ranked[0]?.equivalent != null) {
     const gapPct = Math.round(
       ((ranked[0].equivalent - city.equivalent) / city.equivalent) * 100
     );
@@ -232,13 +241,13 @@ export function computeMostExpensiveCities(cities, salary, baseCityId, limit = 2
     .sort((a, b) => a.equivalent - b.equivalent);
 
   const topRows = allRows.slice(0, limit).map((city, index, ranked) => {
-    const badge = vsHomeBadge(city.factor);
+    const vsHome = vsHomeRankingCopy(city.factor);
     return {
       ...city,
       amount: formatMoney(city.equivalent, base.currencyLabel),
-      vsHomeText: formatVsHomeComparison(city.factor),
-      badgeStatus: badge.status,
-      badgeLabel: badge.label,
+      vsHomeText: vsHome.text,
+      badgeStatus: vsHome.badgeStatus,
+      badgeLabel: vsHome.badgeLabel,
       insight: rankingRowInsight(city, index, ranked, base),
     };
   });

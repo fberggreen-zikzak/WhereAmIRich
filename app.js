@@ -39,6 +39,7 @@ const els = {
   grid: document.getElementById("city-grid"),
   shareFacebook: document.getElementById("share-facebook"),
   shareLinkedIn: document.getElementById("share-linkedin"),
+  shareSubtitle: document.getElementById("share-subtitle"),
   copyBtn: document.getElementById("copy-link"),
   copyLabel: document.getElementById("copy-label"),
   expensiveList: document.getElementById("expensive-list"),
@@ -148,6 +149,23 @@ function renderHero(results, salary) {
   }
 
   updateShareMeta(results, salary, base);
+}
+
+function renderShareCopy(results) {
+  if (!els.shareSubtitle) return;
+
+  const { richest, poorest, totalCities } = results;
+  if (totalCities === 0) {
+    els.shareSubtitle.textContent = "Share your result and compare with friends.";
+    return;
+  }
+
+  if (richest.id === poorest.id) {
+    els.shareSubtitle.textContent = `Would your friends feel rich or tough in ${richest.name}?`;
+    return;
+  }
+
+  els.shareSubtitle.textContent = `Would your friends be rich in ${richest.name} or tough in ${poorest.name}?`;
 }
 
 function renderCityCard(city, base) {
@@ -418,6 +436,7 @@ function applyState(salary, baseCityId) {
   updateBaseCityPickerDisplay(base);
   syncCurrencyUi(base);
   renderHero(results, salary);
+  renderShareCopy(results);
   renderGrid(results);
   renderExpensiveCities(salary, base.id);
   updateUrl(salary, base.id, comparisonCityIds);
@@ -657,7 +676,7 @@ function flashCopyLabel(message, resetMs = 2000) {
   if (!els.copyLabel) return;
   els.copyLabel.textContent = message;
   setTimeout(() => {
-    els.copyLabel.textContent = "Copy link";
+    els.copyLabel.textContent = "Copy result link";
   }, resetMs);
 }
 
