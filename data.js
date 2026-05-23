@@ -10,7 +10,7 @@ import { CITY_CATALOG } from "./cities-catalog.js";
 import { AVERAGE_MONTHLY_SALARY } from "./city-salaries.js";
 
 export const DATA_SOURCE = "Numbeo";
-export const DATA_UPDATED = "2025-05";
+export const DATA_UPDATED = "2026-05";
 export const DEFAULT_SALARY = 6200;
 export const DEFAULT_BASE_CITY_ID = "new-york";
 

@@ -437,6 +437,75 @@ body {
   padding-top: 0.125rem;
 }
 
+.compare__control-hint {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.compare__note {
+  margin: 0.35rem 0 0;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+.compare__note a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.compare__note a:hover {
+  text-decoration: underline;
+}
+
+.city-card__actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.city-card__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.city-card__remove:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.city-card__guide {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.city-card__guide:hover {
+  text-decoration: underline;
+}
+
 .compare__disclaimer {
   margin: 0.35rem 0 0;
   font-size: 0.6875rem;
@@ -669,7 +738,7 @@ body {
 
 .city-card__badge {
   flex-shrink: 0;
-  max-width: 48%;
+  max-width: none;
   display: inline-flex;
   align-items: center;
   padding: 0.28rem 0.55rem;

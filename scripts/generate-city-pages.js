@@ -5,7 +5,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { CITY_CATALOG } from "../cities-catalog.js";
 import { AVERAGE_MONTHLY_SALARY } from "../city-salaries.js";
-import { CITIES_INDEX_PATH, FEATURED_CITIES, SITE_URL } from "../site.config.js";
+import { FEATURED_COMPARISONS, CITIES_INDEX_PATH, FEATURED_CITIES, SITE_URL } from "../site.config.js";
 import {
   escapeHtml,
   organizationJsonLd,
@@ -72,6 +72,11 @@ function buildCityPage(cityId) {
 
   const calcUrl = `${assetPrefix}index.html?city=${city.id}`;
 
+  const compareLinks = FEATURED_COMPARISONS.map(
+    (c) =>
+      `<a href="${assetPrefix}comparisons/${c.slug}.html">${escapeHtml(c.title)}</a>`
+  ).join(" ·\n          ");
+
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -127,8 +132,7 @@ ${rows}
         <h2>More guides</h2>
         <p>
           <a href="${assetPrefix}${CITIES_INDEX_PATH.replace(/^\//, "")}">Browse all city guides</a> ·
-          <a href="${assetPrefix}comparisons/london-vs-lisbon.html">London vs Lisbon</a> ·
-          <a href="${assetPrefix}comparisons/new-york-vs-london.html">New York vs London</a>
+          ${compareLinks}
         </p>
       </article>
     </main>

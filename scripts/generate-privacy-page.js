@@ -5,6 +5,7 @@
 import { writeFileSync } from "fs";
 import {
   ADSENSE_CLIENT_ID,
+  CONTACT_EMAIL,
   COPYRIGHT_HOLDER,
   GA_MEASUREMENT_ID,
   PRIVACY_PATH,
@@ -101,7 +102,8 @@ ${renderBreadcrumb(assetPrefix, [
 
         <h2>9. Contact</h2>
         <p>
-          Privacy questions: contact ${escapeHtml(COPYRIGHT_HOLDER)} through your usual Bulgogi ApS channel.
+          Privacy questions: <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a>
+          (${escapeHtml(COPYRIGHT_HOLDER)}).
           See also <a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">terms of use</a>.
         </p>
 

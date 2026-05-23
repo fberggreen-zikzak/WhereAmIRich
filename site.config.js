@@ -45,6 +45,8 @@ export const SITE_KEYWORDS = [
 ];
 
 export const COPYRIGHT_HOLDER = "Bulgogi ApS";
+/** Public contact for legal/privacy (update if you use a different inbox). */
+export const CONTACT_EMAIL = "hello@bulgogi.dk";
 
 /** Short disclaimer shown in footer and near the calculator. */
 export const SITE_DISCLAIMER_SHORT =
@@ -82,6 +84,7 @@ export const SITEMAP_PAGES = [
   { path: CITIES_INDEX_PATH, changefreq: "monthly", priority: "0.75" },
   { path: "/comparisons/london-vs-lisbon.html", changefreq: "monthly", priority: "0.7" },
   { path: "/comparisons/new-york-vs-london.html", changefreq: "monthly", priority: "0.7" },
+  { path: "/comparisons/dubai-vs-bangkok.html", changefreq: "monthly", priority: "0.7" },
   { path: "/cities/london.html", changefreq: "monthly", priority: "0.7" },
   { path: "/cities/new-york.html", changefreq: "monthly", priority: "0.7" },
   { path: "/cities/lisbon.html", changefreq: "monthly", priority: "0.7" },
@@ -89,6 +92,8 @@ export const SITEMAP_PAGES = [
   { path: "/cities/dubai.html", changefreq: "monthly", priority: "0.7" },
   { path: "/cities/singapore.html", changefreq: "monthly", priority: "0.7" },
   { path: "/cities/berlin.html", changefreq: "monthly", priority: "0.7" },
+  { path: "/cities/paris.html", changefreq: "monthly", priority: "0.7" },
+  { path: "/cities/barcelona.html", changefreq: "monthly", priority: "0.7" },
 ];
 
 /** Per-page title + meta description (path key matches SITEMAP_PAGES path) */
@@ -128,7 +133,7 @@ export const PAGE_SEO = {
   [CITIES_INDEX_PATH]: {
     title: "City Salary Guides — WhereAmIRich.com",
     description:
-      "Browse salary purchasing power guides for London, New York, Lisbon, Bangkok, Dubai, Singapore, Berlin, and more — with links to the live calculator.",
+      "Browse salary purchasing power guides for London, New York, Paris, Barcelona, Lisbon, Bangkok, Dubai, Singapore, Berlin, and more.",
   },
   "/comparisons/london-vs-lisbon.html": {
     title: "London vs Lisbon: Cost of Living & Salary Comparison",
@@ -139,6 +144,11 @@ export const PAGE_SEO = {
     title: "New York vs London: Cost of Living & Salary Comparison",
     description:
       "New York vs London purchasing power: COL factors, average monthly pay, and when each city feels cheaper for the same lifestyle.",
+  },
+  "/comparisons/dubai-vs-bangkok.html": {
+    title: "Dubai vs Bangkok: Cost of Living & Salary Comparison",
+    description:
+      "Dubai vs Bangkok for expats and remote workers — COL indices, typical salaries, and where the same paycheck stretches further.",
   },
   "/cities/london.html": {
     title: "London Salary Purchasing Power — WhereAmIRich.com",
@@ -175,6 +185,16 @@ export const PAGE_SEO = {
     description:
       "Berlin cost of living vs Western capitals — equivalent monthly salary and spending power from a Berlin-based paycheck.",
   },
+  "/cities/paris.html": {
+    title: "Paris Salary Purchasing Power — WhereAmIRich.com",
+    description:
+      "How far a Paris salary stretches in London, Lisbon, Bangkok, and other cities — Numbeo COL factors and local pay context.",
+  },
+  "/cities/barcelona.html": {
+    title: "Barcelona Salary Purchasing Power — WhereAmIRich.com",
+    description:
+      "Barcelona vs Madrid, London, and Lisbon — equivalent salary and spending power from a Barcelona-based monthly paycheck.",
+  },
 };
 
 /** Featured city landings linked from homepage/footer */
@@ -186,6 +206,8 @@ export const FEATURED_CITIES = [
   { id: "dubai", name: "Dubai", path: "/cities/dubai.html" },
   { id: "singapore", name: "Singapore", path: "/cities/singapore.html" },
   { id: "berlin", name: "Berlin", path: "/cities/berlin.html" },
+  { id: "paris", name: "Paris", path: "/cities/paris.html" },
+  { id: "barcelona", name: "Barcelona", path: "/cities/barcelona.html" },
 ];
 
 /** Head-to-head comparison pages (unique copy, not mass-generated) */
@@ -205,5 +227,13 @@ export const FEATURED_COMPARISONS = [
     title: "New York vs London",
     angle:
       "Two finance and media capitals with similar sticker prices — small COL differences still shift monthly equivalents.",
+  },
+  {
+    slug: "dubai-vs-bangkok",
+    cityAId: "dubai",
+    cityBId: "bangkok",
+    title: "Dubai vs Bangkok",
+    angle:
+      "Tax-free Gulf hub vs Southeast Asia value — very different indices, salaries, and lifestyle costs beyond the calculator basket.",
   },
 ];

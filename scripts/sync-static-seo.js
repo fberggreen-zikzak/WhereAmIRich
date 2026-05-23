@@ -10,6 +10,7 @@ import {
   SITE_URL,
   TERMS_PATH,
 } from "../site.config.js";
+import { DATA_UPDATED } from "../data.js";
 import { renderConsentScripts, renderSocialPreviewTags } from "./seo-html.js";
 
 const ROOT = new URL("../", import.meta.url);
@@ -70,6 +71,15 @@ for (const file of FILES) {
   }
   if (html.includes(OLD_FOOTER_TEXT)) {
     html = html.split(OLD_FOOTER_TEXT).join(NEW_FOOTER_HTML);
+    changed = true;
+  }
+  const dataMeta = /Numbeo data \(indicative, updated \d{4}-\d{2}\)/;
+  if (dataMeta.test(html)) {
+    html = html.replace(dataMeta, `Numbeo data (indicative, updated ${DATA_UPDATED})`);
+    changed = true;
+  }
+  if (/last data pass: \d{4}-\d{2}/.test(html)) {
+    html = html.replace(/last data pass: \d{4}-\d{2}/g, `last data pass: ${DATA_UPDATED}`);
     changed = true;
   }
   if (ANALYTICS_BLOCK.test(html)) {

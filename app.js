@@ -1,4 +1,4 @@
-import { SITE_NAME } from "./site.config.js";
+import { FEATURED_CITIES, SITE_NAME } from "./site.config.js";
 import {
   CITIES,
   DEFAULT_BASE_CITY_ID,
@@ -18,6 +18,10 @@ import {
   resolveComparisonIds,
   stateFromUrl,
 } from "./calc.js";
+
+const CITY_GUIDE_PATHS = Object.fromEntries(
+  FEATURED_CITIES.map((c) => [c.id, c.path.replace(/^\//, "")])
+);
 
 const els = {
   salaryInput: document.getElementById("salary-input"),
@@ -84,6 +88,22 @@ function updateUrl(salary, baseCityId, destIds) {
   history.replaceState(null, "", url);
 }
 
+function updateShareMeta(results, salary, base) {
+  const sorted = [...results.cities].sort((a, b) => b.equivalent - a.equivalent);
+  const richest = sorted[0];
+  const poorest = sorted[sorted.length - 1];
+  const title =
+    richest && poorest && richest.id !== poorest.id
+      ? `${richest.name} vs ${poorest.name} — ${SITE_NAME}`
+      : `${SITE_NAME} — Salary purchasing power`;
+  const desc = `${formatMoney(salary, base.currencyLabel)}/mo in ${base.name} — compare purchasing power in ${results.cities.length} cities (indicative).`;
+
+  document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute("content", desc);
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", desc);
+}
+
 function renderHero(results, salary) {
   const { base, richest, poorest, betterOffCount, totalCities } = results;
   const pay = formatMoney(salary, base.currencyLabel);
@@ -136,12 +156,18 @@ function renderHero(results, salary) {
   } else {
     document.title = `${SITE_NAME} — Salary purchasing power`;
   }
+
+  updateShareMeta(results, salary, base);
 }
 
 function renderCityCard(city, base) {
   const article = document.createElement("article");
   article.className = `city-card city-card--${city.status}`;
   const statusLabel = STATUS_LABELS[city.status];
+  const guidePath = CITY_GUIDE_PATHS[city.id];
+  const guideLink = guidePath
+    ? `<a class="city-card__guide" href="${guidePath}">${city.name} salary guide</a>`
+    : "";
   article.setAttribute(
     "aria-label",
     `${city.name}: ${statusLabel}. ${city.amount} per month, ${AMOUNT_SUBLABEL}. ${LOCAL_AVERAGE_LABEL} ${city.averageSalaryLabel} per month. ${city.vsAverageText}. Compared to ${base.name}.`
@@ -160,7 +186,10 @@ function renderCityCard(city, base) {
         />
         <h3 class="city-card__name">${city.name}</h3>
       </div>
-      <span class="city-card__badge">${statusLabel}</span>
+      <div class="city-card__actions">
+        <span class="city-card__badge">${statusLabel}</span>
+        <button type="button" class="city-card__remove" aria-label="Remove ${city.name} from comparison">×</button>
+      </div>
     </div>
     <p class="city-card__amount">
       <span class="city-card__amount-value">${city.amount}</span><span class="city-card__period">/mo</span>
@@ -172,8 +201,13 @@ function renderCityCard(city, base) {
         <span class="city-card__benchmark-amount">${city.averageSalaryLabel}</span><span class="city-card__period">/mo</span>
       </p>
       <p class="city-card__delta city-card__delta--${city.vsAverageTone}">${city.vsAverageText}</p>
+      ${guideLink}
     </div>
   `;
+
+  article.querySelector(".city-card__remove")?.addEventListener("click", () => {
+    removeDestination(city.id);
+  });
 
   return article;
 }
@@ -294,6 +328,12 @@ function addDestination(cityId) {
   if (!getCityById(cityId) || cityId === currentBaseCityId) return;
   if (comparisonCityIds.includes(cityId)) return;
   comparisonCityIds = [...comparisonCityIds, cityId];
+  applyState(currentSalary, currentBaseCityId);
+}
+
+function removeDestination(cityId) {
+  if (!comparisonCityIds.includes(cityId)) return;
+  comparisonCityIds = comparisonCityIds.filter((id) => id !== cityId);
   applyState(currentSalary, currentBaseCityId);
 }
 

@@ -3,7 +3,7 @@
  * Usage: node scripts/generate-terms-page.js
  */
 import { writeFileSync } from "fs";
-import { COPYRIGHT_HOLDER, SITE_NAME, SITE_URL, TERMS_PATH } from "../site.config.js";
+import { COPYRIGHT_HOLDER, CONTACT_EMAIL, SITE_NAME, SITE_URL, TERMS_PATH } from "../site.config.js";
 import {
   escapeHtml,
   organizationJsonLd,
@@ -116,8 +116,8 @@ ${renderBreadcrumb(assetPrefix, [
 
         <h2>9. Contact</h2>
         <p>
-          Questions about these terms may be directed to ${escapeHtml(COPYRIGHT_HOLDER)} via the contact details you
-          use for other Bulgogi ApS services, or through channels listed on our main site once published.
+          Questions about these terms: <a href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a>
+          (${escapeHtml(COPYRIGHT_HOLDER)}).
         </p>
 
         <p>

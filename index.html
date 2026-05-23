@@ -46,6 +46,10 @@
     <meta name="twitter:image" content="https://www.whereamirich.com/og-image.png" />
     <meta name="twitter:image:alt" content="Rich in Lisbon. Poor in London. — compare salary purchasing power across 100+ cities" />
     <meta name="twitter:title" content="Rich in Lisbon. Poor in London." />
+    <meta name="twitter:description" content="Enter your monthly salary and home city. See equivalent pay in 100+ cities — where you're rich or poor after local costs." />
+    <meta name="twitter:image" content="https://www.whereamirich.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Rich in Lisbon. Poor in London. — compare salary purchasing power across 100+ cities" />
+    <meta name="twitter:title" content="Rich in Lisbon. Poor in London." />
     <meta
       name="twitter:description"
       content="Enter your monthly salary and home city. See equivalent pay in 100+ cities — where you're rich or poor after local costs."
@@ -124,7 +128,9 @@
               { "@type": "ListItem", "position": 4, "name": "Bangkok", "url": "https://www.whereamirich.com/cities/bangkok.html" },
               { "@type": "ListItem", "position": 5, "name": "Dubai", "url": "https://www.whereamirich.com/cities/dubai.html" },
               { "@type": "ListItem", "position": 6, "name": "Singapore", "url": "https://www.whereamirich.com/cities/singapore.html" },
-              { "@type": "ListItem", "position": 7, "name": "Berlin", "url": "https://www.whereamirich.com/cities/berlin.html" }
+              { "@type": "ListItem", "position": 7, "name": "Berlin", "url": "https://www.whereamirich.com/cities/berlin.html" },
+              { "@type": "ListItem", "position": 8, "name": "Paris", "url": "https://www.whereamirich.com/cities/paris.html" },
+              { "@type": "ListItem", "position": 9, "name": "Barcelona", "url": "https://www.whereamirich.com/cities/barcelona.html" }
             ]
           }
         ]
@@ -180,7 +186,7 @@
 
         <div class="compare__toolbar">
           <div class="compare__control">
-            <label class="compare__control-label" for="salary-input">Monthly salary</label>
+            <label class="compare__control-label" for="salary-input">Monthly salary <span class="compare__control-hint">(in your home currency)</span></label>
             <div class="compare__salary-row">
               <span class="compare__suffix" id="currency-suffix" aria-hidden="true">$</span>
               <input
@@ -241,6 +247,11 @@
           </div>
         </div>
 
+        <p class="compare__note" role="note">
+          Cost-of-living indices <strong>exclude rent</strong>. Housing can change how far your pay goes —
+          <a href="methodology.html">see methodology</a>.
+        </p>
+
         <div class="compare__outcome">
           <p class="compare__eyebrow" id="hero-eyebrow">$6,200 in New York buys you</p>
           <h2 class="compare__hook" id="hero-title">
@@ -281,6 +292,8 @@
           <li><a href="cities/dubai.html">Dubai</a></li>
           <li><a href="cities/singapore.html">Singapore</a></li>
           <li><a href="cities/berlin.html">Berlin</a></li>
+          <li><a href="cities/paris.html">Paris</a></li>
+          <li><a href="cities/barcelona.html">Barcelona</a></li>
         </ul>
         <p class="featured-guides__more">
           <a href="cities/index.html">All city guides</a>
@@ -288,6 +301,8 @@
           <a href="comparisons/london-vs-lisbon.html">London vs Lisbon</a>
           <span aria-hidden="true"> · </span>
           <a href="comparisons/new-york-vs-london.html">New York vs London</a>
+          <span aria-hidden="true"> · </span>
+          <a href="comparisons/dubai-vs-bangkok.html">Dubai vs Bangkok</a>
         </p>
       </section>
 
@@ -295,7 +310,7 @@
         <div class="share__text">
           <h2 class="share__title" id="share-heading">Share your result</h2>
           <p class="share__subtitle">
-            How does your salary stack up? See how your friends compare.
+            Copy the link — friends see the same salary, home city, and destinations. Social previews use our default card; your exact numbers appear when they open the link.
           </p>
         </div>
         <div class="share__actions">
@@ -372,6 +387,8 @@
             <li><a href="cities/dubai.html">Dubai salary guide</a></li>
             <li><a href="cities/singapore.html">Singapore salary guide</a></li>
             <li><a href="cities/berlin.html">Berlin salary guide</a></li>
+            <li><a href="cities/paris.html">Paris salary guide</a></li>
+            <li><a href="cities/barcelona.html">Barcelona salary guide</a></li>
           </ul>
         </nav>
         <nav aria-label="City comparisons">
@@ -379,11 +396,12 @@
           <ul class="site-footer__links">
             <li><a href="comparisons/london-vs-lisbon.html">London vs Lisbon</a></li>
             <li><a href="comparisons/new-york-vs-london.html">New York vs London</a></li>
+            <li><a href="comparisons/dubai-vs-bangkok.html">Dubai vs Bangkok</a></li>
           </ul>
         </nav>
       </div>
       <p class="site-footer__legal">© 2026 Bulgogi ApS. All rights reserved.</p>
-      <p class="site-footer__meta">Numbeo data (indicative, updated 2025-05). <a href="methodology.html">Methodology</a> · <a href="privacy.html">Privacy</a></p>
+      <p class="site-footer__meta">Numbeo data (indicative, updated 2026-05). <a href="methodology.html">Methodology</a> · <a href="privacy.html">Privacy</a></p>
     </footer>
 
     <noscript>
