@@ -1,7 +1,9 @@
 {
-  "name": "Rich or Poor",
-  "short_name": "Rich or Poor",
-  "description": "Compare your salary purchasing power across cities",
+  "name": "Where Am I Rich",
+  "short_name": "Where Am I Rich",
+  "description": "Compare monthly salary purchasing power across 100+ cities using Numbeo cost-of-living data.",
+  "lang": "en",
+  "categories": ["finance", "utilities"],
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f0f0f",

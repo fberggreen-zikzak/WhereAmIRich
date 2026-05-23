@@ -1,56 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://richorpoor.com/</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/how-it-works.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/how-it-works.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/methodology.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/methodology.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/faq.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/faq.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/cities/london.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/cities/index.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.whereamirich.com/comparisons/london-vs-lisbon.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/cities/new-york.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/comparisons/new-york-vs-london.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/cities/lisbon.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/cities/london.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/cities/bangkok.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/cities/new-york.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://richorpoor.com/cities/dubai.html</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://www.whereamirich.com/cities/lisbon.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.whereamirich.com/cities/bangkok.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.whereamirich.com/cities/dubai.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.whereamirich.com/cities/singapore.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.whereamirich.com/cities/berlin.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

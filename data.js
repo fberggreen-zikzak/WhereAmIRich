@@ -14,7 +14,7 @@ export const DATA_UPDATED = "2025-05";
 export const DEFAULT_SALARY = 6200;
 export const DEFAULT_BASE_CITY_ID = "new-york";
 
-/** Default board: 8 globally high-traffic cities for expats & travel */
+/** Default board: 9 presets → 8 destinations after the home city is excluded */
 export const DEFAULT_COMPARISON_IDS = [
   "london",
   "paris",
@@ -24,6 +24,7 @@ export const DEFAULT_COMPARISON_IDS = [
   "dubai",
   "singapore",
   "bangkok",
+  "lisbon",
 ];
 
 /**

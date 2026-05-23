@@ -1,4 +1,4 @@
-# Rich or Poor
+# Where Am I Rich
 
 Compare your salary’s purchasing power across major cities. Enter your monthly pay and **current city**; see how it translates elsewhere using cost-of-living indices.
 
@@ -28,7 +28,9 @@ Included:
 - Per-page titles, descriptions, canonicals, breadcrumbs, JSON-LD
 - `sitemap.xml`, `robots.txt`, `favicon.svg`, `og-image.svg`
 
-Submit `https://your-domain.com/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
+Submit `https://www.whereamirich.com/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
+
+**Custom domain setup:** see **[DEPLOY.md](./DEPLOY.md)**.
 
 ## Run with Vite (when npm is available)
 

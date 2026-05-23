@@ -2,7 +2,9 @@
  * Shared HTML fragments for static SEO pages (Node build scripts only).
  */
 import {
+  CITIES_INDEX_PATH,
   FEATURED_CITIES,
+  FEATURED_COMPARISONS,
   ORGANIZATION,
   PAGE_SEO,
   SITE_NAME,
@@ -48,6 +50,7 @@ export function renderHead(path, opts = {}) {
     <meta property="og:description" content="${escapeHtml(seo.description)}" />
     <meta property="og:url" content="${canonical}" />
     <meta property="og:image" content="${SITE_URL}/og-image.svg" />
+    <meta property="og:image:alt" content="${escapeHtml(SITE_NAME)} — global salary purchasing power calculator" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(seo.title)}" />
     <meta name="twitter:description" content="${escapeHtml(seo.description)}" />
@@ -67,14 +70,16 @@ export function renderHead(path, opts = {}) {
 
 /**
  * @param {string} assetPrefix
- * @param {string} [active] path segment: home | how | method | faq | cities
+ * @param {string} [active] home | how | method | faq | cities | compare
  */
 export function renderSiteHeader(assetPrefix, active = "") {
   const home = active === "home" ? ' aria-current="page"' : "";
   const how = active === "how" ? ' aria-current="page"' : "";
   const method = active === "method" ? ' aria-current="page"' : "";
   const faq = active === "faq" ? ' aria-current="page"' : "";
+  const cities = active === "cities" ? ' aria-current="page"' : "";
   const calcHref = `${assetPrefix}index.html`;
+  const citiesHref = `${assetPrefix}${CITIES_INDEX_PATH.replace(/^\//, "")}`;
 
   return `    <header class="site-header panel">
       <div class="site-header__inner">
@@ -84,6 +89,7 @@ export function renderSiteHeader(assetPrefix, active = "") {
         </a>
         <nav class="site-nav" aria-label="Site">
           <a href="${calcHref}"${home}>Calculator</a>
+          <a href="${citiesHref}"${cities}>City guides</a>
           <a href="${assetPrefix}how-it-works.html"${how}>How it works</a>
           <a href="${assetPrefix}methodology.html"${method}>Methodology</a>
           <a href="${assetPrefix}faq.html"${faq}>FAQ</a>
@@ -101,6 +107,13 @@ export function renderSiteFooter(assetPrefix) {
       `            <li><a href="${assetPrefix}${c.path.replace(/^\//, "")}">${escapeHtml(c.name)} salary guide</a></li>`
   ).join("\n");
 
+  const compareLinks = FEATURED_COMPARISONS.map(
+    (c) =>
+      `            <li><a href="${assetPrefix}comparisons/${c.slug}.html">${escapeHtml(c.title)}</a></li>`
+  ).join("\n");
+
+  const citiesIndexHref = `${assetPrefix}${CITIES_INDEX_PATH.replace(/^\//, "")}`;
+
   return `    <footer class="site-footer panel">
       <div class="site-footer__grid">
         <div>
@@ -115,10 +128,17 @@ export function renderSiteFooter(assetPrefix) {
             <li><a href="${assetPrefix}faq.html">Frequently asked questions</a></li>
           </ul>
         </nav>
-        <nav aria-label="Popular cities">
-          <p class="site-footer__heading">Popular cities</p>
+        <nav aria-label="City guides">
+          <p class="site-footer__heading">City guides</p>
           <ul class="site-footer__links">
+            <li><a href="${citiesIndexHref}">All city guides</a></li>
 ${cityLinks}
+          </ul>
+        </nav>
+        <nav aria-label="City comparisons">
+          <p class="site-footer__heading">Comparisons</p>
+          <ul class="site-footer__links">
+${compareLinks}
           </ul>
         </nav>
       </div>
@@ -180,5 +200,23 @@ export function organizationJsonLd() {
     name: ORGANIZATION.name,
     url: ORGANIZATION.url,
     logo: ORGANIZATION.logo,
+  };
+}
+
+/**
+ * @param {string} path
+ * @param {string} name
+ * @param {string} description
+ */
+export function webPageJsonLd(path, name, description) {
+  const url = path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    url,
+    description,
+    inLanguage: "en",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
   };
 }

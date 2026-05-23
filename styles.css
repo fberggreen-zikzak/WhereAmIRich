@@ -1254,9 +1254,9 @@ body {
   color: var(--text);
 }
 
-.content__cta {
+.content a.content__cta {
   display: inline-block;
-  margin: 0.5rem 0 1rem;
+  margin: 0.5rem 1rem 1rem 0;
   padding: 0.65rem 1.1rem;
   font-weight: 600;
   font-size: 0.875rem;
@@ -1266,7 +1266,9 @@ body {
   text-decoration: none;
 }
 
-.content__cta:hover {
+.content a.content__cta:hover {
+  color: #0f0f0f;
+  text-decoration: none;
   filter: brightness(1.08);
 }
 
@@ -1330,8 +1332,107 @@ body {
 
 @media (min-width: 640px) {
   .site-footer__grid {
-    grid-template-columns: 1.2fr 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
   }
+}
+
+.featured-guides__heading {
+  margin: 0;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.featured-guides__text {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 40rem;
+}
+
+.featured-guides__grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.65rem;
+}
+
+.featured-guides__grid a {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+}
+
+.featured-guides__grid a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.featured-guides__more {
+  margin: 0.75rem 0 0;
+  font-size: 0.8125rem;
+}
+
+.featured-guides__more a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.featured-guides__more a:hover {
+  text-decoration: underline;
+}
+
+.city-guide-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+}
+
+.city-guide-card a {
+  display: block;
+  padding: 0.75rem 0.9rem;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.city-guide-card a:hover {
+  border-color: var(--accent);
+}
+
+.city-guide-card__name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.city-guide-card__meta {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.content-links {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  max-width: 42rem;
 }
 
 .site-footer__title {

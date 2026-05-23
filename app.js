@@ -131,9 +131,9 @@ function renderHero(results, salary) {
   }
 
   if (totalCities > 0) {
-    document.title = `${richest.name} vs ${poorest.name} — Rich or Poor`;
+    document.title = `${richest.name} vs ${poorest.name} — Where Am I Rich`;
   } else {
-    document.title = `Rich or Poor — Salary purchasing power`;
+    document.title = `Where Am I Rich — Salary purchasing power`;
   }
 }
 

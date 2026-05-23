@@ -5,7 +5,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { CITY_CATALOG } from "../cities-catalog.js";
 import { AVERAGE_MONTHLY_SALARY } from "../city-salaries.js";
-import { FEATURED_CITIES, SITE_URL } from "../site.config.js";
+import { CITIES_INDEX_PATH, FEATURED_CITIES, SITE_URL } from "../site.config.js";
 import {
   escapeHtml,
   organizationJsonLd,
@@ -83,6 +83,7 @@ ${renderSiteHeader(assetPrefix, "cities")}
     <main class="page page--content" id="main-content">
 ${renderBreadcrumb(assetPrefix, [
   { name: "Home", url: "/" },
+  { name: "City guides", url: CITIES_INDEX_PATH },
   { name: city.name },
 ])}
       <article class="content panel">
@@ -121,6 +122,12 @@ ${rows}
           <li>Rent is excluded from the index; housing can swing real budgets.</li>
           <li>Taxes, benefits, and visa rules are not modeled — see <a href="${assetPrefix}methodology.html">methodology</a>.</li>
         </ul>
+        <h2>More guides</h2>
+        <p>
+          <a href="${assetPrefix}${CITIES_INDEX_PATH.replace(/^\//, "")}">Browse all city guides</a> ·
+          <a href="${assetPrefix}comparisons/london-vs-lisbon.html">London vs Lisbon</a> ·
+          <a href="${assetPrefix}comparisons/new-york-vs-london.html">New York vs London</a>
+        </p>
       </article>
     </main>
 ${renderSiteFooter(assetPrefix)}
