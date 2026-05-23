@@ -16,9 +16,11 @@ import {
   DEFAULT_SHARE,
   GA_MEASUREMENT_ID,
   SITE_DISCLAIMER_SHORT,
+  PRIVACY_PATH,
   TERMS_PATH,
   copyrightNotice,
 } from "../site.config.js";
+import { DATA_SOURCE, DATA_UPDATED } from "../data.js";
 
 export function escapeHtml(s) {
   return String(s)
@@ -71,25 +73,20 @@ export function renderOpenGraphTags(share) {
     <meta name="twitter:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`;
 }
 
-/** Google Analytics gtag snippet (empty if GA_MEASUREMENT_ID unset). */
-export function renderGoogleAnalytics() {
-  if (!GA_MEASUREMENT_ID) return "";
+/** Deferred analytics/ads — loaded by consent.js after user accepts. */
+export function renderConsentScripts(assetPrefix = "") {
+  const parts = [`document.documentElement.dataset.siteName=${JSON.stringify(SITE_NAME)};`];
+  if (GA_MEASUREMENT_ID) {
+    parts.push(`document.documentElement.dataset.gaId=${JSON.stringify(GA_MEASUREMENT_ID)};`);
+  }
+  if (ADSENSE_CLIENT_ID) {
+    parts.push(
+      `document.documentElement.dataset.adsenseClient=${JSON.stringify(ADSENSE_CLIENT_ID)};`
+    );
+  }
   return `
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag("js", new Date());
-      gtag("config", "${GA_MEASUREMENT_ID}");
-    </script>`;
-}
-
-/** Google AdSense loader (empty if ADSENSE_CLIENT_ID unset). */
-export function renderAdSense() {
-  if (!ADSENSE_CLIENT_ID) return "";
-  return `
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}" crossorigin="anonymous"></script>`;
+    <script>${parts.join("")}</script>
+    <script src="${assetPrefix}consent.js" defer></script>`;
 }
 
 /**
@@ -114,7 +111,7 @@ export function renderHead(path, opts = {}) {
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow" />${renderGoogleAnalytics()}${renderAdSense()}
+    <meta name="googlebot" content="index, follow" />${renderConsentScripts(assetPrefix)}
     <title>${escapeHtml(seo.title)}</title>
     <meta name="description" content="${escapeHtml(seo.description)}" />
     <link rel="canonical" href="${canonical}" />${renderSocialPreviewTags(path)}
@@ -181,7 +178,7 @@ export function renderSiteFooter(assetPrefix) {
       <div class="site-footer__grid">
         <div>
           <p class="site-footer__title">${escapeHtml(SITE_NAME)}</p>
-          <p class="site-footer__text">${escapeHtml(SITE_DISCLAIMER_SHORT)} <a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">Terms of use</a></p>
+          <p class="site-footer__text">${escapeHtml(SITE_DISCLAIMER_SHORT)} <a href="${assetPrefix}${PRIVACY_PATH.replace(/^\//, "")}">Privacy</a> · <a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">Terms</a></p>
         </div>
         <nav aria-label="Learn more">
           <p class="site-footer__heading">Learn</p>
@@ -189,6 +186,7 @@ export function renderSiteFooter(assetPrefix) {
             <li><a href="${assetPrefix}how-it-works.html">How the calculator works</a></li>
             <li><a href="${assetPrefix}methodology.html">Methodology &amp; data sources</a></li>
             <li><a href="${assetPrefix}faq.html">Frequently asked questions</a></li>
+            <li><a href="${assetPrefix}${PRIVACY_PATH.replace(/^\//, "")}">Privacy policy</a></li>
             <li><a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">Terms of use</a></li>
           </ul>
         </nav>
@@ -207,7 +205,7 @@ ${compareLinks}
         </nav>
       </div>
       <p class="site-footer__legal">${escapeHtml(copyrightNotice())}</p>
-      <p class="site-footer__meta">Data: Numbeo cost-of-living indices (approximate). <a href="${assetPrefix}methodology.html">Read limitations</a>.</p>
+      <p class="site-footer__meta">${escapeHtml(DATA_SOURCE)} data (indicative, updated ${escapeHtml(DATA_UPDATED)}). <a href="${assetPrefix}methodology.html">Methodology</a> · <a href="${assetPrefix}${PRIVACY_PATH.replace(/^\//, "")}">Privacy</a></p>
     </footer>`;
 }
 

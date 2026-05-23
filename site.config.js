@@ -51,6 +51,7 @@ export const SITE_DISCLAIMER_SHORT =
   "For inspiration and general curiosity only — not for financial, tax, legal, or relocation decisions. All data is indicative.";
 
 export const TERMS_PATH = "/terms.html";
+export const PRIVACY_PATH = "/privacy.html";
 
 /** @param {number} [year] */
 export function copyrightNotice(year = new Date().getFullYear()) {
@@ -77,6 +78,7 @@ export const SITEMAP_PAGES = [
   { path: "/methodology.html", changefreq: "monthly", priority: "0.7" },
   { path: "/faq.html", changefreq: "monthly", priority: "0.8" },
   { path: TERMS_PATH, changefreq: "yearly", priority: "0.5" },
+  { path: PRIVACY_PATH, changefreq: "yearly", priority: "0.5" },
   { path: CITIES_INDEX_PATH, changefreq: "monthly", priority: "0.75" },
   { path: "/comparisons/london-vs-lisbon.html", changefreq: "monthly", priority: "0.7" },
   { path: "/comparisons/new-york-vs-london.html", changefreq: "monthly", priority: "0.7" },
@@ -117,6 +119,11 @@ export const PAGE_SEO = {
     title: "Terms of Use — WhereAmIRich.com",
     description:
       "Terms of use: inspirational comparisons only, indicative data, no financial advice, and limitations of liability for WhereAmIRich.com.",
+  },
+  [PRIVACY_PATH]: {
+    title: "Privacy Policy — WhereAmIRich.com",
+    description:
+      "How WhereAmIRich.com uses cookies, Google Analytics, and AdSense; your choices and rights regarding personal data.",
   },
   [CITIES_INDEX_PATH]: {
     title: "City Salary Guides — WhereAmIRich.com",

@@ -1,0 +1,23 @@
+name: SEO check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Regenerate SEO artifacts
+        run: npm run seo
+      - name: Fail if generated files were not committed
+        run: |
+          git diff --exit-code || (
+            echo "::error::Run 'npm run seo' locally and commit the changes."
+            exit 1
+          )

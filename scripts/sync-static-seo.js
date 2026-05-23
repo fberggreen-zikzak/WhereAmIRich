@@ -3,13 +3,27 @@
  * Usage: node scripts/sync-static-seo.js
  */
 import { readFileSync, writeFileSync } from "fs";
-import { OG_IMAGE_URL, SITE_DISCLAIMER_SHORT, SITE_URL, TERMS_PATH } from "../site.config.js";
-import { renderAdSense, renderSocialPreviewTags } from "./seo-html.js";
+import {
+  OG_IMAGE_URL,
+  PRIVACY_PATH,
+  SITE_DISCLAIMER_SHORT,
+  SITE_URL,
+  TERMS_PATH,
+} from "../site.config.js";
+import { renderConsentScripts, renderSocialPreviewTags } from "./seo-html.js";
 
 const ROOT = new URL("../", import.meta.url);
-const ADSENSE_MARKER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+const ANALYTICS_BLOCK =
+  /\s*<!-- Google tag \(gtag\.js\) -->[\s\S]*?pagead\/js\/adsbygoogle\.js[^<]*><\/script>/;
 
-const FILES = ["index.html", "how-it-works.html", "methodology.html", "faq.html", "terms.html"];
+const FILES = [
+  "index.html",
+  "how-it-works.html",
+  "methodology.html",
+  "faq.html",
+  "terms.html",
+  "privacy.html",
+];
 
 /** @type {Record<string, string>} */
 const FILE_TO_PAGE_PATH = {
@@ -18,9 +32,11 @@ const FILE_TO_PAGE_PATH = {
   "methodology.html": "/methodology.html",
   "faq.html": "/faq.html",
   "terms.html": TERMS_PATH,
+  "privacy.html": PRIVACY_PATH,
 };
+
 const OLD_FOOTER_TEXT = "Cost-of-living comparisons for salary decisions — not financial advice.";
-const NEW_FOOTER_HTML = `${SITE_DISCLAIMER_SHORT} <a href="terms.html">Terms of use</a>`;
+const NEW_FOOTER_HTML = `${SITE_DISCLAIMER_SHORT} <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>`;
 const OG_IMAGE_FROM = `${SITE_URL}/og-image.svg`;
 
 /** @type {string[]} */
@@ -34,8 +50,15 @@ const REPLACE_FROM = [
 
 for (const file of FILES) {
   const path = new URL(file, ROOT);
-  let html = readFileSync(path, "utf8");
+  let html;
+  try {
+    html = readFileSync(path, "utf8");
+  } catch {
+    continue;
+  }
   let changed = false;
+  const assetPrefix = file === "index.html" ? "" : "";
+
   for (const from of REPLACE_FROM) {
     if (from === SITE_URL || !html.includes(from)) continue;
     html = html.split(from).join(SITE_URL);
@@ -49,6 +72,20 @@ for (const file of FILES) {
     html = html.split(OLD_FOOTER_TEXT).join(NEW_FOOTER_HTML);
     changed = true;
   }
+  if (ANALYTICS_BLOCK.test(html)) {
+    html = html.replace(ANALYTICS_BLOCK, "");
+    changed = true;
+  }
+  if (!html.includes("consent.js")) {
+    const inserted = html.replace(
+      /<meta name="googlebot" content="index, follow" \/>/,
+      `$&${renderConsentScripts(assetPrefix)}`
+    );
+    if (inserted !== html) {
+      html = inserted;
+      changed = true;
+    }
+  }
   const pagePath = FILE_TO_PAGE_PATH[file];
   if (pagePath) {
     const socialBlock = renderSocialPreviewTags(pagePath).trim();
@@ -60,18 +97,8 @@ for (const file of FILES) {
       changed = true;
     }
   }
-  if (!html.includes(ADSENSE_MARKER)) {
-    const inserted = html.replace(
-      /(<script>\s*window\.dataLayer[\s\S]*?gtag\("config", "[^"]+"\);\s*<\/script>)/,
-      `$1${renderAdSense()}`
-    );
-    if (inserted !== html) {
-      html = inserted;
-      changed = true;
-    }
-  }
   if (changed) {
     writeFileSync(path, html);
-    console.log(`Synced ${file} → ${SITE_URL}`);
+    console.log(`Synced ${file}`);
   }
 }

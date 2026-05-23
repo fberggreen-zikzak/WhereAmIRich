@@ -16,6 +16,8 @@ This updates `sitemap.xml`, `robots.txt`, `og-image.png` (from `og-image.svg` vi
 3. Confirm `index.html` canonical/OG URLs match `SITE_URL`.
 4. **Social previews** use `og-image.png` (1200×630). iMessage, Slack, and LinkedIn do not render SVG — commit the PNG after editing `og-image.svg` (`npm run seo:og` or `node scripts/generate-og-image.js`).
 5. **Default preview text** lives in `site.config.js` as `DEFAULT_SHARE` (`ogTitle` + `ogDescription`). Pages without their own `ogTitle` / `ogDescription` in `PAGE_SEO` inherit these for Open Graph and Twitter. Homepage copy is overridden via `HOME_SHARE`. Run `npm run seo` (includes `sync-static-seo.js`) to refresh hand-edited HTML.
+6. **`ads.txt`** at the site root for AdSense (`google.com, pub-…`). Deploy with the rest of the static files.
+7. **Privacy** — `privacy.html` + `consent.js` gate Google Analytics and AdSense until the user chooses “Accept all”.
 
 ## Sitemap
 
