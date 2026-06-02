@@ -5,7 +5,8 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { CITY_CATALOG } from "../cities-catalog.js";
 import { AVERAGE_MONTHLY_SALARY } from "../city-salaries.js";
-import { FEATURED_COMPARISONS, SITE_URL } from "../site.config.js";
+import { COMPARISON_CONTENT } from "../comparison-editorial.js";
+import { FEATURED_COMPARISONS, SITE_NAME, SITE_URL } from "../site.config.js";
 import {
   escapeHtml,
   organizationJsonLd,
@@ -29,6 +30,44 @@ function formatSalary(cityId, city) {
   return `${amount.toLocaleString("en-US")} ${city.currencyLabel}/mo (approx.)`;
 }
 
+function renderEditorialSections(slug) {
+  const editorial = COMPARISON_CONTENT[slug];
+  if (!editorial) return "";
+
+  let html = "";
+  for (const section of editorial.sections) {
+    html += `        <h2>${escapeHtml(section.heading)}</h2>\n`;
+    for (const paragraph of section.paragraphs) {
+      html += `        <p>${escapeHtml(paragraph)}</p>\n`;
+    }
+  }
+  return html;
+}
+
+function renderScenarios(slug, cityA, cityB, cityAId, cityBId) {
+  const editorial = COMPARISON_CONTENT[slug];
+  if (!editorial?.scenarios?.length) return "";
+
+  const items = editorial.scenarios
+    .map(({ label, salary, fromCityId }) => {
+      const fromCity = fromCityId === cityAId ? cityA : cityB;
+      const toCity = fromCityId === cityAId ? cityB : cityA;
+      const f = factor(fromCity.numbeoColIndex, toCity.numbeoColIndex);
+      const equivalent = Math.round(salary * f);
+      const pay = `${salary.toLocaleString("en-US")} ${fromCity.currencyLabel}`;
+      const eq = `${equivalent.toLocaleString("en-US")} ${fromCity.currencyLabel}`;
+      return `          <li><strong>${escapeHtml(label)}:</strong> ${escapeHtml(pay)}/mo in ${escapeHtml(fromCity.name)} ≈ ${escapeHtml(eq)}/mo equivalent in ${escapeHtml(toCity.name)} (${f.toFixed(2)}× on everyday goods, rent excluded).</li>`;
+    })
+    .join("\n");
+
+  return `        <h2>Salary scenarios</h2>
+        <p>Illustrative equivalents using our COL formula — not take-home pay after tax:</p>
+        <ul>
+${items}
+        </ul>
+`;
+}
+
 function buildComparePage({ slug, cityAId, cityBId, title, angle }) {
   const cityA = CITY_CATALOG.find((c) => c.id === cityAId);
   const cityB = CITY_CATALOG.find((c) => c.id === cityBId);
@@ -42,18 +81,16 @@ function buildComparePage({ slug, cityAId, cityBId, title, angle }) {
   const cheaperNote =
     cityA.numbeoColIndex === cityB.numbeoColIndex
       ? "Indices are similar on this scale."
-      : `${cheaper} has the lower cost-of-living index on Numbeo (excluding rent), so the same monthly pay typically stretches further there.`;
+      : `${cheaper} has the lower cost-of-living index on Numbeo (excluding rent), so the same monthly pay typically stretches further there on everyday goods and services.`;
 
   const jsonLd = [
     organizationJsonLd(),
-    webPageJsonLd(
-      path,
-      `${title} — salary & cost of living`,
-      angle
-    ),
+    webPageJsonLd(path, `${title} — salary & cost of living`, angle),
   ];
 
   const calcBoth = `${assetPrefix}index.html?city=${cityA.id}&dest=${cityB.id}`;
+  const editorialHtml = renderEditorialSections(slug);
+  const scenariosHtml = renderScenarios(slug, cityA, cityB, cityAId, cityBId);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -75,7 +112,7 @@ ${renderBreadcrumb(assetPrefix, [
         <p>
           <a class="content__cta" href="${calcBoth}">Compare in the calculator</a>
         </p>
-        <h2>Cost-of-living indices (excluding rent)</h2>
+${editorialHtml}        <h2>Cost-of-living indices (excluding rent)</h2>
         <div class="content-table-wrap">
           <table class="content-table">
             <thead>
@@ -110,11 +147,12 @@ ${renderBreadcrumb(assetPrefix, [
           Values above 1 mean money stretches further in the destination. Enter your own monthly pay in the
           <a href="${assetPrefix}index.html">calculator</a> for equivalents in your currency and vs local averages.
         </p>
-        <h2>Related guides</h2>
+${scenariosHtml}        <h2>Related guides</h2>
         <ul>
           <li><a href="${assetPrefix}cities/${cityA.id}.html">${escapeHtml(cityA.name)} salary guide</a></li>
           <li><a href="${assetPrefix}cities/${cityB.id}.html">${escapeHtml(cityB.name)} salary guide</a></li>
           <li><a href="${assetPrefix}methodology.html">How we calculate results</a></li>
+          <li><a href="${assetPrefix}about.html">About ${escapeHtml(SITE_NAME)}</a></li>
         </ul>
       </article>
     </main>

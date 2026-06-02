@@ -18,6 +18,7 @@ import {
   SITE_DISCLAIMER_SHORT,
   PRIVACY_PATH,
   TERMS_PATH,
+  ABOUT_PATH,
   copyrightNotice,
 } from "../site.config.js";
 import { DATA_SOURCE, DATA_UPDATED } from "../data.js";
@@ -134,7 +135,7 @@ export function renderHead(path, opts = {}) {
 
 /**
  * @param {string} assetPrefix
- * @param {string} [active] home | how | method | faq | cities | compare
+ * @param {string} [active] home | how | method | faq | cities | compare | about
  */
 export function renderSiteHeader(assetPrefix, active = "") {
   const home = active === "home" ? ' aria-current="page"' : "";
@@ -142,6 +143,7 @@ export function renderSiteHeader(assetPrefix, active = "") {
   const method = active === "method" ? ' aria-current="page"' : "";
   const faq = active === "faq" ? ' aria-current="page"' : "";
   const cities = active === "cities" ? ' aria-current="page"' : "";
+  const about = active === "about" ? ' aria-current="page"' : "";
   const calcHref = `${assetPrefix}index.html`;
   const citiesHref = `${assetPrefix}${CITIES_INDEX_PATH.replace(/^\//, "")}`;
 
@@ -157,6 +159,7 @@ export function renderSiteHeader(assetPrefix, active = "") {
           <a class="site-nav__link" href="${assetPrefix}how-it-works.html"${how}>How it works</a>
           <a class="site-nav__link" href="${assetPrefix}methodology.html"${method}>Methodology</a>
           <a class="site-nav__link" href="${assetPrefix}faq.html"${faq}>FAQ</a>
+          <a class="site-nav__link" href="${assetPrefix}${ABOUT_PATH.replace(/^\//, "")}"${about}>About</a>
         </nav>
       </div>
     </header>`;
@@ -190,6 +193,7 @@ export function renderSiteFooter(assetPrefix) {
             <li><a href="${assetPrefix}how-it-works.html">How the calculator works</a></li>
             <li><a href="${assetPrefix}methodology.html">Methodology &amp; data sources</a></li>
             <li><a href="${assetPrefix}faq.html">Frequently asked questions</a></li>
+            <li><a href="${assetPrefix}${ABOUT_PATH.replace(/^\//, "")}">About us</a></li>
             <li><a href="${assetPrefix}${PRIVACY_PATH.replace(/^\//, "")}">Privacy policy</a></li>
             <li><a href="${assetPrefix}${TERMS_PATH.replace(/^\//, "")}">Terms of use</a></li>
           </ul>

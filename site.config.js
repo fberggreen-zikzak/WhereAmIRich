@@ -54,6 +54,7 @@ export const SITE_DISCLAIMER_SHORT =
 
 export const TERMS_PATH = "/terms.html";
 export const PRIVACY_PATH = "/privacy.html";
+export const ABOUT_PATH = "/about.html";
 
 export const RELOCATION_GUIDE_PATH = "/guides/remote-work-relocation.html";
 
@@ -81,11 +82,11 @@ export const SITEMAP_PAGES = [
   { path: "/how-it-works.html", changefreq: "monthly", priority: "0.8" },
   { path: "/methodology.html", changefreq: "monthly", priority: "0.7" },
   { path: "/faq.html", changefreq: "monthly", priority: "0.8" },
+  { path: ABOUT_PATH, changefreq: "monthly", priority: "0.7" },
   { path: TERMS_PATH, changefreq: "yearly", priority: "0.5" },
   { path: PRIVACY_PATH, changefreq: "yearly", priority: "0.5" },
   { path: RELOCATION_GUIDE_PATH, changefreq: "monthly", priority: "0.75" },
   { path: CITIES_INDEX_PATH, changefreq: "monthly", priority: "0.75" },
-  { path: "/share/default.html", changefreq: "monthly", priority: "0.6" },
   { path: "/comparisons/london-vs-lisbon.html", changefreq: "monthly", priority: "0.7" },
   { path: "/comparisons/new-york-vs-london.html", changefreq: "monthly", priority: "0.7" },
   { path: "/comparisons/dubai-vs-bangkok.html", changefreq: "monthly", priority: "0.7" },
@@ -103,11 +104,11 @@ export const SITEMAP_PAGES = [
 /** Per-page title + meta description (path key matches SITEMAP_PAGES path) */
 export const PAGE_SEO = {
   "/": {
-    title: "WhereAmIRich.com — Salary Purchasing Power Calculator",
+    title: "Where Does Your Salary Go Furthest? — City Purchasing Power Calculator",
     ogTitle: HOME_SHARE.ogTitle,
     ogDescription: HOME_SHARE.ogDescription,
     description:
-      "Compare your monthly salary to 100+ cities worldwide. See equivalent spending power and where you're better or worse off than home — free, instant, shareable.",
+      "Free salary purchasing power calculator: compare monthly pay across 100+ cities, see cost-of-living equivalents, and find where your paycheck stretches further than home.",
   },
   "/how-it-works.html": {
     title: "How It Works — WhereAmIRich.com",
@@ -123,6 +124,11 @@ export const PAGE_SEO = {
     title: "FAQ — WhereAmIRich.com",
     description:
       "Answers about equivalent salary, rich vs poor labels, Numbeo data, currencies, share links, and how to interpret results.",
+  },
+  [ABOUT_PATH]: {
+    title: "About — WhereAmIRich.com",
+    description:
+      "Who publishes WhereAmIRich.com, how we source cost-of-living data, editorial standards, and contact information.",
   },
   [TERMS_PATH]: {
     title: "Terms of Use — WhereAmIRich.com",
@@ -141,12 +147,6 @@ export const PAGE_SEO = {
       "Step-by-step checklist, popular hubs, and head-to-head comparisons before you move with a remote salary.",
     description:
       "Compare salary purchasing power before relocating. Popular remote-work hubs, head-to-head city pairs, and step-by-step checklist.",
-  },
-  "/share/default.html": {
-    title: "Share — WhereAmIRich.com salary calculator",
-    ogTitle: DEFAULT_SHARE.ogTitle,
-    ogDescription: DEFAULT_SHARE.ogDescription,
-    description: DEFAULT_SHARE.ogDescription,
   },
   [CITIES_INDEX_PATH]: {
     title: "City Salary Guides — WhereAmIRich.com",

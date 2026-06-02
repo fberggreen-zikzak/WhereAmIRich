@@ -60,19 +60,50 @@ Uncomment in `index.html`:
 2. **Head-to-head:** add to `FEATURED_COMPARISONS` with a real `angle` string, run `npm run seo`.
 3. Do **not** generate 180+ thin city pages — only add guides with unique, useful copy.
 
-## Highest-priority content to build next
+## Primary search intents (homepage)
 
-1. **Singapore / Berlin** — already live; monitor Search Console performance.
-2. **Paris** or **Barcelona** city guide (high travel intent).
-3. **One more comparison** (e.g. Dubai vs Bangkok) only if the angle is genuinely different.
-4. **Remote work relocation** article (1,000+ words, links to calculator + methodology).
-5. **OG PNG** for better social crawl previews.
+| Intent | How the page addresses it |
+|--------|---------------------------|
+| Where does my salary go furthest | H1, title, hero lead, calculator outcome |
+| Cost of living salary comparison | Destinations grid, methodology block, city guides |
+| Salary purchasing power by city | Meta description, SoftwareApplication schema |
+| Monthly salary comparison across cities | Calculator inputs, share links |
+| Compare salary in [city] vs [city] | Featured comparison pages + city guides (internal links) |
 
-## Files
+Target phrases are woven into visible copy — not repeated unnaturally in hidden text.
+
+## Homepage SEO blocks (2026)
+
+- **`content/home-seo.js`** — people-first How it works / Methodology / FAQ copy
+- **`scripts/sync-home-seo.js`** — injects learn section, FAQPage JSON-LD (matches visible FAQ), title/meta from `PAGE_SEO`
+- Run via `npm run seo` after editing config or content
+
+## Technical notes / blockers
+
+| Item | Status |
+|------|--------|
+| Canonical, OG, Twitter | Set per page; homepage synced from `PAGE_SEO` |
+| robots | `index, follow` on public pages; invite/share private flows excluded from sitemap |
+| FAQ rich results | Homepage FAQPage schema matches visible `<details>` answers only |
+| SearchAction (`?city=`) | Pre-selects home city — not full site search; monitor in Rich Results Test |
+| Calculator | Requires JS; `<noscript>` fallback + static supporting pages for crawlers |
+| Sitemap | Submit `https://www.whereamirich.com/sitemap.xml` in Search Console |
+
+## Highest-priority pages to build next
+
+1. **Tokyo or Madrid city guide** — high search volume, unique COL vs Western hubs
+2. **Singapore vs Hong Kong comparison** — distinct angle from existing pairs
+3. **“How far does $5,000 go in …”** programmatic page — only with real tables + editorial intro per city (avoid thin duplicates)
+4. **Expand remote work guide** with links to calculator + 2–3 comparison pages
+5. Monitor **Paris / Barcelona** guides already live — iterate copy from Search Console queries
+
+## Content principles
 
 | File | Role |
 |------|------|
 | `site.config.js` | URLs, titles, featured cities/comparisons |
+| `scripts/sync-home-seo.js` | Homepage learn section, FAQ schema, title/meta |
+| `content/home-seo.js` | Homepage FAQ + learn copy (must match schema) |
 | `scripts/generate-sitemap.js` | `sitemap.xml`, `robots.txt` |
 | `scripts/generate-city-pages.js` | `cities/{id}.html` |
 | `scripts/generate-cities-index.js` | `cities/index.html` |

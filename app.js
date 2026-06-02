@@ -40,6 +40,9 @@ const els = {
   shareFacebook: document.getElementById("share-facebook"),
   shareLinkedIn: document.getElementById("share-linkedin"),
   shareSubtitle: document.getElementById("share-subtitle"),
+  shareSuggestion: document.getElementById("share-suggestion"),
+  shareSuggestionCopy: document.getElementById("share-suggestion-copy"),
+  shareHint: document.getElementById("share-hint"),
   copyBtn: document.getElementById("copy-link"),
   copyLabel: document.getElementById("copy-label"),
   expensiveList: document.getElementById("expensive-list"),
@@ -151,7 +154,27 @@ function renderHero(results, salary) {
   updateShareMeta(results, salary, base);
 }
 
+function buildSharePostText(results) {
+  const { richest, poorest, totalCities } = results;
+  if (totalCities === 0) {
+    return "How far does your salary really go? Compare 100+ cities free.";
+  }
+  if (richest.id === poorest.id) {
+    return `Rich or tough in ${richest.name}? How far does your salary really go?`;
+  }
+  return `Rich in ${richest.name}. Tough in ${poorest.name}. How far does your salary really go?`;
+}
+
+let currentSharePostText =
+  "How far does your salary really go? Compare 100+ cities free.";
+
 function renderShareCopy(results) {
+  currentSharePostText = buildSharePostText(results);
+
+  if (els.shareSuggestion) {
+    els.shareSuggestion.textContent = currentSharePostText;
+  }
+
   if (!els.shareSubtitle) return;
 
   const { richest, poorest, totalCities } = results;
@@ -166,6 +189,16 @@ function renderShareCopy(results) {
   }
 
   els.shareSubtitle.textContent = `Would your friends be rich in ${richest.name} or tough in ${poorest.name}?`;
+}
+
+function showShareHint(message, resetMs = 3500) {
+  if (!els.shareHint) return;
+  els.shareHint.textContent = message;
+  els.shareHint.hidden = false;
+  clearTimeout(showShareHint._timer);
+  showShareHint._timer = setTimeout(() => {
+    if (els.shareHint) els.shareHint.hidden = true;
+  }, resetMs);
 }
 
 function renderCityCard(city, base) {
@@ -605,6 +638,37 @@ function initCalculator() {
   });
 }
 
+function getShareMessage() {
+  return `${currentSharePostText}\n${getShareUrl()}`;
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      /* fall through */
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  let ok = false;
+  try {
+    ok = document.execCommand("copy");
+  } catch {
+    ok = false;
+  }
+  document.body.removeChild(textarea);
+  return ok;
+}
+
 function getShareUrl() {
   const { origin, pathname, search } = location;
   const defaults = defaultComparisonIds(currentBaseCityId);
@@ -630,46 +694,37 @@ function openSharePopup(shareUrl) {
   );
 }
 
-function shareOnFacebook() {
-  const url = encodeURIComponent(getShareUrl());
+async function shareOnFacebook() {
+  const pageUrl = getShareUrl();
+  const copied = await copyText(getShareMessage());
+  const url = encodeURIComponent(pageUrl);
+  const quote = encodeURIComponent(currentSharePostText);
   openSharePopup(
-    `https://www.facebook.com/sharer/sharer.php?u=${url}`
+    `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`
+  );
+  showShareHint(
+    copied
+      ? "Suggested post copied — paste it into your Facebook post."
+      : "Paste the suggested post above into your Facebook post."
   );
 }
 
-function shareOnLinkedIn() {
-  const url = encodeURIComponent(getShareUrl());
+async function shareOnLinkedIn() {
+  const pageUrl = getShareUrl();
+  const copied = await copyText(getShareMessage());
+  const url = encodeURIComponent(pageUrl);
   openSharePopup(
     `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+  );
+  showShareHint(
+    copied
+      ? "Suggested post copied — paste it into your LinkedIn post."
+      : "Paste the suggested post above into your LinkedIn post."
   );
 }
 
 async function copyShareLink() {
-  const url = getShareUrl();
-  if (navigator.clipboard?.writeText) {
-    try {
-      await navigator.clipboard.writeText(url);
-      return true;
-    } catch {
-      /* fall through */
-    }
-  }
-
-  const textarea = document.createElement("textarea");
-  textarea.value = url;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.left = "-9999px";
-  document.body.appendChild(textarea);
-  textarea.select();
-  let ok = false;
-  try {
-    ok = document.execCommand("copy");
-  } catch {
-    ok = false;
-  }
-  document.body.removeChild(textarea);
-  return ok;
+  return copyText(getShareMessage());
 }
 
 function flashCopyLabel(message, resetMs = 2000) {
@@ -681,12 +736,24 @@ function flashCopyLabel(message, resetMs = 2000) {
 }
 
 function initShare() {
-  els.shareFacebook?.addEventListener("click", shareOnFacebook);
-  els.shareLinkedIn?.addEventListener("click", shareOnLinkedIn);
+  els.shareFacebook?.addEventListener("click", () => {
+    shareOnFacebook();
+  });
+  els.shareLinkedIn?.addEventListener("click", () => {
+    shareOnLinkedIn();
+  });
+
+  els.shareSuggestionCopy?.addEventListener("click", async () => {
+    const ok = await copyText(getShareMessage());
+    showShareHint(ok ? "Suggested post copied." : "Could not copy — select and copy manually.");
+  });
 
   els.copyBtn?.addEventListener("click", async () => {
     const ok = await copyShareLink();
     flashCopyLabel(ok ? "Copied!" : "Could not copy");
+    if (ok) {
+      showShareHint("Post text and link copied.");
+    }
   });
 }
 

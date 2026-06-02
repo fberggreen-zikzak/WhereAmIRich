@@ -5,6 +5,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { CITY_CATALOG } from "../cities-catalog.js";
 import { AVERAGE_MONTHLY_SALARY } from "../city-salaries.js";
+import { CITY_GUIDE_CONTENT } from "../city-editorial.js";
 import { FEATURED_COMPARISONS, CITIES_INDEX_PATH, FEATURED_CITIES, SITE_URL } from "../site.config.js";
 import {
   escapeHtml,
@@ -31,6 +32,64 @@ function spendingLabel(f) {
 }
 
 const COMPARE_TARGETS = ["london", "new-york", "lisbon", "bangkok", "paris", "singapore"];
+
+function formatEquivalent(salary, f, currencyLabel) {
+  const amount = Math.round(salary * f);
+  return `${amount.toLocaleString("en-US")} ${currencyLabel}`;
+}
+
+function renderEditorial(cityId, city) {
+  const editorial = CITY_GUIDE_CONTENT[cityId];
+  if (!editorial) return "";
+
+  let html = "";
+  for (const paragraph of editorial.overview) {
+    html += `        <p>${escapeHtml(paragraph)}</p>\n`;
+  }
+  for (const section of editorial.sections) {
+    html += `        <h2>${escapeHtml(section.heading)}</h2>\n`;
+    for (const paragraph of section.paragraphs) {
+      html += `        <p>${escapeHtml(paragraph)}</p>\n`;
+    }
+  }
+  return html;
+}
+
+function renderWorkedExample(cityId, city) {
+  const editorial = CITY_GUIDE_CONTENT[cityId];
+  const salary =
+    editorial?.exampleSalary ??
+    AVERAGE_MONTHLY_SALARY[cityId] ??
+    Math.round(city.numbeoColIndex * 40);
+
+  const targets = COMPARE_TARGETS.filter((id) => id !== cityId)
+    .map((id) => CITY_CATALOG.find((c) => c.id === id))
+    .filter(Boolean)
+    .slice(0, 4);
+
+  const rows = targets
+    .map((target) => {
+      const f = factor(city.numbeoColIndex, target.numbeoColIndex);
+      return `          <li><strong>${escapeHtml(target.name)}</strong>: ${formatEquivalent(salary, f, city.currencyLabel)}/mo equivalent (${f.toFixed(2)}× — ${escapeHtml(spendingLabel(f))} vs ${escapeHtml(city.name)})</li>`;
+    })
+    .join("\n");
+
+  const pay = `${salary.toLocaleString("en-US")} ${city.currencyLabel}`;
+
+  return `        <h2>Worked example</h2>
+        <p>
+          Suppose you earn <strong>${escapeHtml(pay)}</strong> gross per month in ${escapeHtml(city.name)}.
+          Using our formula, approximate spending-power equivalents in other cities (same lifestyle basket, excluding rent) look like this:
+        </p>
+        <ul>
+${rows}
+        </ul>
+        <p>
+          These are illustrative — enter your own salary in the
+          <a href="${assetPrefix}index.html?city=${city.id}">calculator</a> for live results in your currency.
+        </p>
+`;
+}
 
 function buildCityPage(cityId) {
   const city = CITY_CATALOG.find((c) => c.id === cityId);
@@ -77,6 +136,9 @@ function buildCityPage(cityId) {
       `<a href="${assetPrefix}comparisons/${c.slug}.html">${escapeHtml(c.title)}</a>`
   ).join(" ·\n          ");
 
+  const editorialHtml = renderEditorial(cityId, city);
+  const exampleHtml = renderWorkedExample(cityId, city);
+
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -102,7 +164,7 @@ ${renderBreadcrumb(assetPrefix, [
         <p>
           <a class="content__cta" href="${calcUrl}">Open calculator with ${escapeHtml(city.name)} selected</a>
         </p>
-        <h2>Quick comparisons from ${escapeHtml(city.name)}</h2>
+${editorialHtml}${exampleHtml}        <h2>Quick comparisons from ${escapeHtml(city.name)}</h2>
         <p>
           Factors below use the same formula as the app:
           <code>home index ÷ destination index</code>. Values above 1 mean your money stretches further there.

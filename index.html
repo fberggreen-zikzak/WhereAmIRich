@@ -10,17 +10,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
     <meta name="google-site-verification" content="UpYZmDYAv4PtuA1oaHahVjoATzHxX42OO2S9xteou9Q" />
     <script>document.documentElement.dataset.siteName="WhereAmIRich.com";document.documentElement.dataset.gaId="G-8B5FDK9V77";document.documentElement.dataset.adsenseClient="ca-pub-6644431061410794";</script>
     <script src="consent.js" defer></script>
 
-    <title>WhereAmIRich.com — Salary Purchasing Power Calculator</title>
-    <meta
-      name="description"
-      content="Compare your monthly salary to 100+ cities worldwide. See equivalent spending power and where you're better or worse off than home — free, instant, shareable."
-    />
+    <title>Where Does Your Salary Go Furthest? — City Purchasing Power Calculator</title>
+    <meta name="description" content="Free salary purchasing power calculator: compare monthly pay across 100+ cities, see cost-of-living equivalents, and find where your paycheck stretches further than home." />
     <meta name="author" content="Bulgogi ApS" />
     <link rel="canonical" href="https://www.whereamirich.com/" />
 
@@ -100,6 +97,22 @@
             ]
           },
           {
+                    "@type": "WebPage",
+                    "@id": "https://www.whereamirich.com/#webpage",
+                    "url": "https://www.whereamirich.com/",
+                    "name": "Where Does Your Salary Go Furthest? — City Purchasing Power Calculator",
+                    "description": "Free salary purchasing power calculator: compare monthly pay across 100+ cities, see cost-of-living equivalents, and find where your paycheck stretches further than home.",
+                    "isPartOf": {
+                              "@id": "https://www.whereamirich.com/#website"
+                    },
+                    "about": {
+                              "@type": "Thing",
+                              "name": "Salary purchasing power comparison by city"
+                    },
+                    "inLanguage": "en-US"
+          },
+          
+          {
             "@type": "ItemList",
             "@id": "https://www.whereamirich.com/#city-guides",
             "name": "Featured city salary guides",
@@ -141,6 +154,7 @@
           <a class="site-nav__link" href="how-it-works.html">How it works</a>
           <a class="site-nav__link" href="methodology.html">Methodology</a>
           <a class="site-nav__link" href="faq.html">FAQ</a>
+          <a class="site-nav__link" href="about.html">About</a>
         </nav>
       </div>
     </header>
@@ -149,7 +163,7 @@
         <div class="hero__intro">
           <h1 id="page-intro-heading" class="hero__title">Where does your salary go furthest?</h1>
           <p class="hero__lead">
-            Compare your monthly salary across 100+ cities using cost-of-living data. See where your money goes further — instantly.
+            Compare your monthly salary across 100+ cities — see cost-of-living equivalents, where your pay goes further than home, and how you stack up to local averages.
           </p>
           <p class="hero__trust">Based on Numbeo data. Free to use. No account needed.</p>
         </div>
@@ -289,6 +303,13 @@
           <p class="share__subtitle" id="share-subtitle">
             Share your result and compare with friends.
           </p>
+          <button type="button" class="share__draft" id="share-suggestion-copy" aria-label="Copy suggested post text">
+            <span class="share__draft-label">Suggested post</span>
+            <span class="share__draft-text" id="share-suggestion">
+              How far does your salary really go? Compare 100+ cities free.
+            </span>
+          </button>
+          <p class="share__hint" id="share-hint" hidden></p>
         </div>
         <div class="share__actions">
           <button type="button" class="share-btn" id="share-facebook" aria-label="Share on Facebook">
@@ -349,6 +370,75 @@
         </div>
       </section>
 
+    <!-- @home-learn-start -->
+      <section class="home-learn panel" aria-labelledby="home-learn-heading">
+        <header class="home-learn__header">
+          <h2 id="home-learn-heading" class="home-learn__title">Understanding your results</h2>
+          <p class="home-learn__intro">
+            A quick guide to what the calculator compares, what the numbers mean, and what we do not model.
+            For relocation decisions, read the full <a href="methodology.html">methodology</a> and
+            <a href="faq.html">FAQ</a> — this tool is for curiosity, not financial advice.
+          </p>
+        </header>
+        <div class="home-learn__grid">
+          <article class="home-learn__card" aria-labelledby="home-how-heading">
+            <h3 id="home-how-heading" class="home-learn__card-title">How it works</h3>
+            <p>Enter your gross monthly salary and pick the city you are paid in today. We compare that paycheck to 100+ destinations using Numbeo cost-of-living indices (excluding rent).</p>
+            <p>For each city you see a spending-power equivalent in your home currency — the monthly pay that would buy a similar basket of goods there — plus a simple vs-home label (better, similar, or tougher than home).</p>
+            <p><a href="how-it-works.html">Full walkthrough of the calculator</a></p>
+          </article>
+          <article class="home-learn__card" aria-labelledby="home-method-heading">
+            <h3 id="home-method-heading" class="home-learn__card-title">Methodology</h3>
+            <p>We divide your home city’s cost index by each destination’s index, then multiply your salary to get an equivalent figure. Local average rows compare you to approximate gross pay in that city using public salary benchmarks and FX — useful context, not a job-market survey.</p>
+            <p><a href="methodology.html">Formulas, data sources, and limitations</a></p>
+          </article>
+          <aside class="home-learn__card home-learn__card--aside" aria-labelledby="home-when-heading">
+            <h3 id="home-when-heading" class="home-learn__card-title">When this helps</h3>
+            <ul class="home-learn__list">
+              <li>Remote job offers in a new country</li>
+              <li>Shortlisting cities before a move</li>
+              <li>Explaining why the same number feels different abroad</li>
+            </ul>
+            <p class="home-learn__links">
+              <a href="cities/index.html">Browse city salary guides</a>
+              <span aria-hidden="true"> · </span>
+              <a href="comparisons/london-vs-lisbon.html">London vs Lisbon comparison</a>
+            </p>
+          </aside>
+        </div>
+        <div class="home-faq" aria-labelledby="home-faq-heading">
+          <h3 id="home-faq-heading" class="home-faq__title">Common questions</h3>
+          <div class="home-faq__list">
+          <details class="home-faq__item">
+            <summary class="home-faq__question">What does equivalent salary mean?</summary>
+            <p class="home-faq__answer">The monthly pay you would need in another city to afford a similar standard of living to your salary at home, adjusted using Numbeo cost-of-living indices (excluding rent). Amounts stay in your home currency.</p>
+          </details>
+          <details class="home-faq__item">
+            <summary class="home-faq__question">What do &quot;better than home&quot; and &quot;worse than home&quot; mean?</summary>
+            <p class="home-faq__answer">They describe purchasing power versus your selected home city: better when the equivalent is at least 1.55× your pay, similar between 0.75× and 1.55×, and tougher at 0.75× or below. Directional labels only — not personal finance advice.</p>
+          </details>
+          <details class="home-faq__item">
+            <summary class="home-faq__question">How is local average different from vs home?</summary>
+            <p class="home-faq__answer">Vs home compares your spending power to your own city. Local average compares you to a typical gross monthly earner in the destination. You can feel worse than home but still above the local average, or the reverse.</p>
+          </details>
+          <details class="home-faq__item">
+            <summary class="home-faq__question">Is this after tax?</summary>
+            <p class="home-faq__answer">No. Enter gross monthly pay as you understand it. We do not model income tax, social contributions, benefits, or visa rules.</p>
+          </details>
+          <details class="home-faq__item">
+            <summary class="home-faq__question">What data powers the comparisons?</summary>
+            <p class="home-faq__answer">Numbeo cost-of-living indices (excluding rent) plus approximate gross monthly salaries per city. Figures are refreshed manually — see our methodology page for the latest pass date and limits.</p>
+          </details>
+          <details class="home-faq__item">
+            <summary class="home-faq__question">Is rent included?</summary>
+            <p class="home-faq__answer">No. Housing can change how far your pay goes. The calculator uses Numbeo’s basket excluding rent; treat rent-heavy cities with extra caution.</p>
+          </details>
+          </div>
+          <p class="home-faq__more"><a href="faq.html">Read all frequently asked questions</a></p>
+        </div>
+      </section>
+<!-- @home-learn-end -->
+
     </main>
 
     <footer class="site-footer panel">
@@ -363,6 +453,7 @@
             <li><a href="how-it-works.html">How the calculator works</a></li>
             <li><a href="methodology.html">Methodology &amp; data sources</a></li>
             <li><a href="faq.html">Frequently asked questions</a></li>
+            <li><a href="about.html">About us</a></li>
             <li><a href="privacy.html">Privacy policy</a></li>
             <li><a href="terms.html">Terms of use</a></li>
           </ul>
@@ -406,6 +497,63 @@
         </p>
       </div>
     </noscript>
+
+    <script type="application/ld+json" id="home-faq-schema">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does equivalent salary mean?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The monthly pay you would need in another city to afford a similar standard of living to your salary at home, adjusted using Numbeo cost-of-living indices (excluding rent). Amounts stay in your home currency."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What do \"better than home\" and \"worse than home\" mean?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "They describe purchasing power versus your selected home city: better when the equivalent is at least 1.55× your pay, similar between 0.75× and 1.55×, and tougher at 0.75× or below. Directional labels only — not personal finance advice."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is local average different from vs home?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vs home compares your spending power to your own city. Local average compares you to a typical gross monthly earner in the destination. You can feel worse than home but still above the local average, or the reverse."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is this after tax?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Enter gross monthly pay as you understand it. We do not model income tax, social contributions, benefits, or visa rules."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What data powers the comparisons?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Numbeo cost-of-living indices (excluding rent) plus approximate gross monthly salaries per city. Figures are refreshed manually — see our methodology page for the latest pass date and limits."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is rent included?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Housing can change how far your pay goes. The calculator uses Numbeo’s basket excluding rent; treat rent-heavy cities with extra caution."
+            }
+          }
+        ]
+      }
+    </script>
 
     <script type="module" src="app.js"></script>
   </body>
