@@ -5,9 +5,13 @@ Use this after deploying to [https://www.whereamirich.com](https://www.whereamir
 ## AdSense
 
 1. Confirm **ads.txt**: [https://www.whereamirich.com/ads.txt](https://www.whereamirich.com/ads.txt) returns one line with `pub-6644431061410794`.
-2. In AdSense → **Sites** → your property → **Check for updates** on ads.txt (can take 15 minutes–24 hours).
-3. After approval, verify the homepage ad slot appears when you choose **Accept all** on the cookie banner.
-4. Keep one below-the-fold unit until the account is healthy; add more only if performance is good.
+2. In AdSense → **Sites**, add **`www.whereamirich.com`** (not only the apex). The file is served on `www`; apex redirects there.
+3. On the site row → **Check for updates** on ads.txt (can take 15 minutes–24 hours; if stuck 48h+, remove the site and re-add `www.whereamirich.com`).
+4. Confirm the publisher ID in ads.txt matches **AdSense → Account → Account information** (`pub-6644431061410794`).
+5. After approval, verify the homepage ad slot appears when you choose **Accept all** on the cookie banner.
+6. Keep one below-the-fold unit until the account is healthy; add more only if performance is good.
+
+If ads.txt stays **Not found** for more than a week while the URL returns 200 in a browser, use [AdSense Help → ads.txt troubleshooter](https://support.google.com/adsense/answer/7679060) or contact support — do not wait indefinitely on **Getting ready**.
 
 ## Google Search Console
 

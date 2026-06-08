@@ -30,6 +30,12 @@ writeFileSync(
   `User-agent: *
 Allow: /
 
+User-agent: Google-adstxt
+Allow: /ads.txt
+
+User-agent: Mediapartners-Google
+Allow: /
+
 Sitemap: ${SITE_URL}/sitemap.xml
 `
 );

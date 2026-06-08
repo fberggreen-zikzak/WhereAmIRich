@@ -11,7 +11,7 @@ import {
   TERMS_PATH,
 } from "../site.config.js";
 import { DATA_UPDATED } from "../data.js";
-import { GOOGLE_FONTS_URL, renderConsentScripts, renderSocialPreviewTags } from "./seo-html.js";
+import { GOOGLE_FONTS_URL, renderAdSenseScript, renderConsentScripts, renderFontLinks, renderSocialPreviewTags } from "./seo-html.js";
 
 const ROOT = new URL("../", import.meta.url);
 const ANALYTICS_BLOCK =
@@ -39,6 +39,10 @@ const FILE_TO_PAGE_PATH = {
 const OLD_FOOTER_TEXT = "Cost-of-living comparisons for salary decisions — not financial advice.";
 const NEW_FOOTER_HTML = `${SITE_DISCLAIMER_SHORT} <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>`;
 const OG_IMAGE_FROM = `${SITE_URL}/og-image.svg`;
+/** Blocking Google Fonts stylesheet in hand-edited HTML. */
+const BLOCKING_FONTS =
+  /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com" \/>[\s\S]*?<link rel="stylesheet" href="styles\.css" \/>/;
+
 /** Old Google Fonts URL (italics + variable axis) — not the trimmed GOOGLE_FONTS_URL. */
 const LEGACY_FONTS =
   /https:\/\/fonts\.googleapis\.com\/css2\?family=DM\+Sans:ital,[^"']+/g;
@@ -83,6 +87,16 @@ for (const file of FILES) {
       changed = true;
     }
   }
+  if (BLOCKING_FONTS.test(html)) {
+    const next = html.replace(
+      BLOCKING_FONTS,
+      `${renderFontLinks().trim()}\n    <link rel="preload" href="styles.css" as="style" />\n    <link rel="stylesheet" href="styles.css" />`
+    );
+    if (next !== html) {
+      html = next;
+      changed = true;
+    }
+  }
   if (html.includes(OLD_FOOTER_TEXT)) {
     const next = html.split(OLD_FOOTER_TEXT).join(NEW_FOOTER_HTML);
     if (next !== html) {
@@ -119,6 +133,16 @@ for (const file of FILES) {
     const inserted = html.replace(
       /<meta name="googlebot" content="index, follow" \/>/,
       `$&${renderConsentScripts(assetPrefix)}`
+    );
+    if (inserted !== html) {
+      html = inserted;
+      changed = true;
+    }
+  }
+  if (!html.includes("pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")) {
+    const inserted = html.replace(
+      /(<script>document\.documentElement\.dataset\.siteName=[\s\S]*?<\/script>)/,
+      `$1${renderAdSenseScript()}`
     );
     if (inserted !== html) {
       html = inserted;

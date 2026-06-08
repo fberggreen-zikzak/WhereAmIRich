@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+User-agent: Google-adstxt
+Allow: /ads.txt
+
+User-agent: Mediapartners-Google
+Allow: /
+
 Sitemap: https://www.whereamirich.com/sitemap.xml

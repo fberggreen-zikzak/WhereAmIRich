@@ -35,6 +35,22 @@ export function escapeHtml(s) {
 export const GOOGLE_FONTS_URL =
   "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Instrument+Serif&display=swap";
 
+/** Non-render-blocking Google Fonts (preload + onload stylesheet). */
+export function renderFontLinks() {
+  return `
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="${GOOGLE_FONTS_URL}" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="${GOOGLE_FONTS_URL}" /></noscript>`;
+}
+
+/** @param {string} assetPrefix */
+export function renderStylesheetLink(assetPrefix) {
+  return `
+    <link rel="preload" href="${assetPrefix}styles.css" as="style" />
+    <link rel="stylesheet" href="${assetPrefix}styles.css" />`;
+}
+
 /** @param {{ ogTitle?: string; ogDescription?: string; title: string; description: string }} seo */
 export function shareMeta(seo) {
   return {
@@ -78,6 +94,14 @@ export function renderOpenGraphTags(share) {
     <meta name="twitter:image:alt" content="${escapeHtml(OG_IMAGE_ALT)}" />`;
 }
 
+/** AdSense site verification + ad loader (must be in &lt;head&gt; on every page). */
+export function renderAdSenseScript() {
+  if (!ADSENSE_CLIENT_ID) return "";
+  const src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(ADSENSE_CLIENT_ID)}`;
+  return `
+    <script async src="${src}" crossorigin="anonymous"></script>`;
+}
+
 /** Deferred analytics/ads — loaded by consent.js after user accepts. */
 export function renderConsentScripts(assetPrefix = "") {
   const parts = [`document.documentElement.dataset.siteName=${JSON.stringify(SITE_NAME)};`];
@@ -116,21 +140,15 @@ export function renderHead(path, opts = {}) {
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow" />${renderConsentScripts(assetPrefix)}
+    <meta name="googlebot" content="index, follow" />${renderConsentScripts(assetPrefix)}${renderAdSenseScript()}
     <title>${escapeHtml(seo.title)}</title>
     <meta name="description" content="${escapeHtml(seo.description)}" />
     <link rel="canonical" href="${canonical}" />${renderSocialPreviewTags(path)}
     <link rel="icon" href="${assetPrefix}favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" href="${assetPrefix}apple-touch-icon.svg" sizes="180x180" />
     <link rel="manifest" href="${assetPrefix}site.webmanifest" />
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="${assetPrefix}sitemap.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="${GOOGLE_FONTS_URL}"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="${assetPrefix}styles.css" />${jsonLd}`;
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="${assetPrefix}sitemap.xml" />${renderFontLinks()}
+${renderStylesheetLink(assetPrefix)}${jsonLd}`;
 }
 
 /**

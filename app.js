@@ -220,6 +220,7 @@ function renderCityCard(city, base) {
           width="28"
           height="20"
           loading="lazy"
+          decoding="async"
         />
         <h3 class="city-card__name">${city.name}</h3>
       </div>
