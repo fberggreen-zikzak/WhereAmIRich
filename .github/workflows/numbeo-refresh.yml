@@ -33,10 +33,5 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "$(cat <<'EOF'
-chore: refresh Numbeo cost-of-living indices
-
-Automated monthly update from Numbeo rankings plus SEO artifact sync.
-EOF
-)"
+          git commit -m "chore: refresh Numbeo cost-of-living indices" -m "Automated monthly update from Numbeo rankings plus SEO artifact sync."
           git push
